@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import {  PageHeader, Card, Button } from 'antd';
 import Modal from "../components/modal";
+// import apiUserLogin from "../api";
+// import axios from "axios";
 // import { Link } from "react-router-dom";
 // import upload from '../img/upload.png';
 
@@ -15,6 +17,25 @@ export default function Labelpage(props) {
     const [ datas, setDatas ] = useState(initialValue);
     const [OpenModal, setOpenModal] = useState(false);
     const [activeObject, setActiveObject] = useState(null);
+    
+
+    // useEffect(() => {
+    //     const fetchDatas = async() => {
+    //         try {
+    //             const res = await apiUserLogin.get('/users/1/posts');
+    //             setDatas(res.data);
+    //         } catch (err) {
+    //             if (err.res) {
+    //                 console.log(err.res.data);
+    //                 console.log(err.res.status);
+    //                 console.log(err.res.headers)
+    //             } else {
+    //                 console.log(`Error: ${err.message}`);
+    //             }
+    //         }
+    //     }
+    //     fetchDatas();
+    // },[]);
 
     return (
         <div>
@@ -27,8 +48,8 @@ export default function Labelpage(props) {
                 </div>
             </div>
             <Card title="Data" className="datalist" >
-                {datas.map(({id, data, edited}) => {
-                    return <Button key={id} type="primary" className="data" onClick={()=>{ setActiveObject({id, data, edited}); setOpenModal(true); }}>{data}</Button>;
+                {datas.map(item => {
+                    return <Button key={item.id} type="primary" className="data" onClick={()=>{ setActiveObject(item); setOpenModal(true); }}>{item.data}</Button>;
                 })}
             </Card>
             {OpenModal && <Modal object={activeObject} setOpenModal={setOpenModal}/>}
