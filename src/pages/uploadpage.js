@@ -1,5 +1,5 @@
 import React from 'react';
-import { PageHeader, Form, Input , message, Upload, Radio, Space, Checkbox, Button } from 'antd';
+import { PageHeader, Form, Input , message, Upload, Space, Checkbox, Button } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
 import '../App.css';
 import axios from 'axios';
@@ -64,7 +64,7 @@ class upload extends React.Component {
         // }
         // console.log(fields);
         const userId = "61cd8404c5f3234a331e3ac4";
-        const { userFileName, codeSys, coCode, fileList } = fields;
+        const { userFileName, codeSys, coCode } = fields;
         const data = new FormData();
         data.append('userId', userId);
         data.append('userFileName', userFileName);
@@ -96,7 +96,6 @@ class upload extends React.Component {
     }
 
     render() {
-        const { fileList } = this.state;
         const { value } = this.state;
         const FORM_LAYOUT = {
             labelCol: {
