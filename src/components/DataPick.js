@@ -10,7 +10,7 @@ const pass = ['暫時不標註']
 export default function DataPick(props) {
     const [page, setPage] = useState(0);
     const [perspectiveValue, setPerspectiveValue] = useState([]);
-    const [purposeiveValue, setPurposeValue] = useState([]);
+    const [purposeValue, setPurposeValue] = useState([]);
     const [passValue, setPassValue] = useState("");
 
     const onChangePerspective = e => {
@@ -33,34 +33,38 @@ export default function DataPick(props) {
         
         const {datas} = props;
         if(datas.length > 0) {
-            // console.log(datas[page].FNId);
+            console.log(datas[page]._id);
             
         const handleSave = fields => {
             const userId = "61cd8404c5f3234a331e3ac4";
-            const _id = datas[page].FNId;
+            const _id = datas[page]._id;
             const version = ["1"];
-            const { perspective, purpose } = fields;
-            const data = new FormData();
-            data.append('_id', _id);
-            data.append('userId', userId);
-            data.append('perspective', perspective);
-            data.append('purpose', purpose);
-            data.append('version', version)
-
-            console.log(_id, userId, perspective, purpose, version);
-            axios.post("http://localhost:8080/data/tagData", data, {
-                headers: {
-                    'Access-Control-Allow-Origin': '*',
-                    'Access-Control-Allow-Methods': 'POST',
-                    'Content-Type': 'multipart/raw',
+            var data = JSON.stringify({
+                "_id": _id,
+                "history": {
+                    "userId": userId,
+                    "perspective":perspectiveValue,
+                    "purpose": purposeValue,
+                    "version": version
                 }
-            }).then (({data}) => {
-                message.success("Upload successful~");
-                console.log(data);
-            }).catch (error => {
-                message.error(error.message);
-            })
-
+                });
+            var config = {
+                method: 'post',
+                url: 'http://localhost:8080/data/tagData',
+                headers: { 
+                  'Content-Type': 'application/json'
+                },
+                data : data
+            };
+            axios(config)
+                .then(function (response) {
+                    message.success("Upload successful~");
+                    console.log(JSON.stringify(response.data));
+                })
+                .catch(function (error) {
+                    message.error(error.message);
+                    console.log(error);
+                });
         }
             return(
                 <div className="space-align-container">
@@ -133,7 +137,7 @@ export default function DataPick(props) {
                             padding: "23px",
                             margin: "10px"
                         }}>
-                        <Checkbox.Group options={purpose} onChange={onChangePurpose} value={purposeiveValue} style={{ display: 'grid', margin: "10px" }} />
+                        <Checkbox.Group options={purpose} onChange={onChangePurpose} value={purposeValue} style={{ display: 'grid', margin: "10px" }} />
                         </Form.Item>
                         <Form.Item name="pass" style={{
                             // position: "absolute",

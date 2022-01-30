@@ -34,17 +34,18 @@ export default function DataTimeline(props) {
                             endMessage={<Divider plain>It is all, nothing more 🤐</Divider>}
                             scrollableTarget="scrollableDiv"
                         >
-                            <Divider orientation="left">Discuss Data</Divider>
+                            <Divider orientation="left" style={{fontSize: "25px", fontFamily: "Noto Sans Mono CJK TC"}}>Discuss Datas</Divider>
                             <List
                                 dataSource={datas}
                                 renderItem={(data) => (
                                     <List.Item style={{margin: '1px 15px'}}>
-                                        <CheckCircleTwoTone twoToneColor="#52c41a" />
+                                        {/* <CheckCircleTwoTone twoToneColor="#52c41a" /> */}
                                         <Card
                                             hoverable
                                             style={{
                                                 width: '100%',
-                                                margin: '10px'
+                                                margin: '10px',
+                                                fontSize: '22px'
                                             }}
                                         >
                                             {data.dataName}
