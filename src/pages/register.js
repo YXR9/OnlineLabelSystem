@@ -8,7 +8,7 @@ export default function register() {
             span: 24,
           },
           sm: {
-            span: 8,
+            span: 10,
           },
         },
         wrapperCol: {
@@ -16,7 +16,7 @@ export default function register() {
             span: 24,
           },
           sm: {
-            span: 16,
+            span: 30,
           },
         },
       };
@@ -28,7 +28,7 @@ export default function register() {
           },
           sm: {
             span: 16,
-            offset: 8,
+            offset: 5,
           },
         },
       };
@@ -44,7 +44,9 @@ export default function register() {
                 onFinish={onFinish}
                 scrollToFirstError
             >
-                <h3>會員註冊</h3>
+                <Form.Item>
+                    <h3>會員註冊</h3>
+                </Form.Item>
                 <Form.Item
                   name="username"
                   label="使用者名稱"
@@ -121,9 +123,10 @@ export default function register() {
                     <Input.Password />
                 </Form.Item>
                 <Form.Item {...tailFormItemLayout}>
-                    <Button type="primary" htmlType="submit">
+                    <Button type="primary" htmlType="submit" className="login-form-button">
                       Register
                     </Button>
+                        Or <a href="/">login now!</a>
                 </Form.Item>
             </Form>
         </header>
