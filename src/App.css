@@ -1,6 +1,35 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
 body {
-  overflow: hidden;
-  position: relative;
+  /* overflow: hidden;
+  position: relative; */
+  background-color: #FEFFE6;
+}
+
+nav {
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  padding: 25px 40px;
+  box-shadow: 0px 1px 10px;
+  color: #282c34 10%;
+  border: #282c34 10%;
+}
+
+.login-form {
+  max-width: 300px;
+}
+.login-form-forgot {
+  float: right;
+}
+.ant-col-rtl .login-form-forgot {
+  float: left;
+}
+.login-form-button {
+  width: 100%;
 }
 
 @import '~antd/dist/antd.css';
@@ -13,6 +42,23 @@ body {
   pointer-events: none;
 }
 
+#components-layout-demo-top .logo {
+  float: left;
+  width: 120px;
+  height: 31px;
+  margin: 16px 24px 16px 0;
+  font-family: Noto Sans Mono CJK TC;
+  /* font-size: 30px; */
+  font-weight: bolder;
+  color: rgb(132, 132, 132);
+  background-color: #ffffff;
+}
+
+.ant-row-rtl #components-layout-demo-top .logo {
+  float: right;
+  margin: 16px 0 16px 24px;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
@@ -20,9 +66,8 @@ body {
 }
 
 .App-header {
-  background-color: #ffffff;
   min-height: 80vh;
-  margin: 0;
+  margin: 100;
   padding: 0;
   display: flex;
   flex-flow: row;
@@ -48,8 +93,8 @@ body {
 
 .site-page-header {
   clear: both;
-  border: 1px solid rgb(255, 213, 0);
-  background-color: rgb(255, 249, 158);
+  border: 1px solid #73d13d;
+  background-color: #b7eb8f;
   height: auto;
   font-family: Noto Sans Mono CJK TC;
   font-size: calc(15px + 2vmin);

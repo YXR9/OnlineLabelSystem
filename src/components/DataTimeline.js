@@ -1,7 +1,6 @@
 import React from "react";
 import { PageHeader, Card, List, Skeleton, Divider, Empty } from "antd";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { CheckCircleTwoTone } from "@ant-design/icons";
 
 export default function DataTimeline(props) {
     
