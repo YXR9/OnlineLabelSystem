@@ -1,7 +1,11 @@
 import React, { useState } from "react";
-import { PageHeader, Card, Empty, Form, Checkbox, Button, message } from "antd";
+import { Card, Empty, Form, Checkbox, Button, message, Layout } from "antd";
 import { LeftCircleOutlined, RightCircleOutlined } from "@ant-design/icons";
 import axios from "axios";
+import { blue } from '@ant-design/colors';
+import { Header } from "antd/lib/layout/layout";
+console.log(blue); // ['#E6F7FF', '#BAE7FF', '#91D5FF', '#69C0FF', '#40A9FF', '#1890FF', '#096DD9', '#0050B3', '#003A8C', '#002766']
+console.log(blue.primary); // '#1890FF'
 
 const perspective = ['安全面', '科學與技術面', '環保面', '社會面', '經濟面'];
 const purpose = ['提出論點或主張(CA1)', '提出疑問(CA2)', '提出挑戰(CA3)', '進行推論(CA4)', '表達支持(CA5)', '其他(CA6)'];
@@ -67,8 +71,11 @@ export default function DataPick(props) {
                 });
         }
             return(
-                <div className="space-align-container">
-                    <PageHeader className="site-page-header" title="LabelSystem"/>
+                <Layout className="layout">
+                    <Header style={{ backgroundColor: "#b7eb8f", border: "0.5px solid #73d13d", boxShadow: "2px 2px 2px 1px rgba(0, 0, 0, 0.2)"}}>
+                        <div className="logo">LabelSystem</div>
+
+                    </Header>
                     <Form
                         name="file-upload-form"
                         labelCol={{ span: 6 }}
@@ -159,10 +166,10 @@ export default function DataPick(props) {
                             top: "80%",
                             justifyContent: "center",
                         }}>
-                            <Button style={{ backgroundColor: "rgb(255, 249, 158)", border: "rgb(255, 213, 0)", color: "rgb(132, 132, 132)", fontFamily: "Noto Sans Mono CJK TC"}} type="primary" htmlType="submit">Save</Button>
+                            <Button style={{ lineHeight: "20px", backgroundColor: "#b7eb8f", border: "rgb(255, 213, 0)", color: "rgb(132, 132, 132)", fontFamily: "Noto Sans Mono CJK TC", fontSize: "20px", fontWeight: "bolder", width: "80px", height: "40px", borderRadius: "20px"}} type="primary" htmlType="submit">Save</Button>
                         </Form.Item>
                     </Form>
-                </div>
+                </Layout>
                 
                 
             )
