@@ -6,6 +6,7 @@
 body {
   /* overflow: hidden;
   position: relative; */
+  height: 100%;
   background-color: #FEFFE6;
 }
 
@@ -17,8 +18,8 @@ nav {
   box-shadow: 0px 1px 10px;
   color: #282c34 10%;
   border: #282c34 10%;
+  height: 90px;
 }
-
 .login-form {
   max-width: 300px;
 }
@@ -40,6 +41,10 @@ nav {
 @import '~antd/dist/antd.css';
 .App {
   text-align: center;
+  height: 100%;
+  margin: 0;
+  min-height: 100%;
+  margin-bottom: -90px;
 }
 
 .App-logo {

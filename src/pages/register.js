@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
-import { Form, Input, InputNumber, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete } from 'antd';
+import { Form, Input, Button, message } from 'antd';
+import axios from 'axios';
+// import { useHistory } from 'react-router-dom';
 
 export default function register() {
+  // let history = useHistory();
     const formItemLayout = {
         labelCol: {
           xs: {
@@ -34,6 +37,25 @@ export default function register() {
       };
     const onFinish = (values) => {
         console.log('Received values of form: ', values);
+        const { name, unit, account, password, confirmPassword } = values;
+        const data = new FormData();
+        data.append('name', name);
+        data.append('unit', unit);
+        data.append('account', account);
+        data.append('password', password);
+        data.append('confirmPassword', confirmPassword)
+        axios.post("http://localhost:8080/user/register", data, {
+            // headers: {
+            //     'Access-Control-Allow-Origin': '*',    
+            //     'Access-Control-Allow-Methods': 'POST',
+            //     'Content-Type': 'multipart/form-data',
+            // },
+        }).then (({data}) => {
+            message.success("Login successful~");
+            console.log(data);
+        }).catch (error => {
+            message.error(error.message);
+        })
     };
   return (
     <div className='App'>
@@ -48,7 +70,7 @@ export default function register() {
                     <h3>會員註冊</h3>
                 </Form.Item>
                 <Form.Item
-                  name="username"
+                  name="name"
                   label="使用者名稱"
                   rules={[
                     {
@@ -61,7 +83,7 @@ export default function register() {
                   <Input />
                 </Form.Item>
                 <Form.Item
-                  name="place"
+                  name="unit"
                   label="所屬單位"
                   rules={[
                     {
@@ -101,7 +123,7 @@ export default function register() {
                 </Form.Item>
                
                 <Form.Item
-                    name="confirm"
+                    name="confirmPassword"
                     label="請再輸入一次密碼"
                     dependencies={['password']}
                     hasFeedback

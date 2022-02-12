@@ -1,10 +1,28 @@
 import React from 'react';
-import { Form, Input, Button, Checkbox } from "antd";
+import { Form, Input, Button, Checkbox, message } from "antd";
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import axios from 'axios';
 
 export default function login() {
+
     const onFinish = (values) => {
         console.log('Received values of form: ', values);
+        const { account, password } = values;
+        const data = new FormData();
+        data.append('account', account);
+        data.append('password', password);
+        axios.post("http://localhost:8080/user/login", data, {
+            // headers: {
+            //     'Access-Control-Allow-Origin': '*',    
+            //     'Access-Control-Allow-Methods': 'POST',
+            //     'Content-Type': 'multipart/form-data',
+            // },
+        }).then (({data}) => {
+            message.success("Login successful~");
+            console.log(data);
+        }).catch (error => {
+            message.error(error.message);
+        })
     };
 
     return (
@@ -22,7 +40,7 @@ export default function login() {
                         <h3>會員登入</h3>
                     </Form.Item>
                     <Form.Item
-                        name="username"
+                        name="account"
                         rules={[
                         {
                             required: true,
