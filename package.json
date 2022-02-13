@@ -58,6 +58,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "antd-theme-generator": "^1.2.11"
+    "antd-theme-generator": "^1.2.11",
+    "eslint-plugin-react-hooks": "^4.3.0"
   }
 }

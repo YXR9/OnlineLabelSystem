@@ -1,10 +1,12 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { Form, Input, Button, Checkbox, message } from "antd";
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import axios from 'axios';
 
-export default function login() {
-
+export default function Login() {
+    const history = useHistory();
+    
     const onFinish = (values) => {
         console.log('Received values of form: ', values);
         const { account, password } = values;
@@ -21,7 +23,7 @@ export default function login() {
             message.success("Login successful~");
             console.log(data);
         }).catch (error => {
-            message.error(error.message);
+            message.error("帳號或密碼錯誤!!");
         })
     };
 
@@ -76,7 +78,11 @@ export default function login() {
                     </Form.Item>
 
                     <Form.Item>
-                        <Button type="primary" htmlType="submit" className="login-form-button">
+                        <Button type="primary" htmlType="submit" className="login-form-button" 
+                        onClick={() => {
+                            history.push('/uploadpage'); 
+                        }}
+                    >
                         Log in
                         </Button>
                         Or <a href="/register">register now!</a>

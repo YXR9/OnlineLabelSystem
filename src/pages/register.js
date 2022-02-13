@@ -51,7 +51,7 @@ export default function register() {
             //     'Content-Type': 'multipart/form-data',
             // },
         }).then (({data}) => {
-            message.success("Login successful~");
+            message.success("Register successful~");
             console.log(data);
         }).catch (error => {
             message.error(error.message);

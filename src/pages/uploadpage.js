@@ -1,5 +1,5 @@
 import React from 'react';
-import { PageHeader, Form, Input , message, Upload, Space, Checkbox, Button } from 'antd';
+import { Form, Input , message, Upload, Select, Button, InputNumber, DatePicker } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
 import '../App.css';
 import axios from 'axios';
@@ -10,43 +10,78 @@ class upload extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            userFileName: '',
-            codeSys: [],
+            fileName: '',
+            collector: '',
+            sourceTarget: '',
+            age: '',
+            headCounts: '',
+            collectDate: [],
+            collectMethod: '',
+            context: '',
             fileList: [],    // fileList
-            coCode: true,
             UPLoading: false
         };
         this.inputFilename = this.inputFilename.bind(this);
-        this.onChangeCoding = this.onChangeCoding.bind(this);
+        this.inputCollector = this.inputCollector.bind(this);
+        this.getSourceTarget = this.getSourceTarget.bind(this);
+        this.getAge = this.getAge.bind(this);
+        this.getHeadCounts = this.getHeadCounts.bind(this);
+        this.getCollectDate = this.getCollectDate.bind(this);
+        this.getCollectMethod = this.getCollectMethod.bind(this);
+        this.getContext = this.getContext.bind(this);
         this.HandlefileChange = this.HandlefileChange.bind(this);
-        this.changeAuthority = this.changeAuthority.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     inputFilename = e => {
         if (e.target instanceof HTMLInputElement) {
-            this.setState({ userFileName: e.target.value });
+            // console.log('file name ', e.target.value);
+            this.setState({ fileName: e.target.value });
         }
     }
 
-    onChangeCoding = (e) => {
-      console.log('checked', e);
-      this.setState({
-        codeSys: e.length? [e[e.length - 1]] : []
-    });
+    inputCollector = e => {
+        if (e.target instanceof HTMLInputElement) {
+            // console.log('collector ', e);
+            this.setState({ collector: e.target.value });
+        }
+    }
+
+    getSourceTarget = e => {
+        console.log('source target ', e);
+        this.setState({ sourceTarget: e });
+
+    }
+
+    getAge = (e) => {
+      console.log('age ', e);
+      this.setState({ age: e });
     };
+
+    getHeadCounts = (e) => {
+        console.log('head counts ', e);
+        this.setState({ headCounts: e });
+      };
+
+    getCollectDate = (date, dateString) => {
+        console.log('collect date ', dateString);
+        this.setState({ collectDate: dateString })
+    }
+
+    getCollectMethod = (e) => {
+        console.log('collect method ', e.target.value);
+        this.setState({ collectMethod: e.target.value });
+    }
+
+    getContext = (e) => {
+        console.log('context ', e.target.value);
+        this.setState({ context: e.target.value });
+    }
 
     dummyRequest({ file, onSuccess }) {
         setTimeout(() => {
             onSuccess("ok");
         }, 0);
-    }
-
-    changeAuthority(values) {
-        console.log(values.target.checked);
-        this.setState ({
-            coCode: values,
-        });
     }
 
     HandlefileChange = ({file, fileList}) => {// Processing file Change, guaranteed that the user selected by one is only one
@@ -64,19 +99,24 @@ class upload extends React.Component {
         // }
         // console.log(fields);
         const userId = "61cd8404c5f3234a331e3ac4";
-        const { userFileName, codeSys, coCode } = fields;
+        const { fileName, collector, sourceTarget, age, headCounts, collectDate, collectMethod, context } = fields;
         const data = new FormData();
         data.append('userId', userId);
-        data.append('userFileName', userFileName);
-        data.append('codeSys', codeSys);
-        data.append('coCode', coCode);
+        data.append('fileName', fileName);
+        data.append('collector', collector);
+        data.append('sourceTarget', sourceTarget);
+        data.append('age', age);
+        data.append('headCounts', headCounts);
+        data.append('collectDate', collectDate);
+        data.append('collectMethod', collectMethod);
+        data.append('context', context);
         data.append('file', this.state.fileList[0].originFileObj);
 
         this.setState({
             UPLoading: true,
         })
 
-        console.log(userId, userFileName, codeSys, coCode, this.state.fileList[0].originFileObj);
+        console.log(userId, fileName, collector, sourceTarget, age, headCounts, collectDate, collectMethod, context, this.state.fileList[0].originFileObj);
         axios.post("http://localhost:8080/file", data, {
             // headers: {
             //     'Access-Control-Allow-Origin': '*',    
@@ -101,6 +141,10 @@ class upload extends React.Component {
             labelCol: {
                 span: 8
             },
+            wrapperCol: {
+                span: 15,
+                offset: 1
+            }
         }
 
         const FORM_BTN_LAYOUT = {
@@ -151,7 +195,7 @@ class upload extends React.Component {
 
         return (
             <div className='App'>
-                <PageHeader className="site-page-header" title="LabelSystem"/>
+                {/* <PageHeader className="site-page-header" title="LabelSystem"/> */}
                 <div>
                     {/* <Link>
                         <img className="upload" src={upload}/>
@@ -160,30 +204,77 @@ class upload extends React.Component {
                 <header className='App-header'>
                     <Form name="file-upload-form" {...FORM_LAYOUT} onFinish={this.handleSubmit}>
                         <Form.Item 
-                            name='userFileName'
+                            name='fileName'
                             label="資料名稱"  
-                            className='area' 
+                            className='area'
+                            hasFeedback 
                             rules={[{ require: true, message: "Please enter filename" },]}
+                            // style={{ display: 'inline-block', width: 'calc(50% - 8px)' }}
                         >
-                            <Input name='filename' className='uploadInput' value={this.state.filename} onChange={this.inputFilename}/>
+                            <Input name='fileName' className='uploadInput' value={this.state.fileName} onChange={this.inputFilename}/>
                         </Form.Item>
-                        <Form.Item name="codeSys" label="編碼系統" className='checkbox'>
-                            <Checkbox.Group onChange={this.onChangeCoding} options={value} style={{ display: 'grid' }}>
-                                <Space direction='vertical'>
-                                    <Checkbox value="論點面向">
-                                        論點面向
-                                    </Checkbox>
-                                    <Checkbox value="發言目的">
-                                        發言目的
-                                    </Checkbox>
-                                    {/* <Radio value={3}>
-                                        More...
-                                        {value === 3 ? <Input style={{ width: 100, marginLeft: 10 }} /> : null}
-                                    </Radio> */}
-                                </Space>
-                            </Checkbox.Group>
+                        <Form.Item 
+                            name="collector" 
+                            label="蒐集者姓名" 
+                            className='area'
+                            hasFeedback
+                            // style={{ display: 'inline-block', width: 'calc(50% - 8px)', margin: '0 8px' }}
+                        >
+                            <Input name='collector' className='uploadInput' value={this.state.collector} onChange={this.inputCollector}/>
                         </Form.Item>
-                        <Form.Item name="file"  label="檔案上傳" className="form-group files" wrapperCol={{ span: 24 }}>
+                        <Form.Item
+                            name="sourceTarget"
+                            label="資料來源對象"
+                            hasFeedback
+                            rules={[{ required: true, message: 'Province is required' }]}
+                        >
+                            <Select placeholder="Please select a object" onChange={this.getSourceTarget} value={this.state.sourceTarget}>
+                                <Select.Option value="elementarySchool">國小</Select.Option>
+                                <Select.Option value="secondary">國中</Select.Option>
+                                <Select.Option value="highSchool">高中</Select.Option>
+                            </Select>
+                        </Form.Item>
+                        <Form.Item
+                            name="age"
+                            label="年紀"
+                        >
+                            <InputNumber min={6} max={25} onChange={this.getAge} value={this.state.age}/>
+                        </Form.Item>
+                        <Form.Item
+                            name="headCounts"
+                            label="人數"
+                        >
+                            <InputNumber min={1} max={1000} onChange={this.getHeadCounts} value={this.state.headCounts}/>
+                        </Form.Item>
+                        <Form.Item
+                            name="collectDate"
+                            label="蒐集日期"
+                            validateStatus="success"
+                        >
+                          <DatePicker style={{ width: '100%' }} onChange={this.getCollectDate} />
+                        </Form.Item>
+                        <Form.Item 
+                            name="collectMethod" 
+                            label="蒐集方式" 
+                            className='area'
+                            hasFeedback
+                            // style={{ display: 'inline-block', width: 'calc(50% - 8px)', margin: '0 8px' }}
+                        >
+                            <Input name='collectMethod' className='uploadInput' value={this.state.collectMethod} onChange={this.getCollectMethod}/>
+                        </Form.Item>
+                        <Form.Item
+                          name="context"
+                          label="學習情境（任務）"
+                          rules={[
+                            {
+                              required: true,
+                              message: 'Please input Intro',
+                            },
+                          ]}
+                        >
+                          <Input.TextArea showCount maxLength={100} value={this.state.context} onChange={this.getContext}/>
+                        </Form.Item>
+                        <Form.Item name="file" className="form-group files" wrapperCol={{ span: 24 }}>
                             <Form.Item initialValue={this.props.data && this.props.data.filename ? this.props.data.filename : []}
                                 valuePropName= 'fileList'
                                 getValueFromEvent= {normFile}
@@ -195,12 +286,6 @@ class upload extends React.Component {
                                     <p className="ant-upload-text">點擊或拖曳檔案至此</p>
                                 </Dragger>
                             </Form.Item>
-                        </Form.Item>
-                        <Form.Item name='coCode' label="檔案權限" wrapperCol={{ span: 24 }} onChange={this.changeAuthority} valuePropName='checked'>
-                            <Checkbox >
-                                {" "}
-                                可以編輯（開啟進行任何變更）
-                            </Checkbox>
                         </Form.Item>
                         <Form.Item {...FORM_BTN_LAYOUT}>
                             <Button block type='primary' htmlType='submit'>

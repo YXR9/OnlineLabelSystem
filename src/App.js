@@ -1,13 +1,13 @@
 import React from 'react';
+import { Switch, Route, BrowserRouter, Redirect } from 'react-router-dom';
 import './App.css';
-import Navbar from './components/Navbar';
+import Login from './pages/login';
+import Registerpage from './pages/register';
 import Labelpage from './pages/labelpage';
 import Uploadpage from './pages/uploadpage';
 import Codingpage from './pages/codingpage';
-import Loginpage from './pages/login';
-import Registerpage from './pages/register';
+import Navbar from './components/Navbar';
 // import Footer from './components/Footer';
-import { Switch, Route, BrowserRouter } from 'react-router-dom';
 import { Layout } from 'antd';
 const { Footer } = Layout;
 
@@ -17,7 +17,8 @@ function App() {
     <BrowserRouter>
         <Navbar />
         <Switch>
-          <Route exact path="/" component={Loginpage} />
+          <Route exact path="/" component={Login} />
+            {/* {loggedIn ? <Redirect to="/uploadpage"/>: component={Loginpage}} */}
           <Route exact path="/register" component={Registerpage} />
           <Route exact path="/labelpage" component={Labelpage} />
           <Route exact path="/uploadpage" component={Uploadpage} />
