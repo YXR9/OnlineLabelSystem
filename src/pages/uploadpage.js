@@ -1,5 +1,6 @@
 import React from 'react';
-import { Form, Input , message, Upload, Select, Button, InputNumber, DatePicker } from 'antd';
+import { useForm } from 'react-hook-form';
+import { Form, Input , message, Upload, Select, Button, InputNumber, DatePicker, Row, Col, Menu } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
 import '../App.css';
 import axios from 'axios';
@@ -130,7 +131,8 @@ class upload extends React.Component {
             message.error(error.message);
         }).finally(() => {
             this.setState({
-                UPLoading: false
+                UPLoading: false,
+                fileName: ''
             })
         })
     }
@@ -195,103 +197,124 @@ class upload extends React.Component {
 
         return (
             <div className='App'>
-                {/* <PageHeader className="site-page-header" title="LabelSystem"/> */}
-                <div>
-                    {/* <Link>
-                        <img className="upload" src={upload}/>
-                    </Link> */}
-                </div>
                 <header className='App-header'>
-                    <Form name="file-upload-form" {...FORM_LAYOUT} onFinish={this.handleSubmit}>
-                        <Form.Item 
-                            name='fileName'
-                            label="資料名稱"  
-                            className='area'
-                            hasFeedback 
-                            rules={[{ require: true, message: "Please enter filename" },]}
-                            // style={{ display: 'inline-block', width: 'calc(50% - 8px)' }}
-                        >
-                            <Input name='fileName' className='uploadInput' value={this.state.fileName} onChange={this.inputFilename}/>
-                        </Form.Item>
-                        <Form.Item 
-                            name="collector" 
-                            label="蒐集者姓名" 
-                            className='area'
-                            hasFeedback
-                            // style={{ display: 'inline-block', width: 'calc(50% - 8px)', margin: '0 8px' }}
-                        >
-                            <Input name='collector' className='uploadInput' value={this.state.collector} onChange={this.inputCollector}/>
-                        </Form.Item>
-                        <Form.Item
-                            name="sourceTarget"
-                            label="資料來源對象"
-                            hasFeedback
-                            rules={[{ required: true, message: 'Province is required' }]}
-                        >
-                            <Select placeholder="Please select a object" onChange={this.getSourceTarget} value={this.state.sourceTarget}>
-                                <Select.Option value="elementarySchool">國小</Select.Option>
-                                <Select.Option value="secondary">國中</Select.Option>
-                                <Select.Option value="highSchool">高中</Select.Option>
-                            </Select>
-                        </Form.Item>
-                        <Form.Item
-                            name="age"
-                            label="年紀"
-                        >
-                            <InputNumber min={6} max={25} onChange={this.getAge} value={this.state.age}/>
-                        </Form.Item>
-                        <Form.Item
-                            name="headCounts"
-                            label="人數"
-                        >
-                            <InputNumber min={1} max={1000} onChange={this.getHeadCounts} value={this.state.headCounts}/>
-                        </Form.Item>
-                        <Form.Item
-                            name="collectDate"
-                            label="蒐集日期"
-                            validateStatus="success"
-                        >
-                          <DatePicker style={{ width: '100%' }} onChange={this.getCollectDate} />
-                        </Form.Item>
-                        <Form.Item 
-                            name="collectMethod" 
-                            label="蒐集方式" 
-                            className='area'
-                            hasFeedback
-                            // style={{ display: 'inline-block', width: 'calc(50% - 8px)', margin: '0 8px' }}
-                        >
-                            <Input name='collectMethod' className='uploadInput' value={this.state.collectMethod} onChange={this.getCollectMethod}/>
-                        </Form.Item>
-                        <Form.Item
-                          name="context"
-                          label="學習情境（任務）"
-                          rules={[
-                            {
-                              required: true,
-                              message: 'Please input Intro',
-                            },
-                          ]}
-                        >
-                          <Input.TextArea showCount maxLength={100} value={this.state.context} onChange={this.getContext}/>
-                        </Form.Item>
-                        <Form.Item name="file" className="form-group files" wrapperCol={{ span: 24 }}>
-                            <Form.Item initialValue={this.props.data && this.props.data.filename ? this.props.data.filename : []}
-                                valuePropName= 'fileList'
-                                getValueFromEvent= {normFile}
-                            >
-                                <Dragger name='fileList' fileList={this.state.fileList} {...props} customRequest={this.dummyRequest} onChange={this.HandlefileChange}>
-                                    <p className="ant-upload-drag-icon">
-                                        <InboxOutlined />
-                                    </p>
-                                    <p className="ant-upload-text">點擊或拖曳檔案至此</p>
-                                </Dragger>
-                            </Form.Item>
-                        </Form.Item>
-                        <Form.Item {...FORM_BTN_LAYOUT}>
-                            <Button block type='primary' htmlType='submit'>
-                                Upload
-                            </Button>
-                        </Form.Item>
+                    <Form name="file-upload-form" onFinish={this.handleSubmit}>
+                        <Row>
+                            <Col span={11}>
+                                <Form.Item 
+                                    name='fileName'
+                                    label="資料名稱"  
+                                    hasFeedback 
+                                    rules={[{ require: true, message: "Please enter filename" },]}
+                                >
+                                    <Input name='fileName' value={this.state.fileName} onChange={this.inputFilename}/>
+                                </Form.Item>
+                            </Col>
+                            <Col span={12} push={1}>
+                                <Form.Item 
+                                    name="collector" 
+                                    label="蒐集者姓名" 
+                                    hasFeedback
+                                >
+                                    <Input name='collector' value={this.state.collector} onChange={this.inputCollector}/>
+                                </Form.Item>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col span={8}>
+                                <Form.Item
+                                    name="sourceTarget"
+                                    label="來源對象"
+                                    hasFeedback
+                                    // rules={[{ required: true, message: 'Province is required' }]}
+                                >
+                                    <Select onChange={this.getSourceTarget} value={this.state.sourceTarget}>
+                                        <Select.Option value="elementarySchool">國小</Select.Option>
+                                        <Select.Option value="secondary">國中</Select.Option>
+                                        <Select.Option value="highSchool">高中</Select.Option>
+                                    </Select>
+                                </Form.Item>
+                            </Col>
+                            <Col span={8} push={1}>
+                                <Form.Item
+                                    name="age"
+                                    label="年紀"
+                                >
+                                    <InputNumber min={6} max={25} onChange={this.getAge} value={this.state.age}/>
+                                </Form.Item>
+                            </Col>
+                            <Col span={8} push={1}>
+                                 <Form.Item
+                                    name="headCounts"
+                                    label="人數"
+                                >
+                                    <InputNumber min={1} max={1000} onChange={this.getHeadCounts} value={this.state.headCounts}/>
+                                </Form.Item>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col span={11}>
+                                <Form.Item
+                                    name="collectDate"
+                                    label="蒐集日期"
+                                    validateStatus="success"
+                                >
+                                  <DatePicker style={{ width: '100%' }} onChange={this.getCollectDate} />
+                                </Form.Item>
+                            </Col>
+                            <Col  span={12} push={1}>
+                                <Form.Item 
+                                    name="collectMethod" 
+                                    label="蒐集方式" 
+                                    hasFeedback
+                                    // style={{ display: 'inline-block', width: 'calc(50% - 8px)', margin: '0 8px' }}
+                                >
+                                    <Input name='collectMethod'  value={this.state.collectMethod} onChange={this.getCollectMethod}/>
+                                </Form.Item>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col span={24}>
+                                <Form.Item
+                                  name="context"
+                                  label="學習情境（任務）"
+                                //   rules={[
+                                //     {
+                                //       required: true,
+                                //       message: 'Please input Intro',
+                                //     },
+                                //   ]}
+                                >
+                                  <Input.TextArea showCount maxLength={100} value={this.state.context} onChange={this.getContext}/>
+                                </Form.Item>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col span={24}>
+                                <Form.Item name="file" className="form-group files" wrapperCol={{ span: 24 }}>
+                                    <Form.Item initialValue={this.props.data && this.props.data.filename ? this.props.data.filename : []}
+                                        valuePropName= 'fileList'
+                                        getValueFromEvent= {normFile}
+                                    >
+                                        <Dragger name='fileList' fileList={this.state.fileList} {...props} customRequest={this.dummyRequest} onChange={this.HandlefileChange}>
+                                            <p className="ant-upload-drag-icon">
+                                                <InboxOutlined />
+                                            </p>
+                                            <p className="ant-upload-text">點擊或拖曳檔案至此</p>
+                                        </Dragger>
+                                    </Form.Item>
+                                </Form.Item>
+                            </Col>
+                        </Row>
+                        <Row justify='center'>
+                            <Col>
+                                <Form.Item>
+                                    <Button block type='primary' htmlType='submit' className="login-form-button">
+                                        Upload
+                                    </Button>
+                                </Form.Item>
+                            </Col>
+                        </Row>
                     </Form>
                 </header>
             </div>
