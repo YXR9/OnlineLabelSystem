@@ -13,6 +13,7 @@ body {
 nav {
   background-color: white;
   display: flex;
+  float:inline-end;
   justify-content: space-between;
   padding: 25px 40px;
   box-shadow: 0px 1px 10px;
@@ -76,16 +77,18 @@ nav {
 }
 
 .App-header {
-  min-height: 80vh;
-  /* margin: 100; */
-  /* padding: 10; */
   display: flex;
-  /* flex-flow: row; */
-  /* flex-direction: column; */
   align-items: center;
   justify-content: center;
-  /* font-size: calc(10px + 2vmin); */
-  /* color: rgb(0, 0, 0); */
+  background-color:rgb(255, 255, 255);
+  height: 650px;
+  /* width: 1800px; */
+  margin-top: 70px;
+  margin-left: 60px;
+  margin-right: 60px;
+  border-color: rgba(110, 110, 110, 0.3);
+  border-width: 1.5px;
+  border-style: solid;
 }
 
 .App-link {
@@ -119,6 +122,10 @@ nav {
   align-items: center;
   justify-content: space-between;
   
+}
+
+.background {
+  background-color: #FEFFE6;
 }
 
 .upload {

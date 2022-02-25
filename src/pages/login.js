@@ -20,6 +20,7 @@ export default function Login() {
             //     'Content-Type': 'multipart/form-data',
             // },
         }).then (({data}) => {
+            history.push('/uploadpage'); 
             message.success("Login successful~");
             console.log(data);
         }).catch (error => {
@@ -79,9 +80,9 @@ export default function Login() {
 
                     <Form.Item>
                         <Button type="primary" htmlType="submit" className="login-form-button" 
-                        onClick={() => {
-                            history.push('/uploadpage'); 
-                        }}
+                        // onClick={() => {
+                        //     history.push('/uploadpage'); 
+                        // }}
                     >
                         Log in
                         </Button>

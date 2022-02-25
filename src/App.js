@@ -7,6 +7,7 @@ import Labelpage from './pages/labelpage';
 import Uploadpage from './pages/uploadpage';
 import Codingpage from './pages/codingpage';
 import Navbar from './components/Navbar';
+import AddCodeingStructurepage from './pages/addcodestructurepage';
 // import Footer from './components/Footer';
 import { Layout } from 'antd';
 const { Footer } = Layout;
@@ -23,6 +24,7 @@ function App() {
           <Route exact path="/labelpage" component={Labelpage} />
           <Route exact path="/uploadpage" component={Uploadpage} />
           <Route exact path="/codingpage" component={Codingpage} />
+          <Route exact path="/addstructure" component={AddCodeingStructurepage} />
         </Switch>
         <Footer style={{ backgroundColor: "#614700", color: "#FFF", textAlign: 'center', position: "absolute", boxSizing: "border-box", bottom: "0", width: "100%" }}>Ant Design ©2018 Created by Ant UED</Footer>
     </BrowserRouter>
