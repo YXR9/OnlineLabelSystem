@@ -71,11 +71,7 @@ export default function DataPick(props) {
                 });
         }
             return(
-                <Layout className="layout">
-                    <Header style={{ backgroundColor: "#b7eb8f", border: "0.5px solid #73d13d", boxShadow: "2px 2px 2px 1px rgba(0, 0, 0, 0.2)"}}>
-                        <div className="logo">LabelSystem</div>
-
-                    </Header>
+                <Layout className="App-header">
                     <Form
                         name="file-upload-form"
                         labelCol={{ span: 6 }}
@@ -130,7 +126,10 @@ export default function DataPick(props) {
                             padding: "23px",
                             margin: "10px"
                         }}>
-                        <Checkbox.Group options={perspective} onChange={onChangePerspective} value={perspectiveValue} style={{ display: 'grid', margin: "10px" }} />
+                            <Card>
+                                 <Checkbox.Group options={perspective} onChange={onChangePerspective} value={perspectiveValue} style={{ display: 'grid', margin: "10px" }} />
+                            </Card>
+                       
                         </Form.Item>
                         <Form.Item name="purpose" label="發言目的" className='checkbox' style={{
                             // position: "absolute",

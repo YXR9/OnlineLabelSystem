@@ -1,9 +1,9 @@
 import React from 'react';
-import { useForm } from 'react-hook-form';
 import { Form, Input , message, Upload, Select, Button, InputNumber, DatePicker, Row, Col, Menu } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
 import '../App.css';
 import axios from 'axios';
+// import { History } from 'history';
 
 const { Dragger } = Upload;
 
@@ -125,6 +125,7 @@ class upload extends React.Component {
             //     'Content-Type': 'multipart/form-data',
             // },
         }).then (({data}) => {
+            this.props.history.push("/list")
             message.success("Upload successful~");
             console.log(data);
         }).catch (error => {
@@ -308,6 +309,13 @@ class upload extends React.Component {
                         </Row>
                         <Row justify='center'>
                             <Col>
+                                <Form.Item>
+                                    <Button block className="cancel-form-button" onClick={() => { this.props.history.push("/list") }}>
+                                        Cancel
+                                    </Button>
+                                </Form.Item>
+                            </Col>
+                            <Col push={1}>
                                 <Form.Item>
                                     <Button block type='primary' htmlType='submit' className="login-form-button">
                                         Upload

@@ -10,16 +10,16 @@ export default function DataTimeline(props) {
         if(datas.length > 0) {
             return(
                 <div>
-                    <PageHeader className="site-page-header" title="LabelSystem"/>
                     <div
+                        className="App-header"
                         id="scrollableDiv"
                         style={{
                             width: "80%",
-                            height: 800,
+                            // height: 800,
                             overflow: 'auto',
                             position: 'absolute',
-                            left: "48%",
-                            top: "50%",
+                            left: "45%",
+                            top: "47%",
                             transform: "translate(-50%, -50%)",
                             margin:'40px',
                             padding: 'auto'
@@ -43,8 +43,8 @@ export default function DataTimeline(props) {
                                             hoverable
                                             style={{
                                                 width: '100%',
-                                                margin: '10px',
-                                                fontSize: '22px'
+                                                // margin: '10px',
+                                                // fontSize: '22px'
                                             }}
                                         >
                                             {data.dataName}

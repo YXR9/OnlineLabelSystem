@@ -20,7 +20,7 @@ export default function Login() {
             //     'Content-Type': 'multipart/form-data',
             // },
         }).then (({data}) => {
-            history.push('/uploadpage'); 
+            history.push('/list'); 
             message.success("Login successful~");
             console.log(data);
         }).catch (error => {

@@ -7,18 +7,17 @@ body {
   /* overflow: hidden;
   position: relative; */
   height: 100%;
-  background-color: #FEFFE6;
+  background-color: #141E61
 }
 
 nav {
-  background-color: white;
+  background-color: #0F044C;
   display: flex;
   float:inline-end;
   justify-content: space-between;
   padding: 25px 40px;
   box-shadow: 0px 1px 10px;
-  color: #282c34 10%;
-  border: #282c34 10%;
+  color: #000;
   height: 90px;
 }
 .login-form {
@@ -30,13 +29,46 @@ nav {
 .ant-col-rtl .login-form-forgot {
   float: left;
 }
-.login-form-button {
+.cancel-form-button {
   width: 100%;
-  background-color: rgba(255, 249, 158);
-  border-color: rgba(250, 235, 124);
-  color: rgba(120, 120, 120);
+  background-color: #FCF8EC;
+  border-color: #456268;
+  color: #456268;
   border-radius: 20px;
   margin-bottom: 15px;
+  font-family: 'Comic Sans MS'
+}
+.cancel-form-button:hover {
+  background-color: #456268;
+  color: #FCF8EC;
+  border-color: #FCF8EC;
+}
+.cancel-form-button:active {
+  background-color: #456268;
+  color: #FCF8EC;
+  border-color: #FCF8EC;
+  transform: translateY(5px);
+}
+
+.login-form-button {
+  width: 100%;
+  background-color: #456268;
+  border-color: #FCF8EC;
+  color: #FCF8EC;
+  border-radius: 20px;
+  margin-bottom: 15px;
+  font-family: 'Comic Sans MS'
+}
+.login-form-button:hover {
+  background-color: #FCF8EC;
+  color: #456268;
+  border-color: #456268;
+}
+.login-form-button:active {
+  background-color: #FCF8EC;
+  color: #456268;
+  border-color: #456268;
+  transform: translateY(5px);
 }
 
 @import '~antd/dist/antd.css';
@@ -80,15 +112,15 @@ nav {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color:rgb(255, 255, 255);
+  background-color:#EEEEEE;
   height: 650px;
-  /* width: 1800px; */
-  margin-top: 70px;
+  margin-top: 75px;
   margin-left: 60px;
   margin-right: 60px;
   border-color: rgba(110, 110, 110, 0.3);
   border-width: 1.5px;
   border-style: solid;
+  font-family: Comic Sans MS;
 }
 
 .App-link {
@@ -235,4 +267,29 @@ nav {
 
 .dborder {
   border: blue;
+}
+
+.ant-drawer-body {
+  background-color: #EEEEEE;
+}
+
+.add {
+  text-align: center;
+  padding: 0px;
+  margin: 10px 20px;
+  float: right;
+  background-color: #456268;
+  border-color: #FCF8EC;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  color: #EEE;
+  font-size: 15px;
+  line-height: 15px;
+}
+
+.add:hover {
+  background-color: #FCF8EC;
+  color: #456268;
+  border-color: #456268;
 }
