@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Form, Input, Button, message } from 'antd';
 import axios from 'axios';
-// import { useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
-export default function register() {
-  // let history = useHistory();
+export default function Register() {
+  let history = useHistory();
     const formItemLayout = {
         labelCol: {
           xs: {
@@ -51,6 +51,7 @@ export default function register() {
             //     'Content-Type': 'multipart/form-data',
             // },
         }).then (({data}) => {
+            history.push('/')
             message.success("Register successful~");
             console.log(data);
         }).catch (error => {
@@ -69,26 +70,26 @@ export default function register() {
                 <Form.Item>
                     <h3>會員註冊</h3>
                 </Form.Item>
-                <Form.Item
+                {/* <Form.Item
                   name="name"
-                  label="使用者名稱"
+                  label="姓名"
                   rules={[
                     {
                       required: true,
-                      message: '請輸入使用者名稱!',
+                      message: '請輸入姓名!',
                       whitespace: true,
                     },
                   ]}
                 >
                   <Input />
-                </Form.Item>
+                </Form.Item> */}
                 <Form.Item
                   name="unit"
-                  label="所屬單位"
+                  label="e-mail"
                   rules={[
                     {
                       required: true,
-                      message: '請輸入所屬單位!',
+                      message: '請輸入e-mail!',
                       whitespace: true,
                     },
                   ]}
@@ -97,7 +98,7 @@ export default function register() {
                 </Form.Item>
                 <Form.Item
                   name="account"
-                  label="帳號"
+                  label="姓名"
                   rules={[
                     {
                       required: true,
@@ -110,7 +111,7 @@ export default function register() {
                 </Form.Item>
                 <Form.Item
                    name="password"
-                   label="設定密碼"
+                   label="密碼"
                    rules={[
                      {
                        required: true,
@@ -124,7 +125,7 @@ export default function register() {
                
                 <Form.Item
                     name="confirmPassword"
-                    label="請再輸入一次密碼"
+                    label="確認密碼"
                     dependencies={['password']}
                     hasFeedback
                     rules={[
@@ -137,7 +138,7 @@ export default function register() {
                             if (!value || getFieldValue('password') === value) {
                                 return Promise.resolve();
                             }
-                            return Promise.reject(new Error('The two passwords that you entered do not match!'));
+                            return Promise.reject(new Error('確認密碼不同'));
                         },
                       }),
                     ]}
