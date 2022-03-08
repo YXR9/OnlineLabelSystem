@@ -37,7 +37,7 @@ export default function Navbar() {
                 <Button type='primary' icon={<MenuOutlined style={{color:'#EEEEEE', float: 'left'}}/>} onClick={showDrawer} style={{backgroundColor: '#0F044C', border: '#FCF8EC'}}></Button>
             </Col>
             <Col push={2}>
-                <h2 style={{ color: '#EEEEEE', fontFamily: 'Comic Sans MS'}}>OnlineLabelSystem</h2>
+                <h2 style={{ color: '#EEEEEE', fontFamily: 'Comic Sans MS', cursor: "pointer"}} onClick={() => { history.push("/list")}} title="OnlineLabelSystem" >OnlineLabelSystem</h2>
             </Col>
         </Row>
         <Popover placement='bottom' content={content}>

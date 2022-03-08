@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 
 export default function Register() {
-  let history = useHistory();
+    let history = useHistory();
     const formItemLayout = {
         labelCol: {
           xs: {
