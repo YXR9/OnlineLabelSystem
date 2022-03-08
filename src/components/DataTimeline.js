@@ -1,57 +1,129 @@
-import React from "react";
-import { PageHeader, Card, List, Skeleton, Divider, Empty } from "antd";
-import InfiniteScroll from "react-infinite-scroll-component";
+import React, { useState } from "react";
+import { Table, Steps, Empty, Button, message, DatePicker, Form } from "antd";
+import { useHistory } from "react-router-dom";
+
+const { Step } = Steps;
 
 export default function DataTimeline(props) {
+    const history = useHistory();
+    const [ current, setCurrent ] = useState(0)
     
     const displayDatas = (props) => {
         
         const {datas} = props;
+        const columns = [
+            {
+                title: 'Data',
+                dataIndex: 'dataName',
+                key: 'dataName',
+                render: text => <a href="/codingpage">{text}</a>
+            }
+        ]
+        const coCodeColumns = [
+            {
+                title: 'data',
+                dataIndex: 'dataName',
+                width: 700,
+                key: 'dataName',
+                render: text => <a>{text}</a>
+            },
+            {
+                title: 'A 編碼者',
+                dataIndex: '',
+                key: '',
+                // render: text => <a>{text}</a>
+            },
+            {
+                title: 'B 編碼者',
+                dataIndex: '',
+                key: '',
+                // render: text => <a>{text}</a>
+            },
+            {
+                title: '編碼結果',
+                dataIndex: '',
+                key: '',
+                // render: text => <a>{text}</a>
+            },
+            {
+                title: '修改',
+                width: 100,
+                render: () => <a>edit</a>
+            },
+        ]
+        const steps = [
+            {
+                title: '獨立編碼',
+                content: <div style={{ padding: '30px 100px'}}>
+                            <Table columns={columns} dataSource={datas} pagination={{ pageSize: 50 }} scroll={{ y: 240 }} />
+                        </div>
+            },
+            {
+                title: '建立編碼校正',
+                content: <Form style={{ display: "inline-block", padding: "160px" }}>
+                            <Form.Item label="排定校正日期">
+                                <DatePicker showToday/>
+                            </Form.Item>
+                        </Form>
+            },
+            {
+                title: '進行編碼校正',
+                content: <div style={{ padding: '30px 100px'}}>
+                            <Table columns={coCodeColumns} dataSource={datas} pagination={{ pageSize: 50 }} scroll={{ y: 240 }} />
+                        </div>
+            },
+            {
+                title: '完成編碼校正',
+                content: <div style={{ display: "inline-block", padding: "160px" }}>
+                            <Button className="btn">下載 excel 檔</Button>
+                        </div>
+            }
+        ]
+        const next = () => {
+            setCurrent(current + 1);
+          };
+        
+          const prev = () => {
+            setCurrent(current - 1);
+          };
         if(datas.length > 0) {
             return(
-                <div>
-                    <div
-                        className="App-header"
-                        id="scrollableDiv"
-                        style={{
-                            width: "80%",
-                            // height: 800,
-                            overflow: 'auto',
-                            position: 'absolute',
-                            left: "45%",
-                            top: "47%",
-                            transform: "translate(-50%, -50%)",
-                            margin:'40px',
-                            padding: 'auto'
-                        }}
-                    >
-                        
-                        <InfiniteScroll
-                            dataLength={datas.length}
-                            hasMore={datas.length < 50}
-                            loader={<Skeleton avatar paragraph={{ rows: 1 }} active />}
-                            endMessage={<Divider plain>It is all, nothing more 🤐</Divider>}
-                            scrollableTarget="scrollableDiv"
-                        >
-                            <Divider orientation="left" style={{fontSize: "25px", fontFamily: "Noto Sans Mono CJK TC"}}>Discuss Datas</Divider>
-                            <List
-                                dataSource={datas}
-                                renderItem={(data) => (
-                                    <List.Item style={{margin: '1px 15px'}}>
-                                        {/* <CheckCircleTwoTone twoToneColor="#52c41a" /> */}
-                                        <Card
-                                            hoverable
-                                            style={{
-                                                width: '100%',
-                                                // margin: '10px',
-                                                // fontSize: '22px'
-                                            }}
-                                        >
-                                            {data.dataName}
-                                        </Card>
-                                    </List.Item>
-                                )} />
-                        </InfiniteScroll>
+                <div className="App">
+                    <div className="App-header" >
+                        <div style={{ width: '100%', height: '100%', paddingTop: '100px'}}>
+                            <Steps current={current} style={{ maxWidth: '100%', padding: '0px 150px'}}>
+                                {
+                                    steps.map(item => (
+                                        <Step key={item.title} title={item.title} />
+                                    ))
+                                }
+                            </Steps>
+                            <div className="steps-content">
+                                {steps[current].content}
+                            </div>
+                            <div className="steps-action">
+                                {current < steps.length - 1 && (
+                                  <Button className="btn" type="primary" onClick={() => next()}>
+                                    下一步
+                                  </Button>
+                                )}
+                                {current === 0 && (
+                                  <Button className="btn1" type="primary" style={{ margin: '0 8px' }} onClick={() => history.push("/codepage")}>
+                                    暫停並返回編碼任務列表
+                                  </Button>
+                                )}
+                                {current === steps.length - 1 && (
+                                  <Button className="btn" type="primary" onClick={() => message.success('Processing complete!')}>
+                                    完成並返回編碼任務列表
+                                  </Button>
+                                )}
+                                {current > 0 && (
+                                  <Button className="btn1" style={{ margin: '0 8px' }} onClick={() => prev()}>
+                                    返回
+                                  </Button>
+                                )}
+                            </div>
+                        </div>
                     </div>
                 </div>
                 

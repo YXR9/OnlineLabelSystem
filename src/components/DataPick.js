@@ -1,17 +1,16 @@
 import React, { useState } from "react";
-import { Card, Empty, Form, Checkbox, Button, message, Layout } from "antd";
-import { LeftCircleOutlined, RightCircleOutlined } from "@ant-design/icons";
+import { Card, Empty, Form, Checkbox, Button, message, Space, Row, Col } from "antd";
 import axios from "axios";
 import { blue } from '@ant-design/colors';
-import { Header } from "antd/lib/layout/layout";
+import { useHistory } from "react-router-dom"
 console.log(blue); // ['#E6F7FF', '#BAE7FF', '#91D5FF', '#69C0FF', '#40A9FF', '#1890FF', '#096DD9', '#0050B3', '#003A8C', '#002766']
 console.log(blue.primary); // '#1890FF'
 
 const perspective = ['安全面', '科學與技術面', '環保面', '社會面', '經濟面'];
 const purpose = ['提出論點或主張(CA1)', '提出疑問(CA2)', '提出挑戰(CA3)', '進行推論(CA4)', '表達支持(CA5)', '其他(CA6)'];
-const pass = ['暫時不標註']
 
 export default function DataPick(props) {
+    const history = useHistory();
     const [page, setPage] = useState(0);
     const [perspectiveValue, setPerspectiveValue] = useState([]);
     const [purposeValue, setPurposeValue] = useState([]);
@@ -32,6 +31,18 @@ export default function DataPick(props) {
         setPassValue(e);
     }
 
+    const tailFormItemLayout = {
+        wrapperCol: {
+          xs: {
+            span: 24,
+            offset: 0,
+          },
+          sm: {
+            span: 16,
+            offset: 5,
+          },
+        },
+    };
 
     const displayDatas = (props) => {
         
@@ -70,105 +81,82 @@ export default function DataPick(props) {
                     console.log(error);
                 });
         }
-            return(
-                <Layout className="App-header">
-                    <Form
-                        name="file-upload-form"
-                        labelCol={{ span: 6 }}
-                        wrapperCol={{ span: 14 }}
-                        onFinish={handleSave}
-                    >
-                        <Form.Item
-                            style={{
-                                position: "absolute",
-                                left: "5%",
-                                top: "50%"
-                            }}
-                        >
-                            <LeftCircleOutlined  onClick={() => setPage(page - 1)} style={{ fontSize: '50px' }} />
-                        </Form.Item>
-                        <Form.Item
-                            style={{
-                                // position: "absolute",
-                                justifyContent: "center",
-                                // width: "100%"
-                                padding: "15px",
-                                margin: "10px"
-                            }}
-                        >
-                            <Card
+        return(
+                <div className="App-header">
+                    <div style={{margin: "200px",marginTop: "150px"}}>
+                        <Form name="file-upload-form" onFinish={handleSave}>
+                            {/* <Form.Item
                                 style={{
-                                    width: '100%',
-                                    margin: '50px',
-                                    fontFamily: "Noto Sans Mono CJK TC",
-                                    fontSize: "25px",
+                                    position: "absolute",
+                                    left: "5%",
+                                    top: "50%"
                                 }}
                             >
-                                {datas[page].dataName}
-                            </Card>
-                        </Form.Item>
-                        <Form.Item style={{
-                            position: "absolute",
-                            left: "90%",
-                            top: "50%"
-                        }}>
-                            <RightCircleOutlined  onClick={() => setPage(page + 1)} style={{ fontSize: '50px' }}/>
-                        </Form.Item>
-                        <Form.Item name="perspective" label="論點面向" className='checkbox' style={{
-                            // position: "absolute",
-                            // display: "inline-flex",
-                            width: "380px",
-                            left: "45%",
-                            top: "50%",
-                            position: 'fixed',
-                            fontFamily: "Noto Sans Mono CJK TC",
-                            border: "1px solid rgba(156, 156, 156, 0.6)",
-                            padding: "23px",
-                            margin: "10px"
-                        }}>
-                            <Card>
-                                 <Checkbox.Group options={perspective} onChange={onChangePerspective} value={perspectiveValue} style={{ display: 'grid', margin: "10px" }} />
-                            </Card>
-                       
-                        </Form.Item>
-                        <Form.Item name="purpose" label="發言目的" className='checkbox' style={{
-                            // position: "absolute",
-                            // display: "inline-flex",
-                            width: "380px",
-                            left: "20%",
-                            top: "50%",
-                            position: 'fixed',
-                            fontFamily: "Noto Sans Mono CJK TC",
-                            border: "1px solid rgba(156, 156, 156, 0.6)",
-                            padding: "23px",
-                            margin: "10px"
-                        }}>
-                        <Checkbox.Group options={purpose} onChange={onChangePurpose} value={purposeValue} style={{ display: 'grid', margin: "10px" }} />
-                        </Form.Item>
-                        <Form.Item name="pass" style={{
-                            // position: "absolute",
-                            width: "300px",
-                            left: "70%",
-                            top: "50%",
-                            position: 'fixed',
-                            fontFamily: "Noto Sans Mono CJK TC",
-                            padding: "15px",
-                            margin: "10px"
+                                <LeftCircleOutlined  onClick={() => setPage(page - 1)} style={{ fontSize: '50px' }} />
+                            </Form.Item> */}
+                            <Row>
+                                <Col span={24}>
+                                    <Form.Item>
+                                        <Card
+                                            style={{
+                                                margin: '50px',
+                                                fontSize: "25px",
+                                                backgroundColor: "#EEE"
+                                            }}
+                                        >
+                                            {datas[page].dataName}
+                                        </Card>
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                                        
+                            {/* <Form.Item style={{
+                                position: "absolute",
+                                left: "90%",
+                                top: "50%"
+                            }}>
+                                <RightCircleOutlined  onClick={() => setPage(page + 1)} style={{ fontSize: '50px' }}/>
+                            </Form.Item> */}
+                            <Row>
+                                <Col span={8} offset={4}>
+                                    <Form.Item name="perspective" className='checkbox'>
+                                        <Card title="論點面向" bordered={false} style={{ marginBottom: "30px" }}>
+                                            <Checkbox.Group options={perspective} onChange={onChangePerspective} value={perspectiveValue} style={{ display: "flex", flexDirection: "column" }}/>
+                                        </Card>
+                                    </Form.Item>
+                                </Col>
+                                <Col span={8}>
+                                    <Form.Item name="purpose" className='checkbox'>
+                                        <Card title="發言目的" bordered={false} style={{ marginBottom: "30px" }}>
+                                            <Checkbox.Group options={purpose} onChange={onChangePurpose} value={purposeValue} style={{ display: "flex", flexDirection: "column" }}/>
+                                        </Card>
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col span={8} push={10}>
+                                    <Form.Item>
+                                        <Row>
+                                            <Col pull={1}>
+                                                <Button type="primary" htmlType="submit" className="btn">
+                                                    下一筆
+                                                </Button>
+                                            </Col>
+                                            <Col>
+                                                <Button type="primary" htmlType="submit" className="btn1" onClick={() => { history.push("/labelpage")}}>
+                                                    離開編碼任務
+                                                </Button>
+                                            </Col>
+                                        </Row>
+                                        
+                                    </Form.Item>
+                                </Col>
+                            </Row>
                             
-                            // justifyContent: "center",
-                        }}>
-                            <Checkbox.Group options={pass} onChange={onChange} value={passValue} style={{ display: 'grid' }} ></Checkbox.Group>
-                        </Form.Item>
-                        <Form.Item wrapperCol={{ span: 12, offset: 6 }} style={{
-                            position: "absolute",
-                            left: "75%",
-                            top: "80%",
-                            justifyContent: "center",
-                        }}>
-                            <Button style={{ lineHeight: "20px", backgroundColor: "#b7eb8f", border: "rgb(255, 213, 0)", color: "rgb(132, 132, 132)", fontFamily: "Noto Sans Mono CJK TC", fontSize: "20px", fontWeight: "bolder", width: "80px", height: "40px", borderRadius: "20px"}} type="primary" htmlType="submit">Save</Button>
-                        </Form.Item>
-                    </Form>
-                </Layout>
+                        </Form>
+                    </div>
+                    
+                </div>
                 
                 
             )
