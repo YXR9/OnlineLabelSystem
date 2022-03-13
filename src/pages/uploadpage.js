@@ -1,8 +1,10 @@
 import React from 'react';
-import { Form, Input , message, Upload, Select, Button, InputNumber, DatePicker, Row, Col, Menu } from 'antd';
+import { Form, Input , message, Upload, Select, Button, InputNumber, DatePicker, Row, Col, Layout } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
 import '../App.css';
 import axios from 'axios';
+import Navbar from '../components/Navbar';
+import { getAuthToken } from '../utils';
 // import { History } from 'history';
 
 const { Dragger } = Upload;
@@ -99,7 +101,8 @@ class upload extends React.Component {
         //     message.warning ("Please select the file you want to upload")
         // }
         // console.log(fields);
-        const userId = "61cd8404c5f3234a331e3ac4";
+        // const userId = "61cd8404c5f3234a331e3ac4";
+        const userId = getAuthToken();
         const { fileName, collector, sourceTarget, age, headCounts, collectDate, collectMethod, context } = fields;
         const data = new FormData();
         data.append('userId', userId);
@@ -139,23 +142,6 @@ class upload extends React.Component {
     }
 
     render() {
-        const { value } = this.state;
-        const FORM_LAYOUT = {
-            labelCol: {
-                span: 8
-            },
-            wrapperCol: {
-                span: 15,
-                offset: 1
-            }
-        }
-
-        const FORM_BTN_LAYOUT = {
-            wrapperCol: {
-                span: 16,
-                offset: 8
-            }
-        }
 
         const normFile = (e) => {
             console.log('Upload event:', e);    
@@ -198,6 +184,7 @@ class upload extends React.Component {
 
         return (
             <div className='App'>
+                <Navbar/>
                 <header className='App-header'>
                     <Form name="file-upload-form" onFinish={this.handleSubmit}>
                         <Row>
@@ -216,6 +203,7 @@ class upload extends React.Component {
                                     name="collector" 
                                     label="蒐集者姓名" 
                                     hasFeedback
+                                    rules={[{ require: true, message: "Please enter collector" },]}
                                 >
                                     <Input name='collector' value={this.state.collector} onChange={this.inputCollector}/>
                                 </Form.Item>
@@ -227,7 +215,7 @@ class upload extends React.Component {
                                     name="sourceTarget"
                                     label="來源對象"
                                     hasFeedback
-                                    // rules={[{ required: true, message: 'Province is required' }]}
+                                    // rules={[{ required: true, message: 'Source Target is required' }]}
                                 >
                                     <Select onChange={this.getSourceTarget} value={this.state.sourceTarget}>
                                         <Select.Option value="elementarySchool">國小</Select.Option>
@@ -317,7 +305,7 @@ class upload extends React.Component {
                             </Col>
                             <Col push={1}>
                                 <Form.Item>
-                                    <Button block type='primary' htmlType='submit' className="login-form-button">
+                                    <Button block type='primary' htmlType='submit' className="btn">
                                         Upload
                                     </Button>
                                 </Form.Item>

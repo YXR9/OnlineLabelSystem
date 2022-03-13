@@ -4,19 +4,19 @@
 }
 
 body {
-  /* overflow: hidden;
-  position: relative; */
+  overflow: hidden;
+  position: relative;
   height: 100%;
-  background-color: #141E61
+  background: url(http://1.bp.blogspot.com/-YODKGVfWimA/VaXaz68qdRI/AAAAAAAAMFA/MZZGV1lGxd4/s1600/yellow-bg-100.jpg) #f2f0ec;
 }
 
 nav {
-  background-color: #0F044C;
+  background: url(http://1.bp.blogspot.com/-YODKGVfWimA/VaXaz68qdRI/AAAAAAAAMFA/MZZGV1lGxd4/s1600/yellow-bg-100.jpg) #f2f0ec;
   display: flex;
   float:inline-end;
   justify-content: space-between;
   padding: 25px 40px;
-  box-shadow: 0px 1px 10px;
+  /* box-shadow: 0px 1px 10px; */
   color: #000;
   height: 90px;
 }
@@ -31,88 +31,89 @@ nav {
 }
 .cancel-form-button {
   width: 100%;
-  background-color: #FCF8EC;
-  border-color: #456268;
-  color: #456268;
+  background-color: #f2f0ec;
+  border-color: #474b41;
+  color: #474b41;
   border-radius: 20px;
   margin-bottom: 15px;
   font-family: 'Comic Sans MS'
 }
 .cancel-form-button:hover {
-  background-color: #456268;
-  color: #FCF8EC;
-  border-color: #FCF8EC;
+  background-color: #474b41;
+  color: #f2f0ec;
+  border-color: #f2f0ec;
 }
 .cancel-form-button:active {
-  background-color: #456268;
-  color: #FCF8EC;
-  border-color: #FCF8EC;
+  background-color: #474b41;
+  color: #f2f0ec;
+  border-color: #f2f0ec;
   transform: translateY(5px);
 }
 
 .login-form-button {
   width: 100%;
-  background-color: #456268;
-  border-color: #FCF8EC;
-  color: #FCF8EC;
+  height: 45px;
+  background-color: #474b41;
+  border-color: #f2f0ec;
+  color: #f2f0ec;
   border-radius: 20px;
   margin-bottom: 15px;
   font-family: 'Comic Sans MS'
 }
 
 .login-form-button:hover {
-  background-color: #FCF8EC;
-  color: #456268;
-  border-color: #456268;
+  background-color: #f2f0ec;
+  color: #474b41;
+  border-color: #474b41;
 }
 
 .login-form-button:active {
-  background-color: #FCF8EC;
-  color: #456268;
-  border-color: #456268;
+  background-color: #f2f0ec;
+  color: #474b41;
+  border-color: #474b41;
   transform: translateY(5px);
 }
 
 .btn {
-  background-color: #456268;
-  border-color: #FCF8EC;
-  color: #FCF8EC;
+  background-color: #474b41;
+  border-color: #f2f0ec;
+  color: #f2f0ec;
   border-radius: 20px;
   margin-bottom: 15px;
 }
 
 .btn:hover {
-  background-color: #FCF8EC;
-  color: #456268;
-  border-color: #456268;
+  background-color: #f2f0ec;
+  color: #474b41;
+  border-color: #474b41;
 }
 
 .btn:active {
-  background-color: #FCF8EC;
-  color: #456268;
-  border-color: #456268;
+  background-color: #f2f0ec;
+  color: #af7c20;
+  border-color: #474b41;
   transform: translateY(5px);
 }
 
 .btn1 {
-  background-color: #FCF8EC;
-  border-color: #456268;
-  color: #456268;
+  background-color: #f2f0ec;
+  border-color: #474b41;
+  color: #474b41;
   border-radius: 20px;
   margin-bottom: 15px;
   font-family: 'Comic Sans MS'
 }
 
 .btn1:hover {
-  background-color: #456268;
-  color: #FCF8EC;
-  border-color: #FCF8EC;
+  background-color: #474b41;
+  color: #f2f0ec;
+  border-color: #f2f0ec;
 }
 
 .btn1:active {
-  background-color: #456268;
-  color: #FCF8EC;
-  border-color: #FCF8EC;
+  background-color: #474b41;
+  color: #f2f0ec;
+  border-color: #f2f0ec;
   transform: translateY(5px);
 }
 
@@ -153,19 +154,38 @@ nav {
   }
 }
 
+.App-login-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color:#f2f0ec;
+  height: 800px;
+  margin-top: 80px;
+  margin-left: 60px;
+  margin-right: 60px;
+  border-color: #887451;
+  border-style: dashed;
+  border-width: 2px;
+  border-radius: 50px;
+  font-family: Comic Sans MS;
+  color: #af7c20;
+}
+
 .App-header {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color:#EEEEEE;
+  background-color:#f2f0ec;
   height: 650px;
   margin-top: 75px;
   margin-left: 60px;
   margin-right: 60px;
-  border-color: rgba(110, 110, 110, 0.3);
-  border-width: 1.5px;
-  border-style: solid;
+  border-color: #887451;
+  border-style: dashed;
+  border-width: 2px;
+  border-radius: 50px;
   font-family: Comic Sans MS;
+  color: #af7c20;
 }
 
 .steps-content {
@@ -325,7 +345,7 @@ nav {
 }
 
 .ant-drawer-body {
-  background-color: #EEEEEE;
+  background-color: #4b4741;
 }
 
 .add {
@@ -333,18 +353,18 @@ nav {
   padding: 0px;
   margin: 10px 20px;
   float: right;
-  background-color: #456268;
-  border-color: #FCF8EC;
+  background-color: #af7c20;
+  border-color: #ddceb4;
   height: 50px;
   width: 50px;
   border-radius: 50%;
-  color: #EEE;
+  color: #f2f0ec;
   font-size: 15px;
   line-height: 15px;
 }
 
 .add:hover {
-  background-color: #FCF8EC;
-  color: #456268;
-  border-color: #456268;
+  background-color: #ddceb4;
+  color: #474b41;
+  border-color: #474b41;
 }

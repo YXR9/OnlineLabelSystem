@@ -1,46 +1,60 @@
-import React from 'react';
-import { useHistory } from 'react-router-dom';
-import { Form, Input, Button, Checkbox, message } from "antd";
+import React, { useState } from 'react';
+import propTypes from 'prop-types';
+import { Form, Input, Button, Divider, message } from "antd";
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import axios from 'axios';
+import { useHistory } from 'react-router-dom';
+import { setAuthToken } from "../utils";
+
+
 
 export default function Login() {
-    const history = useHistory();
+const history = useHistory();
+    const [ account, setAccount ] = useState();
+    const [ password, setPassword ] = useState();
     
-    const onFinish = (values) => {
-        console.log('Received values of form: ', values);
-        const { account, password } = values;
-        const data = new FormData();
-        data.append('account', account);
-        data.append('password', password);
-        axios.post("http://localhost:8080/user/login", data, {
-            // headers: {
-            //     'Access-Control-Allow-Origin': '*',    
-            //     'Access-Control-Allow-Methods': 'POST',
-            //     'Content-Type': 'multipart/form-data',
-            // },
-        }).then (({data}) => {
-            history.push('/list'); 
-            message.success("Login successful~");
-            console.log(data);
-        }).catch (error => {
-            message.error("帳號或密碼錯誤!!");
+    async function loginUser(credentials) {
+        // let history = useHistory();
+        // console.log(credentials);
+        return axios.post("http://localhost:8080/user/login", credentials
+        )
+        .then((data) => {
+            setAuthToken(data.data.userInfo._id, data.data.userInfo.name)
+            console.log(data.status);
+            message.success("login successful 😉")
+            if(data.status === 200) {
+                console.log("login successful~")
+                history.push('/list');
+            }
         })
+        .catch ((error) => {
+            message.error(error.message);
+        })
+    }
+
+    const onFinish = async e => {
+       if (e && e.preventDefault) { e.preventDefault(); }
+        const token = await loginUser({
+            account,
+            password
+        })
+        // setToken(token);
+        
     };
 
     return (
         <div className='App'>
-            <header className='App-header'>
+            <header className='App-login-header'>
                 <Form
                     name="normal_login"
                     className="login-form"
-                    initialValues={{
-                        remember: true,
-                    }}
-                    onFinish={onFinish}
+                    // initialValues={{
+                    //     remember: true,
+                    // }}
+                    onFinish={()=> onFinish()}
                 >
                     <Form.Item>
-                        <h3>會員登入</h3>
+                        <h3  style={{ color: '#4b4741', fontFamily: 'Comic Sans MS', fontSize: "30px"}}>OnlineLabelSystem</h3>
                     </Form.Item>
                     <Form.Item
                         name="account"
@@ -51,7 +65,20 @@ export default function Login() {
                         },
                         ]}
                     >
-                        <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
+                        <Input 
+                            name='account'
+                            prefix={<UserOutlined className="site-form-item-icon" />} 
+                            placeholder="Username" 
+                            onChange={e => setAccount(e.target.value)}
+                            style={{
+                                backgroundColor: "#887451",
+                                height: "75px",
+                                color: "#EEE",
+                                borderRadius: "10px"
+                            }}
+                            size="large"
+                            bordered={false}
+                        />
                     </Form.Item>
                     <Form.Item
                         name="password"
@@ -62,31 +89,27 @@ export default function Login() {
                         },
                         ]}
                     >
-                        <Input
-                        prefix={<LockOutlined className="site-form-item-icon" />}
-                        type="password"
-                        placeholder="Password"
+                        <Input.Password
+                            name='password'
+                            prefix={<LockOutlined className="site-form-item-icon" />}
+                            placeholder="Password"
+                            onChange={e => setPassword(e.target.value)}
+                            style={{
+                                backgroundColor: "#887451",
+                                height: "75px",
+                                color: "#EEE",
+                                borderRadius: "10px"
+                            }}
+                            size="large"
+                            bordered={false}
                         />
                     </Form.Item>
                     <Form.Item>
-                        <Form.Item name="remember" valuePropName="checked" noStyle>
-                        <Checkbox>Remember me</Checkbox>
-                        </Form.Item>
-
-                        <a className="login-form-forgot" href="">
-                        Forgot password
-                        </a>
-                    </Form.Item>
-
-                    <Form.Item>
-                        <Button type="primary" htmlType="submit" className="login-form-button" 
-                        // onClick={() => {
-                        //     history.push('/uploadpage'); 
-                        // }}
-                    >
-                        Log in
+                        <Button type="primary" htmlType="submit" className="login-form-button">
+                            Log in
                         </Button>
-                        Or <a href="/register">register now!</a>
+                        <Divider orientation='botton'>Or</Divider>
+                        <a href="/register">register now!</a>
                     </Form.Item>
                 </Form>
             </header>
@@ -94,3 +117,7 @@ export default function Login() {
         
     )
 }
+
+Login.propTypes = {
+    setToken: propTypes.func.isRequired
+};

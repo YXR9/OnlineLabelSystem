@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
-import { Form, Input, Button, message } from 'antd';
+import React from 'react';
+import { Form, Input, Button, message, Divider } from 'antd';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
+import { LockOutlined, LockTwoTone, MailOutlined, UserOutlined } from '@ant-design/icons';
 
 export default function Register() {
     let history = useHistory();
@@ -60,7 +61,7 @@ export default function Register() {
     };
   return (
     <div className='App'>
-        <header className='App-header'>
+        <header className='App-login-header'>
             <Form
                 {...formItemLayout}
                 name="register"
@@ -68,7 +69,7 @@ export default function Register() {
                 scrollToFirstError
             >
                 <Form.Item>
-                    <h3>會員註冊</h3>
+                    <h3  style={{ color: '#4b4741', fontFamily: 'Comic Sans MS', fontSize: "30px"}}>OnlineLabelSystem</h3>
                 </Form.Item>
                 {/* <Form.Item
                   name="name"
@@ -85,7 +86,6 @@ export default function Register() {
                 </Form.Item> */}
                 <Form.Item
                   name="unit"
-                  label="e-mail"
                   rules={[
                     {
                       required: true,
@@ -94,11 +94,23 @@ export default function Register() {
                     },
                   ]}
                 >
-                  <Input />
+                  <Input 
+                      prefix={<MailOutlined className="site-form-item-icon" />}
+                      placeholder='e-mail'
+                      style={{
+                        backgroundColor: "#887451",
+                        height: "70px",
+                        width: "300px",
+                        color: "#EEE",
+                        borderRadius: "10px"
+                    }}
+                    size="large"
+                    bordered={false}
+                  />
                 </Form.Item>
                 <Form.Item
                   name="account"
-                  label="姓名"
+                  // label="姓名"
                   rules={[
                     {
                       required: true,
@@ -107,11 +119,23 @@ export default function Register() {
                     },
                   ]}
                 >
-                  <Input />
+                  <Input 
+                      prefix={<UserOutlined className="site-form-item-icon" />}
+                      placeholder='Username'
+                      style={{
+                        backgroundColor: "#887451",
+                        height: "70px",
+                        width: "300px",
+                        color: "#EEE",
+                        borderRadius: "10px"
+                  }}
+                  size="large"
+                  bordered={false}
+                  />
                 </Form.Item>
                 <Form.Item
                    name="password"
-                   label="密碼"
+                  //  label="密碼"
                    rules={[
                      {
                        required: true,
@@ -120,12 +144,24 @@ export default function Register() {
                    ]}
                    hasFeedback
                 >
-                   <Input.Password />
+                   <Input.Password 
+                      prefix={<LockOutlined className="site-form-item-icon" />}
+                      placeholder='Password'
+                      style={{
+                        backgroundColor: "#887451",
+                        height: "70px",
+                        width: "300px",
+                        color: "#EEE",
+                        borderRadius: "10px"
+                      }}
+                      size="large"
+                      bordered={false}
+                   />
                 </Form.Item>
                
                 <Form.Item
                     name="confirmPassword"
-                    label="確認密碼"
+                    // label="確認密碼"
                     dependencies={['password']}
                     hasFeedback
                     rules={[
@@ -143,13 +179,26 @@ export default function Register() {
                       }),
                     ]}
                 >
-                    <Input.Password />
+                    <Input.Password 
+                      prefix={<LockOutlined className="site-form-item-icon" />}
+                      placeholder='Confirm Password'
+                      style={{
+                        backgroundColor: "#887451",
+                        height: "70px",
+                        width: "300px",
+                        color: "#EEE",
+                        borderRadius: "10px"
+                    }}
+                    size="large"
+                    bordered={false}
+                    />
                 </Form.Item>
                 <Form.Item {...tailFormItemLayout}>
                     <Button type="primary" htmlType="submit" className="login-form-button">
                       Register
                     </Button>
-                        Or <a href="/">login now!</a>
+                    <Divider orientation='botton'>Or</Divider>
+                    <a href="/">login now!</a>
                 </Form.Item>
             </Form>
         </header>
