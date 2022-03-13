@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from "axios";
-import { Table, Row, Col, Button, Divider } from 'antd';
+import { Table, Row, Col, Button, Divider, Layout } from 'antd';
+import Navbar from '../components/Navbar';
+import { getAuthToken } from '../utils';
+const { Footer } = Layout;
 
 export default function Filelistpage() {
     const history = useHistory();
@@ -30,7 +33,9 @@ export default function Filelistpage() {
     }, []);
 
     const getAllDatas = () => {
-        axios.get(`${url}file/allFile/61cd8404c5f3234a331e3ac4`)
+        const userId = getAuthToken();
+        // console.log(userId)
+        axios.get(`${url}file/allFile/${userId}`)
         .then((res) => {
             // const allDatas = res.data.datas.allDatas;
             // add data to state
@@ -41,17 +46,19 @@ export default function Filelistpage() {
 
     return (
       <div className='App'>
+          <Navbar/>
           <header className='App-header'>
-              <div style={{ margin: '30px' }}>
-                 <Row>
+              <div style={{ width: "1500px" }}>
+                 {/* <Row> */}
                     <Divider orientation='left'>檔案總管</Divider>
-                    <Col span={24}>
-                        <Table columns={columns} dataSource={datas} pagination={{ pageSize: 5 }} scroll={{ y: 250 }} style={{ tableLayout: "fixed"}}/>
+                    {/* <Col span={40}> */}
+                        <Table columns={columns} dataSource={datas} pagination={{ pageSize: 5 }}/>
                         <Button className='add' onClick={()=>{ history.push('/uploadpage')}}>add</Button>
-                    </Col>
-                </Row> 
+                    {/* </Col>
+                </Row>  */}
               </div>
           </header>
+          <Footer style={{ background: "url(http://1.bp.blogspot.com/-YODKGVfWimA/VaXaz68qdRI/AAAAAAAAMFA/MZZGV1lGxd4/s1600/yellow-bg-100.jpg) #f2f0ec", color: "#4b4741", textAlign: 'center', position: "absolute", boxSizing: "border-box", bottom: "0", width: "100%", fontFamily: 'Comic Sans MS, Comic Sans, cursive' }}>Ant Design ©2018 Created by Ant UED</Footer>
       </div>
     )
 }

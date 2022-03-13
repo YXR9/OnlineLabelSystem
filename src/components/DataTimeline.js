@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import { Table, Steps, Empty, Button, message, DatePicker, Form } from "antd";
+import { Table, Steps, Empty, Button, message, DatePicker, Form, Layout } from "antd";
 import { useHistory } from "react-router-dom";
+import Navbar from '../components/Navbar';
 
 const { Step } = Steps;
+const { Footer } = Layout;
 
 export default function DataTimeline(props) {
     const history = useHistory();
@@ -61,8 +63,12 @@ export default function DataTimeline(props) {
             {
                 title: '建立編碼校正',
                 content: <Form style={{ display: "inline-block", padding: "160px" }}>
-                            <Form.Item label="排定校正日期">
-                                <DatePicker showToday/>
+                            <Form.Item 
+                                label="排定校正日期"
+                                size="large"
+                                bordered={false}
+                            >
+                                <DatePicker showToday size="large"/>
                             </Form.Item>
                         </Form>
             },
@@ -89,6 +95,7 @@ export default function DataTimeline(props) {
         if(datas.length > 0) {
             return(
                 <div className="App">
+                    <Navbar/>
                     <div className="App-header" >
                         <div style={{ width: '100%', height: '100%', paddingTop: '100px'}}>
                             <Steps current={current} style={{ maxWidth: '100%', padding: '0px 150px'}}>
@@ -103,18 +110,8 @@ export default function DataTimeline(props) {
                             </div>
                             <div className="steps-action">
                                 {current < steps.length - 1 && (
-                                  <Button className="btn" type="primary" onClick={() => next()}>
-                                    下一步
-                                  </Button>
-                                )}
-                                {current === 0 && (
                                   <Button className="btn1" type="primary" style={{ margin: '0 8px' }} onClick={() => history.push("/codepage")}>
                                     暫停並返回編碼任務列表
-                                  </Button>
-                                )}
-                                {current === steps.length - 1 && (
-                                  <Button className="btn" type="primary" onClick={() => message.success('Processing complete!')}>
-                                    完成並返回編碼任務列表
                                   </Button>
                                 )}
                                 {current > 0 && (
@@ -122,9 +119,20 @@ export default function DataTimeline(props) {
                                     返回
                                   </Button>
                                 )}
+                                {current < steps.length - 1 && (
+                                  <Button className="btn" type="primary" onClick={() => next()}>
+                                    下一步
+                                  </Button>
+                                )}
+                                {current === steps.length - 1 && (
+                                  <Button className="btn" type="primary" onClick={() => message.success('Processing complete!')}>
+                                    完成並返回編碼任務列表
+                                  </Button>
+                                )}
                             </div>
                         </div>
                     </div>
+                    <Footer style={{ background: "url(http://1.bp.blogspot.com/-YODKGVfWimA/VaXaz68qdRI/AAAAAAAAMFA/MZZGV1lGxd4/s1600/yellow-bg-100.jpg) #f2f0ec", color: "#4b4741", textAlign: 'center', position: "absolute", boxSizing: "border-box", bottom: "0", width: "100%", fontFamily: 'Comic Sans MS, Comic Sans, cursive' }}>Ant Design ©2018 Created by Ant UED</Footer>
                 </div>
                 
             )

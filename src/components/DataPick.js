@@ -1,10 +1,8 @@
 import React, { useState } from "react";
-import { Card, Empty, Form, Checkbox, Button, message, Space, Row, Col } from "antd";
+import { Card, Empty, Form, Checkbox, Button, message, Row, Col } from "antd";
 import axios from "axios";
-import { blue } from '@ant-design/colors';
 import { useHistory } from "react-router-dom"
-console.log(blue); // ['#E6F7FF', '#BAE7FF', '#91D5FF', '#69C0FF', '#40A9FF', '#1890FF', '#096DD9', '#0050B3', '#003A8C', '#002766']
-console.log(blue.primary); // '#1890FF'
+import Navbar from '../components/Navbar';
 
 const perspective = ['安全面', '科學與技術面', '環保面', '社會面', '經濟面'];
 const purpose = ['提出論點或主張(CA1)', '提出疑問(CA2)', '提出挑戰(CA3)', '進行推論(CA4)', '表達支持(CA5)', '其他(CA6)'];
@@ -14,7 +12,6 @@ export default function DataPick(props) {
     const [page, setPage] = useState(0);
     const [perspectiveValue, setPerspectiveValue] = useState([]);
     const [purposeValue, setPurposeValue] = useState([]);
-    const [passValue, setPassValue] = useState("");
 
     const onChangePerspective = e => {
         console.log('perspective: ', e);
@@ -26,23 +23,13 @@ export default function DataPick(props) {
         setPurposeValue(e);
     }
 
-    const onChange = e => {
-        console.log(e);
-        setPassValue(e);
-    }
-
-    const tailFormItemLayout = {
-        wrapperCol: {
-          xs: {
-            span: 24,
-            offset: 0,
-          },
-          sm: {
-            span: 16,
-            offset: 5,
-          },
-        },
+    const next = () => {
+        setPage(page + 1);
     };
+
+    const prev = () => {
+        setPage(page - 1);
+    }
 
     const displayDatas = (props) => {
         
@@ -82,6 +69,8 @@ export default function DataPick(props) {
                 });
         }
         return(
+            <div className="App">
+                <Navbar/>
                 <div className="App-header">
                     <div style={{margin: "200px",marginTop: "150px"}}>
                         <Form name="file-upload-form" onFinish={handleSave}>
@@ -101,7 +90,7 @@ export default function DataPick(props) {
                                             style={{
                                                 margin: '50px',
                                                 fontSize: "25px",
-                                                backgroundColor: "#EEE"
+                                                backgroundColor: "#f2f0ec"
                                             }}
                                         >
                                             {datas[page].dataName}
@@ -137,15 +126,24 @@ export default function DataPick(props) {
                                 <Col span={8} push={10}>
                                     <Form.Item>
                                         <Row>
-                                            <Col pull={1}>
-                                                <Button type="primary" htmlType="submit" className="btn">
-                                                    下一筆
-                                                </Button>
-                                            </Col>
                                             <Col>
                                                 <Button type="primary" htmlType="submit" className="btn1" onClick={() => { history.push("/labelpage")}}>
                                                     離開編碼任務
                                                 </Button>
+                                            </Col>
+                                            <Col>
+                                                {page > 0 && (
+                                                    <Button type="primary" htmlType="submit" className="btn" style={{ margin: '0 8px' }} onClick={() => prev()}>
+                                                        上一筆
+                                                    </Button>
+                                                )}
+                                            </Col>
+                                            <Col>
+                                                {page < datas.length - 1 && (
+                                                    <Button type="primary" htmlType="submit" className="btn" style={{ margin: '0 8px' }} onClick={() => next()}>
+                                                        下一筆
+                                                    </Button>
+                                                )}    
                                             </Col>
                                         </Row>
                                         
@@ -157,9 +155,8 @@ export default function DataPick(props) {
                     </div>
                     
                 </div>
-                
-                
-            )
+            </div>    
+        )
         } else {
             return (
             <Empty
