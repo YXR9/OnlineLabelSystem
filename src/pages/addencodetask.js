@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Form, Select, DatePicker, Button, Row, Col } from 'antd';
+import { Form, Select, DatePicker, Button, Row, Col, message } from 'antd';
 import { useHistory } from 'react-router-dom';
 import axios from "axios";
 import Navbar from '../components/Navbar';
@@ -10,8 +10,6 @@ export default function Addencodetask() {
     const [ files, setFiles ] = useState([]);
     const [ codeSystem, setCodeSystem ] = useState([]);
     const url = 'http://localhost:8080/';
-    console.log(files)
-    console.log(typeof(files))
 
     useEffect(() => {
         getAllFiles();
@@ -20,8 +18,9 @@ export default function Addencodetask() {
 
     const getAllFiles = () => {
         const userId = getAuthToken();
-        axios.get(`${url}code/allEncodeTask/${userId}`)
+        axios.get(`${url}file/allFile/${userId}`)
         .then((res) => {
+            // alert(JSON.stringify(res))
             setFiles(res.data);
         })
         .catch(error => console.error(`Error: ${error}`));
@@ -31,27 +30,47 @@ export default function Addencodetask() {
         const userId = getAuthToken();
         axios.get(`${url}code/codeSystem/${userId}`)
         .then((res) => {
-            console.log(res.data)
             setCodeSystem(res.data);
         })
     }
 
-    const handleAddCodeTask = fields => {
+    const handleAddCodeTask = (fields) => {
         const userId = getAuthToken();
+        const status = 1;
+        const creator = true;
         const { codeSysId, fileId, startTime, endTime } = fields;
         const data = new FormData();
         data.append('userId', userId);
-        data.append('codeSysId', JSON.stringify(codeSysId._id));
-        data.append('fileId', JSON.stringify(fileId._id));
-        data.append('startTime', startTime);
+        data.append('codeSysId', codeSysId);
+        data.append('fileId', fileId);
+        data.append('startTime',startTime);
         data.append('endTime', endTime);
+        data.append('status', status);
+        data.append('creator', creator);
+        // data.append('startTime', new Date(Date.parse(startTime)).toLocaleDateString());
+        // data.append('endTime', new Date(Date.parse(endTime)).toLocaleDateString());
+
+        console.log("fileId", fileId);
+        console.log("codeSysId", codeSysId);
+        console.log("startTime", typeof(new Date(Date.parse(startTime)).toLocaleDateString()));
+        console.log("endTime", endTime._d);
+        
+        // console.log(userId, codeSysId, fileId._id, startTime._d, endTime._d);
+        axios.post("http://localhost:8080/code/encodeTask", data)
+            .then((data) => {
+                history.push("/codepage")
+                message.success("新增編碼任務成功🤗");
+                console.log(data)
+            }).catch (error => {
+                message.error(error.message);
+            })
     }
 
     return (
     <div className='App'>
         <Navbar/>
         <div className='App-header'>
-            <Form onFinish={handleAddCodeTask}>
+            <Form name="file-upload-form" onFinish={handleAddCodeTask}>
                 <Form.Item
                     name="fileId"
                     // label='選擇編碼檔案'
@@ -64,16 +83,15 @@ export default function Addencodetask() {
                         padding: "0px 20px"
                     }}
                     size="large"
-                    bordered={false}
                 >
                     <Select
-                        defaultValue={files}
+                        name="fileId"
                         showSearch
                         placeholder="選擇編碼檔案"
                         bordered={false}
                     >
                         {files.map((item, index) => (
-                            <Select.Option key={JSON.stringify(index)} value={JSON.stringify(item)}>{item.fileDetails[0].fileName}</Select.Option>
+                            <Select.Option key={JSON.stringify(index)} value={item._id}>{item.fileName}</Select.Option>
                         ))}
                     </Select>
                 </Form.Item>
@@ -89,14 +107,14 @@ export default function Addencodetask() {
                         padding: "0px 20px"
                     }}
                     size="large"
-                    bordered={false}
                 >
-                    <Select 
+                    <Select
+                        name="codeSysId" 
                         bordered={false}
                         placeholder="選擇編碼架構"
                     >
                         {codeSystem.map((item, index) => (
-                            <Select.Option key={JSON.stringify(index)} value={JSON.stringify(item)}>{item.codeName}</Select.Option>
+                            <Select.Option key={JSON.stringify(index)} value={item._id}>{item.codeName}</Select.Option>
                         ))}
                     </Select>
                 </Form.Item>
@@ -112,9 +130,12 @@ export default function Addencodetask() {
                         padding: "0px 20px"
                     }}
                     size="large"
-                    bordered={false}
                 >
-                    <DatePicker bordered={false}/>
+                    <DatePicker
+                        name="startTime" 
+                        bordered={false}
+                        
+                    />
                 </Form.Item>
                 <Form.Item
                     name="endTime"
@@ -128,9 +149,12 @@ export default function Addencodetask() {
                         padding: "0px 20px"
                     }}
                     size="large"
-                    bordered={false}
                 >
-                    <DatePicker bordered={false}/>
+                    <DatePicker
+                        name="endTime"
+                        bordered={false}
+                        value
+                    />
                 </Form.Item>
                 <Row justify='center'>
                     <Col>

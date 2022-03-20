@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from "axios";
-import { Table, Row, Col, Button, Divider, Layout } from 'antd';
+import { Table, Button, Divider, Layout } from 'antd';
 import Navbar from '../components/Navbar';
 import { getAuthToken } from '../utils';
+import { FileAddOutlined } from '@ant-design/icons';
 const { Footer } = Layout;
 
 export default function Filelistpage() {
@@ -53,7 +54,7 @@ export default function Filelistpage() {
                     <Divider orientation='left'>檔案總管</Divider>
                     {/* <Col span={40}> */}
                         <Table columns={columns} dataSource={datas} pagination={{ pageSize: 5 }}/>
-                        <Button className='add' onClick={()=>{ history.push('/uploadpage')}}>add</Button>
+                        <Button className='add' onClick={()=>{ history.push('/uploadpage')}} icon={<FileAddOutlined/>}>Add File</Button>
                     {/* </Col>
                 </Row>  */}
               </div>

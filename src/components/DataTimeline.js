@@ -12,7 +12,7 @@ export default function DataTimeline(props) {
     
     const displayDatas = (props) => {
         
-        const {datas} = props;
+        const { datas, adjustData } = props;
         const columns = [
             {
                 title: 'Data',
@@ -26,14 +26,14 @@ export default function DataTimeline(props) {
                 title: 'data',
                 dataIndex: 'dataName',
                 width: 700,
-                key: 'dataName',
-                render: text => <a>{text}</a>
+                key: 'content',
+                render: text => <h3>{text}</h3>
             },
             {
                 title: 'A 編碼者',
-                dataIndex: '',
-                key: '',
-                // render: text => <a>{text}</a>
+                dataIndex: 'userId',
+                key: 'userId',
+                render: text => <a>{text}</a>
             },
             {
                 title: 'B 編碼者',
@@ -43,8 +43,8 @@ export default function DataTimeline(props) {
             },
             {
                 title: '編碼結果',
-                dataIndex: '',
-                key: '',
+                dataIndex: 'history.code',
+                key: 'history.code',
                 // render: text => <a>{text}</a>
             },
             {
@@ -66,7 +66,7 @@ export default function DataTimeline(props) {
                             <Form.Item 
                                 label="排定校正日期"
                                 size="large"
-                                bordered={false}
+                                // bordered={false}
                             >
                                 <DatePicker showToday size="large"/>
                             </Form.Item>
@@ -75,7 +75,7 @@ export default function DataTimeline(props) {
             {
                 title: '進行編碼校正',
                 content: <div style={{ padding: '30px 100px'}}>
-                            <Table columns={coCodeColumns} dataSource={datas} pagination={{ pageSize: 50 }} scroll={{ y: 240 }} />
+                            <Table columns={coCodeColumns} dataSource={adjustData} pagination={{ pageSize: 50 }} scroll={{ y: 240 }} />
                         </div>
             },
             {
