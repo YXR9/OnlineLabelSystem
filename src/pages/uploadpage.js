@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input , message, Upload, Select, Button, InputNumber, DatePicker, Row, Col, Layout } from 'antd';
+import { Form, Input , message, Upload, Select, Button, InputNumber, DatePicker, Row, Col, Layout, PageHeader } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
 import '../App.css';
 import axios from 'axios';
@@ -121,12 +121,11 @@ class upload extends React.Component {
         })
 
         console.log(userId, fileName, collector, sourceTarget, age, headCounts, collectDate, collectMethod, context, this.state.fileList[0].originFileObj);
-        axios.post("http://localhost:8080/file", data, {
-            // headers: {
-            //     'Access-Control-Allow-Origin': '*',    
-            //     'Access-Control-Allow-Methods': 'POST',
-            //     'Content-Type': 'multipart/form-data',
-            // },
+        axios({
+            method: 'post',
+            url: "http://localhost:8080/file", 
+            data: data, 
+            headers: { 'Content-Type': 'multipart/form-data' }
         }).then (({data}) => {
             this.props.history.push("/list")
             message.success("Upload successful~");
@@ -136,13 +135,13 @@ class upload extends React.Component {
         }).finally(() => {
             this.setState({
                 UPLoading: false,
-                fileName: ''
             })
         })
     }
 
     render() {
-
+        const { fileList } = this.state;
+        const { value } = this.state;
         const normFile = (e) => {
             console.log('Upload event:', e);    
           
@@ -163,8 +162,9 @@ class upload extends React.Component {
             //     'Access-Control-Allow-Origin': '*',
             //     'Access-Control-Allow-Methods': 'POST'
             // },
-            action:'http://localhost:8080/file',
+            // action:'http://localhost:8080/file',
             onChange(info) {
+                // this.setState({fileList: info.target.fileList[0]})
                const { status } = info.file;
                console.log(info);
                if (status !== 'uploading') {
@@ -185,6 +185,8 @@ class upload extends React.Component {
         return (
             <div className='App'>
                 <Navbar/>
+            <div style={{ width: "90%", margin: "0px auto", padding: "20px"}}>
+                <PageHeader title="上傳檔案"/>
                 <header className='App-header'>
                     <Form name="file-upload-form" onFinish={this.handleSubmit}>
                         <Row>
@@ -215,7 +217,7 @@ class upload extends React.Component {
                                     name="sourceTarget"
                                     label="來源對象"
                                     hasFeedback
-                                    // rules={[{ required: true, message: 'Source Target is required' }]}
+                                    rules={[{ required: true, message: '請填寫來源對象！' }]}
                                 >
                                     <Select onChange={this.getSourceTarget} value={this.state.sourceTarget}>
                                         <Select.Option value="elementarySchool">國小</Select.Option>
@@ -228,6 +230,7 @@ class upload extends React.Component {
                                 <Form.Item
                                     name="age"
                                     label="年紀"
+                                    rules={[{ required: true, message: '請填寫資料蒐集對象年紀！' }]}
                                 >
                                     <InputNumber min={6} max={25} onChange={this.getAge} value={this.state.age}/>
                                 </Form.Item>
@@ -236,6 +239,7 @@ class upload extends React.Component {
                                  <Form.Item
                                     name="headCounts"
                                     label="人數"
+                                    rules={[{ required: true, message: '請填寫人數！' }]}
                                 >
                                     <InputNumber min={1} max={1000} onChange={this.getHeadCounts} value={this.state.headCounts}/>
                                 </Form.Item>
@@ -247,6 +251,7 @@ class upload extends React.Component {
                                     name="collectDate"
                                     label="蒐集日期"
                                     validateStatus="success"
+                                    rules={[{ required: true, message: '請選擇資料蒐集日期！' }]}
                                 >
                                   <DatePicker style={{ width: '100%' }} onChange={this.getCollectDate} />
                                 </Form.Item>
@@ -256,6 +261,7 @@ class upload extends React.Component {
                                     name="collectMethod" 
                                     label="蒐集方式" 
                                     hasFeedback
+                                    rules={[{ required: true, message: '請填寫收集方式！' }]}
                                     // style={{ display: 'inline-block', width: 'calc(50% - 8px)', margin: '0 8px' }}
                                 >
                                     <Input name='collectMethod'  value={this.state.collectMethod} onChange={this.getCollectMethod}/>
@@ -267,12 +273,12 @@ class upload extends React.Component {
                                 <Form.Item
                                   name="context"
                                   label="學習情境（任務）"
-                                //   rules={[
-                                //     {
-                                //       required: true,
-                                //       message: 'Please input Intro',
-                                //     },
-                                //   ]}
+                                  rules={[
+                                    {
+                                      required: true,
+                                      message: 'Please input Intro',
+                                    },
+                                  ]}
                                 >
                                   <Input.TextArea showCount maxLength={100} value={this.state.context} onChange={this.getContext}/>
                                 </Form.Item>
@@ -280,25 +286,27 @@ class upload extends React.Component {
                         </Row>
                         <Row>
                             <Col span={24}>
-                                <Form.Item name="file" className="form-group files" wrapperCol={{ span: 24 }}>
-                                    <Form.Item initialValue={this.props.data && this.props.data.filename ? this.props.data.filename : []}
+                                    <Form.Item 
+                                        name="file" 
+                                        // initialValue={this.props.data && this.props.data.filename ? this.props.data.filename : []}
                                         valuePropName= 'fileList'
                                         getValueFromEvent= {normFile}
+                                        // className="form-group files" 
+                                        wrapperCol={{ span: 24 }}
                                     >
-                                        <Dragger name='fileList' fileList={this.state.fileList} {...props} customRequest={this.dummyRequest} onChange={this.HandlefileChange}>
+                                        <Dragger name='fileList' fileList={this.state.fileList} {...props} customRequest={this.dummyRequest} beforeUpload={(f, fList) => false} onChange={this.HandlefileChange}>
                                             <p className="ant-upload-drag-icon">
                                                 <InboxOutlined />
                                             </p>
                                             <p className="ant-upload-text">點擊或拖曳檔案至此</p>
                                         </Dragger>
                                     </Form.Item>
-                                </Form.Item>
                             </Col>
                         </Row>
                         <Row justify='center'>
                             <Col>
                                 <Form.Item>
-                                    <Button block className="cancel-form-button" onClick={() => { this.props.history.push("/list") }}>
+                                    <Button block className="btn1" onClick={() => { this.props.history.push("/list") }}>
                                         Cancel
                                     </Button>
                                 </Form.Item>
@@ -313,6 +321,7 @@ class upload extends React.Component {
                         </Row>
                     </Form>
                 </header>
+                </div>
             </div>
         )
     }

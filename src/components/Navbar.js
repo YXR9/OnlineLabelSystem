@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Layout, Drawer, Menu, Button, Row, Col, Avatar, Popover } from 'antd'
-import { MenuOutlined, FolderOutlined, ProjectOutlined, UserOutlined, LogoutOutlined, SearchOutlined } from '@ant-design/icons'
-import { getAuthToken, getUsername, setAuthToken } from '../utils';
+import { CodeOutlined, UserOutlined, LogoutOutlined } from '@ant-design/icons'
+import { getUsername, setAuthToken } from '../utils';
 
 export default function Navbar() {
   const history = useHistory();
@@ -46,26 +46,32 @@ export default function Navbar() {
       <nav>
         <Row>
             <Col>
-                <Button type='primary' icon={<MenuOutlined style={{color:'#4b4741', float: 'left'}}/>} onClick={showDrawer} style={{background: 'url(http://1.bp.blogspot.com/-YODKGVfWimA/VaXaz68qdRI/AAAAAAAAMFA/MZZGV1lGxd4/s1600/yellow-bg-100.jpg) #f2f0ec', border: '#f2f0ec'}}></Button>
+                <Button title='網站首頁' icon={<CodeOutlined style={{ fontSize: "180%"}} />} style={{ margin: "0px 15px", border: "none", background: 'url(http://1.bp.blogspot.com/-YODKGVfWimA/VaXaz68qdRI/AAAAAAAAMFA/MZZGV1lGxd4/s1600/yellow-bg-100.jpg) #f2f0ec', color: "#af7c20" }} onClick={() => { history.push("/list")}}/>
             </Col>
-            <Col push={2}>
-                <h2 style={{ color: '#4b4741', fontFamily: 'Comic Sans MS', cursor: "pointer"}} onClick={() => { history.push("/list")}} title="OnlineLabelSystem" >OnlineLabelSystem</h2>
+            <Col>
+                <h2 style={{ color: '#af7c20', fontFamily: 'Comic Sans MS', cursor: "pointer"}} onClick={() => { history.push("/list")}} title="OnlineLabelSystem" >OnlineLabelSystem</h2>
             </Col>
         </Row>
-        <Popover placement='bottom' content={content}>
-            <Avatar size='large' icon={<UserOutlined/>}/>
-        </Popover>
+        <Row>
+            <Col pull={1}>
+                <Menu key={1} style={{ background: 'url(http://1.bp.blogspot.com/-YODKGVfWimA/VaXaz68qdRI/AAAAAAAAMFA/MZZGV1lGxd4/s1600/yellow-bg-100.jpg) #f2f0ec', color: "#56514b", fontSize: "16px", lineHeight: "35px"}} mode="horizontal">
+                    <Menu.Item onClick={ () => { history.push("/list")} }>資料總管</Menu.Item>
+                    <Menu.Item onClick={() => { history.push("/codepage")}}>編碼任務</Menu.Item>
+                    <Menu.Item onClick={ () => { history.push("/codesystem")}}>編碼架構</Menu.Item>
+                </Menu>
+            </Col>
+            <Col>
+                <Popover placement='bottom' content={content}>
+                    <Avatar size='large' icon={<UserOutlined/>}/>
+                </Popover>
+            </Col>
+        </Row>
       </nav>
-      <Drawer placement={placement} closable={false} onClose={onClose} visible={visible} key={placement}>
+      {/* <Drawer placement={placement} closable={false} onClose={onClose} visible={visible} key={placement}>
           <Col push={2}>
               <Button type='primary' icon={<MenuOutlined style={{color:'#f2f0ec', float: 'left' }}/>} onClick={hideDrawer} style={{backgroundColor: '#4b4741', border: '#4b4741'}}></Button>
-          </Col>
-          <Menu style={{ margin: '15px 0px', backgroundColor: '#4b4741', color: '#f2f0ec', borderColor: "#4b4741"}}>
-              <Menu.Item icon={<FolderOutlined />} onClick={ () => { history.push("/list")} }>檔案總管</Menu.Item>
-              <Menu.Item icon={<ProjectOutlined />} onClick={() => { history.push("/codepage")}}>編碼任務</Menu.Item>
-              <Menu.Item icon={<SearchOutlined />} onClick={ () => { history.push("/codesystem")}}>查詢編碼架構</Menu.Item>
-          </Menu>
-      </Drawer>
+          </Col> */}
+      {/* </Drawer> */}
     </Layout>
     
   )

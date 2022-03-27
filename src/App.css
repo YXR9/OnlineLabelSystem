@@ -16,7 +16,7 @@ nav {
   float:inline-end;
   justify-content: space-between;
   padding: 25px 40px;
-  /* box-shadow: 0px 1px 10px; */
+  box-shadow: 0px -5px 10px black;
   color: #000;
   height: 90px;
 }
@@ -75,44 +75,44 @@ nav {
 }
 
 .btn {
-  background-color: #474b41;
+  background-color: #936510;
   border-color: #f2f0ec;
-  color: #f2f0ec;
+  color: #f3f2ee;
   border-radius: 20px;
   margin-bottom: 15px;
 }
 
 .btn:hover {
-  background-color: #f2f0ec;
-  color: #474b41;
-  border-color: #474b41;
+  background-color: #ae7b20;
+  border-color: #f2f0ec;
+  color: #f3f2ee;
 }
 
 .btn:active {
-  background-color: #f2f0ec;
-  color: #af7c20;
-  border-color: #474b41;
+  background-color: #f3f2ee;
+  border-color: #f2f0ec;
+  color: #ae7b20;
   transform: translateY(5px);
 }
 
 .btn1 {
-  background-color: #f2f0ec;
-  border-color: #474b41;
-  color: #474b41;
+  background-color: #e8e7e3;
+  border-color: #f2f0ec;
+  color: #a5a29b;
   border-radius: 20px;
   margin-bottom: 15px;
   font-family: 'Comic Sans MS'
 }
 
 .btn1:hover {
-  background-color: #474b41;
-  color: #f2f0ec;
+  background-color: #e0dfdb;
+  color: #565047;
   border-color: #f2f0ec;
 }
 
 .btn1:active {
-  background-color: #474b41;
-  color: #f2f0ec;
+  background-color: #e0dfdb;
+  color: #565047;
   border-color: #f2f0ec;
   transform: translateY(5px);
 }
@@ -175,15 +175,14 @@ nav {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color:#f2f0ec;
+  /* background-color:#f2f0ec; */
   height: 650px;
-  margin-top: 75px;
   margin-left: 60px;
   margin-right: 60px;
-  border-color: #887451;
-  border-style: dashed;
-  border-width: 2px;
-  border-radius: 50px;
+  /* border-color: #887451; */
+  /* border-style: dashed; */
+  /* border-width: 2px; */
+  /* border-radius: 50px; */
   font-family: Comic Sans MS;
   color: #af7c20;
 }
@@ -356,8 +355,8 @@ nav {
   background-color: #af7c20;
   border-color: #ddceb4;
   height: 50px;
-  width: 50px;
-  border-radius: 50%;
+  width: 150px;
+  border-radius: 10px;
   color: #f2f0ec;
   font-size: 15px;
   line-height: 15px;
@@ -367,4 +366,12 @@ nav {
   background-color: #ddceb4;
   color: #474b41;
   border-color: #474b41;
+}
+
+.table td {
+  border-color: #000;
+  color: #af7c20;
+  border-bottom: #000;
+  border: #000;
+  border-width: 10px;
 }
