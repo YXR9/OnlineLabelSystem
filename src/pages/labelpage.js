@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import DataTimeline from '../components/DataTimeline';
 import axios from "axios";
-import { getAuthToken } from "../utils";
+import { getAuthToken, getFileId, getEncodeTaskId } from "../utils";
 
 
 export default function Labelpage() {
@@ -19,28 +19,66 @@ export default function Labelpage() {
 
     const getAllDatas = () => {
         var data = JSON.stringify({
-            "fileId": "622471df1730db0496083cd3",
+            "fileId": getFileId(),
             "userId": getAuthToken(),
-            "encodeTaskId": "622c4626f4db8a2efc9d4cc4"
+            "encodeTaskId": getEncodeTaskId()
           });
-        axios.get(`${url}data/userData`)
-        .then((res) => {
-            setDatas(res.data);
-        })
-        .catch(error => console.error(`Error: ${error}`));
+          var config = {
+            method: 'get',
+            url: 'http://localhost:8080/data/userData',
+            headers: { 
+              'Content-Type': 'application/json', 
+            //   'Cookie': 'connect.sid=s%3A5Go4tS-x350sMnz7U3Osp2U8gHF9QDe1.0xdgbe54QYQKgNHr5MQFHCJOv%2BakBkZFd5H1wVpKJXU'
+            },
+            data : data
+          };
+          
+          axios(config)
+          .then(function (response) {
+                setDatas(response.data)
+                console.log(JSON.stringify(response.data));
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+          
+        // axios.get(`${url}data/userData`, data)
+        // .then((res) => {
+        //     setDatas(res.data);
+        // })
+        // .catch(error => console.error(`Error: ${error}`));
     }
 
     const getAdjustData = () => {
-        var data = JSON.stringify({
-            "fileId": "622471df1730db0496083cd3",
-            "encodeTaskId": "622c4626f4db8a2efc9d4cc4"
+        var dt = JSON.stringify({
+            "encodeTaskId": getEncodeTaskId(),
+            "fileId": getFileId()
         });
-        axios.get(`${url}data/adjustData`)
-        .then((data) => {
-            console.log("AdjustData", data.data)
-            setAdjustData(data.data);
-        })
-        .catch(error => console.error(`Error: ${error}`));
+        var cfg = {
+            method: 'get',
+            url: 'http://localhost:8080/data/adjustData',
+            headers: { 
+              'Content-Type': 'application/json', 
+            //   'Cookie': 'connect.sid=s%3A5Go4tS-x350sMnz7U3Osp2U8gHF9QDe1.0xdgbe54QYQKgNHr5MQFHCJOv%2BakBkZFd5H1wVpKJXU'
+            },
+            data : dt
+          };
+          
+          axios(cfg)
+          .then(function (res) {
+                setAdjustData(res.data);
+                console.log("adjust", JSON.stringify(res.data));
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+          
+        // axios.get(`${url}data/adjustData`, data)
+        // .then((data) => {
+        //     console.log("AdjustData", data.data)
+        //     setAdjustData(data.data);
+        // })
+        // .catch(error => console.error(`Error: ${error}`));
     }
 
     return (

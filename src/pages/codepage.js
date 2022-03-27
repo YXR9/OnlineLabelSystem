@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from "axios";
-import { Input, Row, Col, Button, Divider, Card, List, Popconfirm, Tooltip, Layout, Modal, Form, message } from 'antd';
-import { CodeOutlined, EditOutlined, DeleteOutlined, UsergroupAddOutlined, FileAddOutlined } from '@ant-design/icons';
+import { Input, Row, Col, Button, Divider, Card, List, Popconfirm, Tooltip, Layout, Modal, Form, message, PageHeader, Popover } from 'antd';
+import { CodeOutlined, EditOutlined, DeleteOutlined, PlusCircleOutlined } from '@ant-design/icons';
 import Navbar from '../components/Navbar';
-import { getAuthToken } from '../utils';
+import { setFile, setFileIndex, getAuthToken, setEncodeTaskId } from '../utils';
+import { format } from "date-fns";
 
 const { Footer } = Layout;
 
@@ -56,60 +57,52 @@ export default function Codepage() {
         })
         .catch(error => console.error(`Error: ${error}`));
     }
+
+    const content = (
+        <div>
+            <Row>
+                <Col>
+                    <Button type="primary" onClick={showJoinTask} style={{ borderColor: '#FFF', background: "#FFF", color: "#af7c20"}}>加入編碼任務</Button>
+                </Col>
+            </Row>
+            <Row>
+                <Col>
+                    <Button onClick={()=>{ history.push('/addencodetask')}} style={{ borderColor: '#FFF', background: "#FFF", color: "#af7c20"}}>建立編碼任務</Button>
+                </Col>
+            </Row>
+        </div>
+        
+    )
+
   return (
     <div className='App'>
         <Navbar/>
+        <div style={{ width: "90%", margin: "0px auto", padding: "20px"}}>
+        <Row>
+            <Col>
+                <PageHeader style={{ color: "#eee" }} title="編碼任務"/>
+            </Col>
+        </Row>
         <div className='App-header'>
                 <Row>
                     <Col span={24}>
-                        <Button type="primary" className="add" icon={<UsergroupAddOutlined />} onClick={showJoinTask}>加入編碼任務</Button>
-                        <Modal 
-                            title="加入共編編碼任務" 
-                            visible={isModalVisible}
-                            onCancel={handleCancel}
-                            footer={null}
-                        >
-                            <Form name='file-upload-form' onFinish={handleJoinTask}>
-                                <Form.Item name="coCode">
-                                    <Input
-                                        name='coCode'
-                                        placeholder="請輸入共編代碼" 
-                                        style={{
-                                            height: "75px",
-                                            width: "300px",
-                                            borderRadius: "10px",
-                                            borderStyle: "dashed",
-                                            position: "abslute",
-                                            top: "50%",
-                                            left: "50%",
-                                            margin: "20px 0 0 -150px"
-                                        }}
-                                        size="large"
-                                    />
-                                </Form.Item>
-                                <Form.Item>
-                                    <Button block className="btn" htmlType="submit" type='primary' style={{ width: "150px", margin: "10px 150px 10px 10px", float: "right"}}>加入共編任務</Button>
-                                </Form.Item>
-                            </Form>
-                        </Modal>
-                        <Divider orientation='left'>編碼任務</Divider>
                         <List
                             grid={{ gutter: 16, colum: 4 }}
                             dataSource={datas}
-                            renderItem={(data) => (
+                            renderItem={(data, index) => (
                                 <List.Item>
                                 <Card 
-                                    style={{ width: 320 }} 
+                                    style={{ margin: "10px", width: 500, fontSize: "18px", borderColor: "#56514b", borderWidth: "3px", borderRadius: "5px", color: "#56514b", background: "#fbfaf7" }} 
                                     actions={[ 
-                                        <Tooltip title="進行編碼">
-                                            <CodeOutlined onClick={() => { history.push("/labelpage") }}/>
+                                        <Tooltip borderRadius title="進行編碼" style={{ color: "#af7c20", borderColor: "#af7c20", borderRadius: "20px", borderWidth: "3px", background: "#d9c7a6" }}>
+                                            <CodeOutlined style={{ color: "#56514b", borderColor: "#af7c20", borderRadius: "20px", borderWidth: "3px" }} onClick={() => { setFileIndex(index); setFile(data.fileId); setEncodeTaskId(data._id); history.push("/labelpage"); }}/>
                                         </Tooltip>, 
-                                        <Tooltip title="編輯任務">
-                                            <EditOutlined/>
-                                        </Tooltip>, 
+                                        <Tooltip title="編輯任務" style={{ color: "#cccac6", borderColor: "#af7c20", borderRadius: "20px", borderWidth: "3px" }}>
+                                            <EditOutlined style={{ color: "#56514b", borderColor: "#af7c20", borderRadius: "20px", borderWidth: "3px" }}/>
+                                        </Tooltip>,
                                         <Tooltip title="刪除任務">
                                             <Popconfirm title="確定要刪除此編碼任務嗎？">
-                                                <DeleteOutlined />
+                                                <DeleteOutlined style={{ color: "#56514b", borderColor: "#af7c20", borderRadius: "20px", borderWidth: "3px" }} />
                                             </Popconfirm>
                                         </Tooltip>
                                     ]}
@@ -143,12 +136,43 @@ export default function Codepage() {
                             </List.Item>
                             )}
                         />
-                        
-                        <Button className='add' onClick={()=>{ history.push('/addencodetask')}} icon={<FileAddOutlined />}>Add Task</Button>
+                        <Modal 
+                            title="加入編碼任務" 
+                            visible={isModalVisible}
+                            onCancel={handleCancel}
+                            footer={null}
+                        >
+                            <Form name='file-upload-form' onFinish={handleJoinTask}>
+                                <Form.Item name="coCode">
+                                    <Input
+                                        name='coCode'
+                                        placeholder="請輸入共編代碼" 
+                                        style={{
+                                            height: "75px",
+                                            width: "300px",
+                                            borderRadius: "10px",
+                                            borderStyle: "dashed",
+                                            position: "abslute",
+                                            top: "50%",
+                                            left: "50%",
+                                            margin: "20px 0 0 -150px"
+                                        }}
+                                        size="large"
+                                    />
+                                </Form.Item>
+                            </Form>
+                            <Form.Item>
+                                <Button block className="btn" htmlType="submit" type='primary' style={{ width: "150px", margin: "10px 150px 10px 10px", float: "right"}}>加入共編任務</Button>
+                            </Form.Item>
+                        </Modal>
                     </Col>
                 </Row>
         </div>
-        <Footer style={{ background: "url(http://1.bp.blogspot.com/-YODKGVfWimA/VaXaz68qdRI/AAAAAAAAMFA/MZZGV1lGxd4/s1600/yellow-bg-100.jpg) #f2f0ec", color: "#4b4741", textAlign: 'center', position: "absolute", boxSizing: "border-box", bottom: "0", width: "100%", fontFamily: 'Comic Sans MS, Comic Sans, cursive' }}>Ant Design ©2018 Created by Ant UED</Footer>
+            <Popover placement='top' content={content}>
+                <Button style={{ fontFamily: "Comic Sans MS", fontSize: "50px", margin: "-20px 0px 0px 0px", textAlign: "center",padding: "0px 0px 7px 0px", float: "right", borderRadius: "50%", width: "70px", height: "70px", boxShadow: "1px 3px 5px 0px black", lineHeight: "0px", border: "0px", background: "#ae7b20", color: "#f8f7f5"}}>+</Button>
+            </Popover>
+        </div>
+        <Footer style={{ background: "url(http://1.bp.blogspot.com/-YODKGVfWimA/VaXaz68qdRI/AAAAAAAAMFA/MZZGV1lGxd4/s1600/yellow-bg-100.jpg) #f2f0ec", color: "#af7c20", textAlign: 'center', position: "absolute", boxSizing: "border-box", bottom: "0", width: "100%", fontFamily: 'Comic Sans MS, Comic Sans, cursive' }}>Ant Design ©2018 Created by Ant UED</Footer>
     </div>
   )
 }

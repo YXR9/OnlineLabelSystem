@@ -1,9 +1,9 @@
 import { PlusOutlined, ContainerOutlined, DeleteOutlined } from '@ant-design/icons';
-import { Layout, Input, Row, Col, Button, Modal, Form, Divider, List, Card, Tooltip, Popconfirm, message, Table } from 'antd';
+import { Layout, Input, Row, Col, Button, Modal, Form, Divider, List, Card, Tooltip, Popconfirm, message, Table, PageHeader } from 'antd';
 import axios from 'axios';
 import React, { useEffect, useState, useContext, useRef } from 'react'
 import Navbar from '../components/Navbar';
-import { getAuthToken, getUsername } from '../utils';
+import { getAuthToken, getUsername, getFileIndex, setFile, setFileIndex } from '../utils';
 
 const EditableContext = React.createContext(null);
 const { Footer } = Layout;
@@ -27,9 +27,11 @@ export default function Codesystempage() {
       setIsModalVisible(true);
   }
 
-  const showDeteil = () => {
-    setDeteil(true)
-  }
+  // const showDeteil = () => {
+  //   setDeteil(true);
+  //   setAuthToken()
+  //   // console.log(index)
+  // }
 
   const handleAddCodeSystem = (fields) => {
       const userId = getAuthToken();
@@ -248,24 +250,25 @@ export default function Codesystempage() {
         option: <Form.Item name="option"><Input name='option' placeholder='Please enter option'/></Form.Item>,
         description: <Form.Item name="description"><Input name='description' placeholder='Please enter description.'/></Form.Item>
     }
-    console.log("ok")
+    // console.log("ok")
     setCodeSystemDeteil((pre) => {
       return [...pre, newOption];
     });
-    console.log("okk")
+    // console.log("okk")
   }
 
   return (
     <div className='App'>
         <Navbar/>
+        <div style={{ width: "90%", margin: "0px auto", padding: "20px"}}>
+        <PageHeader title="編碼架構"/>
+                <Col>
+                    <Search size='large' placeholder='搜尋編碼架構' allowClear onSearch={onSearch} style={{ width: "500px", lineHeight: "100px" ,background: "#fbfaf7" }} bordered={false} enterButton={false}/>
+                    {/* <HeartOutlined /> */}
+                </Col>
         <div className='App-header'>
             <div style={{ padding: "700px 300px"}}>
             <Row>
-                <Col span={24} offset={8}>
-                    <Search placeholder='搜尋編碼架構' allowClear onSearch={onSearch} style={{ width: "200px" }}/>
-                    <PlusOutlined style={{ margin: "10px"}} onClick={showJoinTask} />
-                    {/* <HeartOutlined /> */}
-                </Col>
                 <Col span={24}>
                     <Modal 
                         title="新增編碼架構" 
@@ -319,66 +322,66 @@ export default function Codesystempage() {
                             </Form.Item>
                         </Form>
                     </Modal>
-                    <Divider orientation='left'>編碼架構</Divider>
-                    <List
-                        grid={{ gutter: 16 }}
-                        dataSource={datas}
-                        pagination={{
-                          onChange: page => {
-                            console.log(page);
-                          },
-                          pageSize: 4,
-                        }}
-                        renderItem={(data) => (
-                            <List.Item>
-                                <Card
-                                    style={{ width: 240 }} 
-                                    actions={[ 
-                                        // <Tooltip title="收藏">
-                                        //     <HeartOutlined />
-                                        // </Tooltip>, 
-                                        <Tooltip title="詳細內容">
-                                            <ContainerOutlined onClick={showDeteil} />
-                                        </Tooltip>, 
-                                        <Tooltip title="刪除">
-                                            <Popconfirm title="確定要刪除此編碼架構嗎？">
-                                                <DeleteOutlined />
-                                            </Popconfirm>
-                                        </Tooltip>
-                                    ]}
-                                >
-                                    <Meta title={data.codeName} description={data.purpose} />
-                                </Card>
-                                <Modal 
-                                    title={data.codeName}
-                                    visible={deteil}
-                                    onCancel={handleCancel}
-                                    footer={null}
-                                >
-                                    <Row>
-                                        <Col>
-                                            <div>目的： {data.purpose}</div>
-                                        </Col>
-                                    </Row>
-                                    <Row>
-                                        <Col>
-                                            <Table dataSource={data.code} columns={column} components={components} rowClassName={() => 'editable-row'} pagination={{ pageSize: 50 }} scroll={{ y: 240 }} />
-                                        </Col>
-                                    </Row>
-                                    <Row>
-                                        <Col>
-                                            <div>建立人： {data.source}</div>
-                                        </Col>
-                                    </Row>
-                                </Modal>
-                            </List.Item>
-                        )}
-                    />
+                    <Row>
+                        <Col span={24}>
+                            <List
+                                grid={{ gutter: 16, colum: 4  }}
+                                dataSource={datas}
+                                // scroll={{ y: 240 }}
+                                renderItem={(data, index) => (
+                                    <List.Item key={index}>
+                                        <Card
+                                            style={{ margin: "10px", width: 450, fontSize: "18px", borderColor: "#56514b", borderWidth: "3px", borderRadius: "5px", color: "#56514b", background: "#fbfaf7" }} 
+                                            actions={[ 
+                                                // <Tooltip title="收藏">
+                                                //     <HeartOutlined />
+                                                // </Tooltip>, 
+                                                <Tooltip title="詳細內容"  style={{ borderColor: "#af7c20"}}>
+                                                    <ContainerOutlined style={{color: "#56514b"}} onClick={()=>{setFileIndex(index); setFile(data._id); setDeteil(true);}} />
+                                                </Tooltip>, 
+                                                <Tooltip title="刪除">
+                                                    <Popconfirm title="確定要刪除此編碼架構嗎？">
+                                                        <DeleteOutlined style={{color: "#56514b"}} />
+                                                    </Popconfirm>
+                                                </Tooltip>
+                                            ]}
+                                        >
+                                            <Meta title={data.codeName} description={data.purpose} style={{ fontSize: "18px" }}/>
+                                        </Card>
+                                        <Modal 
+                                            title={datas[0].codeName}
+                                            visible={deteil}
+                                            onCancel={handleCancel}
+                                            footer={null}
+                                        >
+                                            <Row>
+                                                <Col>
+                                                    <div>目的： {datas[0].purpose}</div>
+                                                </Col>
+                                            </Row>
+                                            <Row>
+                                                <Col>
+                                                    <Table dataSource={datas[0].code} columns={column} components={components} rowClassName={() => 'editable-row'} pagination={{ pageSize: 50 }} scroll={{ y: 240 }} />
+                                                </Col>
+                                            </Row>
+                                            <Row>
+                                                <Col>
+                                                    <div>建立人： {datas[0].source}</div>
+                                                </Col>
+                                            </Row>
+                                        </Modal>
+                                    </List.Item>
+                                )}
+                            />
+                        </Col>
+                    </Row>
                 </Col>
             </Row>
             </div>
         </div>
-        <Footer style={{ background: "url(http://1.bp.blogspot.com/-YODKGVfWimA/VaXaz68qdRI/AAAAAAAAMFA/MZZGV1lGxd4/s1600/yellow-bg-100.jpg) #f2f0ec", color: "#4b4741", textAlign: 'center', position: "absolute", boxSizing: "border-box", bottom: "0", width: "100%", fontFamily: 'Comic Sans MS, Comic Sans, cursive' }}>Ant Design ©2018 Created by Ant UED</Footer>
+        <Button style={{ fontFamily: "Comic Sans MS", fontSize: "50px", margin: "-60px 0px 0px 0px", textAlign: "center", padding: "0px 0px 7px 0px", float: "right", borderRadius: "50%", width: "70px", height: "70px", boxShadow: "1px 3px 5px 0px black", lineHeight: "0px", border: "0px", background: "#ae7b20", color: "#f8f7f5"}} onClick={showJoinTask}>+</Button>
+        </div>
+        <Footer style={{ background: "url(http://1.bp.blogspot.com/-YODKGVfWimA/VaXaz68qdRI/AAAAAAAAMFA/MZZGV1lGxd4/s1600/yellow-bg-100.jpg) #f2f0ec", color: "#af7c20", textAlign: 'center', position: "absolute", boxSizing: "border-box", bottom: "0", width: "100%", fontFamily: 'Comic Sans MS, Comic Sans, cursive' }}>Ant Design ©2018 Created by Ant UED</Footer>
     </div>
   )
 }

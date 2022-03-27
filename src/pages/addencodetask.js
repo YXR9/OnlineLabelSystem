@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Form, Select, DatePicker, Button, Row, Col, message } from 'antd';
+import { Form, Select, DatePicker, Button, Row, Col, message, PageHeader } from 'antd';
 import { useHistory } from 'react-router-dom';
 import axios from "axios";
 import Navbar from '../components/Navbar';
@@ -69,6 +69,8 @@ export default function Addencodetask() {
     return (
     <div className='App'>
         <Navbar/>
+        <div style={{ width: "1800px", margin: "0px auto", padding: "20px"}}>
+            <PageHeader title="建立編碼任務"/>
         <div className='App-header'>
             <Form name="file-upload-form" onFinish={handleAddCodeTask}>
                 <Form.Item
@@ -159,7 +161,7 @@ export default function Addencodetask() {
                 <Row justify='center'>
                     <Col>
                         <Form.Item>
-                            <Button block className="cancel-form-button" onClick={() => { history.push("/codepage") }}>
+                            <Button block className="btn1" onClick={() => { history.push("/codepage") }}>
                                 Cancel
                             </Button>
                         </Form.Item>
@@ -173,6 +175,7 @@ export default function Addencodetask() {
                     </Col>
                 </Row>
             </Form>
+        </div>
         </div>
     </div>
   )

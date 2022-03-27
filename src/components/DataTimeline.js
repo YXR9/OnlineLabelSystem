@@ -15,7 +15,7 @@ export default function DataTimeline(props) {
         const { datas, adjustData } = props;
         const columns = [
             {
-                title: 'Data',
+                title: '資料',
                 dataIndex: 'dataName',
                 key: 'dataName',
                 render: text => <a href="/codingpage">{text}</a>
@@ -26,7 +26,7 @@ export default function DataTimeline(props) {
                 title: 'data',
                 dataIndex: 'dataName',
                 width: 700,
-                key: 'content',
+                key: 'dataName',
                 render: text => <h3>{text}</h3>
             },
             {
@@ -125,7 +125,7 @@ export default function DataTimeline(props) {
                                   </Button>
                                 )}
                                 {current === steps.length - 1 && (
-                                  <Button className="btn" type="primary" onClick={() => message.success('Processing complete!')}>
+                                  <Button className="btn" type="primary" onClick={() => { message.success('Processing complete!'); history.push("/codepage")}}>
                                     完成並返回編碼任務列表
                                   </Button>
                                 )}

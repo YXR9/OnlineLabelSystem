@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from "axios";
-import { Table, Button, Divider, Layout } from 'antd';
+import { Table, Button, Layout, PageHeader } from 'antd';
 import Navbar from '../components/Navbar';
 import { getAuthToken } from '../utils';
-import { FileAddOutlined } from '@ant-design/icons';
 const { Footer } = Layout;
 
 export default function Filelistpage() {
@@ -48,18 +47,16 @@ export default function Filelistpage() {
     return (
       <div className='App'>
           <Navbar/>
+        <div style={{ width: "90%", margin: "0px auto", padding: "20px"}}>
+          <PageHeader title="資料總管"/>
           <header className='App-header'>
-              <div style={{ width: "1500px" }}>
-                 {/* <Row> */}
-                    <Divider orientation='left'>檔案總管</Divider>
-                    {/* <Col span={40}> */}
-                        <Table columns={columns} dataSource={datas} pagination={{ pageSize: 5 }}/>
-                        <Button className='add' onClick={()=>{ history.push('/uploadpage')}} icon={<FileAddOutlined/>}>Add File</Button>
-                    {/* </Col>
-                </Row>  */}
+              <div style={{ width: "100%" }}>
+                    <Table className='table' columns={columns} dataSource={datas} pagination={{ pageSize: 5 }}/>
               </div>
           </header>
-          <Footer style={{ background: "url(http://1.bp.blogspot.com/-YODKGVfWimA/VaXaz68qdRI/AAAAAAAAMFA/MZZGV1lGxd4/s1600/yellow-bg-100.jpg) #f2f0ec", color: "#4b4741", textAlign: 'center', position: "absolute", boxSizing: "border-box", bottom: "0", width: "100%", fontFamily: 'Comic Sans MS, Comic Sans, cursive' }}>Ant Design ©2018 Created by Ant UED</Footer>
+            <Button className='add' onClick={()=>{ history.push('/uploadpage')}} Button style={{ fontFamily: "Comic Sans MS", fontSize: "50px", margin: "-20px 0px 0px 0px", textAlign: "center",padding: "0px 0px 6px 0px", float: "right", borderRadius: "50%", width: "70px", height: "70px", boxShadow: "1px 3px 5px 0px black", lineHeight: "0px", border: "0px", background: "#ae7b20", color: "#f8f7f5"}} >+</Button>
+          </div>
+          <Footer style={{ background: "url(http://1.bp.blogspot.com/-YODKGVfWimA/VaXaz68qdRI/AAAAAAAAMFA/MZZGV1lGxd4/s1600/yellow-bg-100.jpg) #f2f0ec", color: "#af7c20", textAlign: 'center', position: "absolute", boxSizing: "border-box", bottom: "0", width: "100%", fontFamily: 'Comic Sans MS, Comic Sans, cursive' }}>Ant Design ©2018 Created by Ant UED</Footer>
       </div>
     )
 }
