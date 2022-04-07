@@ -1,7 +1,8 @@
 import { PlusOutlined, ContainerOutlined, DeleteOutlined } from '@ant-design/icons';
-import { Layout, Input, Row, Col, Button, Modal, Form, Divider, List, Card, Tooltip, Popconfirm, message, Table, PageHeader } from 'antd';
+import { Layout, Input, Row, Col, Button, Modal, Form, Divider, List, Card, Tooltip, Popconfirm, message, Table, PageHeader, Skeleton } from 'antd';
 import axios from 'axios';
 import React, { useEffect, useState, useContext, useRef } from 'react'
+import InfiniteScroll from 'react-infinite-scroll-component';
 import Navbar from '../components/Navbar';
 import { getAuthToken, getUsername, getFileIndex, setFile, setFileIndex } from '../utils';
 
@@ -260,14 +261,32 @@ export default function Codesystempage() {
   return (
     <div className='App'>
         <Navbar/>
-        <div style={{ width: "90%", margin: "0px auto", padding: "20px"}}>
-        <PageHeader title="編碼架構"/>
-                <Col>
+        <div style={{ width: "60%", margin: "0px auto", padding: "60px 0px"}}>
+            <Row>
+                <Col span={3}>
+                    <h2>編碼架構</h2>
+                </Col>
+                <Col span={3} offset={5}>
                     <Search size='large' placeholder='搜尋編碼架構' allowClear onSearch={onSearch} style={{ width: "500px", lineHeight: "100px" ,background: "#fbfaf7" }} bordered={false} enterButton={false}/>
                     {/* <HeartOutlined /> */}
                 </Col>
-        <div className='App-header'>
-            <div style={{ padding: "700px 300px"}}>
+                <Col span={8} offset={5}>
+                    <Button style={{ fontFamily: "Comic Sans MS", fontSize: "30px", margin: "0px 0px 0px 0px", textAlign: "center", padding: "0px 0px 7px 0px", float: "right", borderRadius: "50%", width: "50px", height: "50px", boxShadow: "rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px", lineHeight: "0px", border: "0px", background: "#00bdff", color: "#f8f7f5"}} onClick={showJoinTask}>+</Button>
+                </Col>
+            </Row>
+            <Divider/>
+        {/* <div className='App-header'> */}
+            <div 
+                id="scrollableDiv"
+                style={{
+                    height: 580,
+                    overflow: 'auto',
+                    display: 'flex',
+                    flexDirection: 'column-reverse',
+                    // padding: '0 16px',
+                    justifyItems: 'center'
+                }}
+            >
             <Row>
                 <Col span={24}>
                     <Modal 
@@ -323,25 +342,34 @@ export default function Codesystempage() {
                         </Form>
                     </Modal>
                     <Row>
-                        <Col span={24}>
+                        <Col>
+                        <InfiniteScroll
+                            dataLength={datas.length}
+                            next={getAllDatas}
+                            hasMore={datas.length < 10}
+                            loader={<Skeleton avatar paragraph={{ rows: 1 }} active />}
+                            endMessage={<Divider plain>It is all, nothing more 🤐</Divider>}
+                            scrollableTarget="scrollableDiv"
+                            style={{ margin: '0px auto'}}
+                        >
                             <List
-                                grid={{ gutter: 16, colum: 4  }}
+                                // grid={{ colum: 4  }}
                                 dataSource={datas}
                                 // scroll={{ y: 240 }}
                                 renderItem={(data, index) => (
                                     <List.Item key={index}>
                                         <Card
-                                            style={{ margin: "10px", width: 450, fontSize: "18px", borderColor: "#56514b", borderWidth: "3px", borderRadius: "5px", color: "#56514b", background: "#fbfaf7" }} 
+                                            style={{ margin: "10px", width: "100%", fontSize: "18px", borderRadius: "15px", color: "#002339", background: "#fff", boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px" }} 
                                             actions={[ 
                                                 // <Tooltip title="收藏">
                                                 //     <HeartOutlined />
                                                 // </Tooltip>, 
                                                 <Tooltip title="詳細內容"  style={{ borderColor: "#af7c20"}}>
-                                                    <ContainerOutlined style={{color: "#56514b"}} onClick={()=>{setFileIndex(index); setFile(data._id); setDeteil(true);}} />
+                                                    <ContainerOutlined style={{color: "#006288"}} onClick={()=>{setFileIndex(index); setFile(data._id); setDeteil(true);}} />
                                                 </Tooltip>, 
                                                 <Tooltip title="刪除">
                                                     <Popconfirm title="確定要刪除此編碼架構嗎？">
-                                                        <DeleteOutlined style={{color: "#56514b"}} />
+                                                        <DeleteOutlined style={{color: "#006288"}} />
                                                     </Popconfirm>
                                                 </Tooltip>
                                             ]}
@@ -373,15 +401,16 @@ export default function Codesystempage() {
                                     </List.Item>
                                 )}
                             />
+                        </InfiniteScroll> 
                         </Col>
                     </Row>
                 </Col>
             </Row>
             </div>
+        {/* </div>/ */}
+        
         </div>
-        <Button style={{ fontFamily: "Comic Sans MS", fontSize: "50px", margin: "-60px 0px 0px 0px", textAlign: "center", padding: "0px 0px 7px 0px", float: "right", borderRadius: "50%", width: "70px", height: "70px", boxShadow: "1px 3px 5px 0px black", lineHeight: "0px", border: "0px", background: "#ae7b20", color: "#f8f7f5"}} onClick={showJoinTask}>+</Button>
-        </div>
-        <Footer style={{ background: "url(http://1.bp.blogspot.com/-YODKGVfWimA/VaXaz68qdRI/AAAAAAAAMFA/MZZGV1lGxd4/s1600/yellow-bg-100.jpg) #f2f0ec", color: "#af7c20", textAlign: 'center', position: "absolute", boxSizing: "border-box", bottom: "0", width: "100%", fontFamily: 'Comic Sans MS, Comic Sans, cursive' }}>Ant Design ©2018 Created by Ant UED</Footer>
+        <Footer style={{ background: "#000406", color: "#5f8497", textAlign: 'center', position: "absolute", boxSizing: "border-box", bottom: "0", width: "100%", fontFamily: 'Comic Sans MS, Comic Sans, cursive' }}>Ant Design ©2018 Created by Ant UED</Footer>
     </div>
   )
 }
