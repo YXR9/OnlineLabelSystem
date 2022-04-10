@@ -57,7 +57,7 @@ export default function DataTimeline(props) {
             {
                 title: '獨立編碼',
                 content: <div style={{ padding: '30px 100px'}}>
-                            <Table columns={columns} dataSource={datas} pagination={{ pageSize: 50 }} scroll={{ y: 240 }} />
+                            <Table columns={columns} dataSource={datas} pagination={false} scroll={{ y: 500 }} />
                         </div>
             },
             {
@@ -132,7 +132,7 @@ export default function DataTimeline(props) {
                             </div>
                         </div>
                     </div>
-                    <Footer style={{ background: "url(http://1.bp.blogspot.com/-YODKGVfWimA/VaXaz68qdRI/AAAAAAAAMFA/MZZGV1lGxd4/s1600/yellow-bg-100.jpg) #f2f0ec", color: "#4b4741", textAlign: 'center', position: "absolute", boxSizing: "border-box", bottom: "0", width: "100%", fontFamily: 'Comic Sans MS, Comic Sans, cursive' }}>Ant Design ©2018 Created by Ant UED</Footer>
+                    <Footer style={{ background: "#000406", color: "#5f8497", textAlign: 'center', position: "absolute", boxSizing: "border-box", bottom: "0", width: "100%", fontFamily: 'Comic Sans MS, Comic Sans, cursive' }}>Ant Design ©2018 Created by Ant UED</Footer>
                 </div>
                 
             )

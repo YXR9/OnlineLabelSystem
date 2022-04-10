@@ -45,22 +45,22 @@ export default function Navbar() {
     <Layout>
       <nav>
         <Row>
-            <Col>
-                <Button title='網站首頁' icon={<CodeOutlined style={{ fontSize: "180%"}} />} style={{ margin: "0px 15px", border: "none", background: 'url(http://1.bp.blogspot.com/-YODKGVfWimA/VaXaz68qdRI/AAAAAAAAMFA/MZZGV1lGxd4/s1600/yellow-bg-100.jpg) #f2f0ec', color: "#af7c20" }} onClick={() => { history.push("/list")}}/>
+            <Col style={{ margin: "0px 0px 0px 330px" }}>
+                <Button title='網站首頁' icon={<CodeOutlined style={{ fontSize: "180%"}} />} style={{ margin: "0px 15px", border: "none", background: '#002339', color: "#39d8eb" }} onClick={() => { history.push("/list")}}/>
             </Col>
             <Col>
-                <h2 style={{ color: '#af7c20', fontFamily: 'Comic Sans MS', cursor: "pointer"}} onClick={() => { history.push("/list")}} title="OnlineLabelSystem" >OnlineLabelSystem</h2>
+                <h1 style={{ color: '#39d8eb', fontFamily: 'Comic Sans MS', cursor: "pointer", lineHeight: "35px", fontSize: "1.2rem"}} onClick={() => { history.push("/list")}} title="OnlineLabelSystem" >OnlineLabelSystem</h1>
             </Col>
         </Row>
         <Row>
             <Col pull={1}>
-                <Menu key={1} style={{ background: 'url(http://1.bp.blogspot.com/-YODKGVfWimA/VaXaz68qdRI/AAAAAAAAMFA/MZZGV1lGxd4/s1600/yellow-bg-100.jpg) #f2f0ec', color: "#56514b", fontSize: "16px", lineHeight: "35px"}} mode="horizontal">
-                    <Menu.Item onClick={ () => { history.push("/list")} }>資料總管</Menu.Item>
-                    <Menu.Item onClick={() => { history.push("/codepage")}}>編碼任務</Menu.Item>
-                    <Menu.Item onClick={ () => { history.push("/codesystem")}}>編碼架構</Menu.Item>
+                <Menu key={1} style={{ background: '#002339', color: "#f3f5f6", fontSize: "16px", lineHeight: "35px", borderColor: "#002339"}} mode="horizontal">
+                    <Menu.Item key={1} onClick={ () => { history.push("/list")} }>資料總管</Menu.Item>
+                    <Menu.Item key={2} onClick={() => { history.push("/codepage")}}>編碼任務</Menu.Item>
+                    <Menu.Item key={3} onClick={ () => { history.push("/codesystem")}}>編碼架構</Menu.Item>
                 </Menu>
             </Col>
-            <Col>
+            <Col style={{ margin: "0px 350px 0px 0px" }}>
                 <Popover placement='bottom' content={content}>
                     <Avatar size='large' icon={<UserOutlined/>}/>
                 </Popover>

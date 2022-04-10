@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from "axios";
-import { Table, Button, Layout, PageHeader } from 'antd';
+import { Table, Button, Layout, PageHeader, Row, Col, Divider } from 'antd';
 import Navbar from '../components/Navbar';
 import { getAuthToken } from '../utils';
 const { Footer } = Layout;
@@ -45,18 +45,25 @@ export default function Filelistpage() {
     }
 
     return (
-      <div className='App'>
-          <Navbar/>
-        <div style={{ width: "90%", margin: "0px auto", padding: "20px"}}>
-          <PageHeader title="資料總管"/>
-          <header className='App-header'>
-              <div style={{ width: "100%" }}>
-                    <Table className='table' columns={columns} dataSource={datas} pagination={{ pageSize: 5 }}/>
-              </div>
-          </header>
-            <Button className='add' onClick={()=>{ history.push('/uploadpage')}} Button style={{ fontFamily: "Comic Sans MS", fontSize: "50px", margin: "-20px 0px 0px 0px", textAlign: "center",padding: "0px 0px 6px 0px", float: "right", borderRadius: "50%", width: "70px", height: "70px", boxShadow: "1px 3px 5px 0px black", lineHeight: "0px", border: "0px", background: "#ae7b20", color: "#f8f7f5"}} >+</Button>
-          </div>
-          <Footer style={{ background: "url(http://1.bp.blogspot.com/-YODKGVfWimA/VaXaz68qdRI/AAAAAAAAMFA/MZZGV1lGxd4/s1600/yellow-bg-100.jpg) #f2f0ec", color: "#af7c20", textAlign: 'center', position: "absolute", boxSizing: "border-box", bottom: "0", width: "100%", fontFamily: 'Comic Sans MS, Comic Sans, cursive' }}>Ant Design ©2018 Created by Ant UED</Footer>
-      </div>
+        <div className='App'>
+            <Navbar/>
+        <div style={{ width: "60%", height: "200px", margin: "0px auto", padding: "60px 0px"}}>
+                    <Row>
+                        <Col span={3}>
+                            <h2>資料總管</h2>
+                        </Col>
+                        <Col span={8} offset={13}>
+                            <Button className='add' onClick={()=>{ history.push('/uploadpage')}}  style={{ fontFamily: "Comic Sans MS", fontSize: "30px", margin: "0px 0px 0px 0px", textAlign: "center", padding: "0px 0px 7px 0px", float: "right", borderRadius: "50%", width: "50px", height: "50px", boxShadow: "rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px", lineHeight: "0px", border: "0px", background: "#00bdff", color: "#f8f7f5"}} >+</Button>
+                        </Col>
+                    </Row>
+                    <Divider/>
+            {/* <header className='App-header'> */}
+                {/* <div style={{ height: "300px" }}> */}
+                    <Table className='table' columns={columns} dataSource={datas} pagination={false} scroll={{ y: 500 }}/>
+                {/* </div> */}
+            {/* </header> */}
+        </div>
+        <Footer style={{ background: "#000406", color: "#5f8497", textAlign: 'center', position: "absolute", boxSizing: "border-box", bottom: "0", width: "100%", fontFamily: 'Comic Sans MS, Comic Sans, cursive' }}>Ant Design ©2018 Created by Ant UED</Footer>
+        </div>
     )
 }

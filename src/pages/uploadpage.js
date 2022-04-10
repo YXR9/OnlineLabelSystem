@@ -36,6 +36,10 @@ class upload extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    componentWillUnmount() {
+        this.setState = () => false;
+    }
+
     inputFilename = e => {
         if (e.target instanceof HTMLInputElement) {
             // console.log('file name ', e.target.value);
@@ -88,6 +92,8 @@ class upload extends React.Component {
     }
 
     HandlefileChange = ({file, fileList}) => {// Processing file Change, guaranteed that the user selected by one is only one
+        console.log("upload file...");
+        // this.setState({fileList: event.target.files[0]});
         this.setState({
             'fileList': fileList.length? [fileList[fileList.length - 1]] : []
         });
@@ -129,7 +135,7 @@ class upload extends React.Component {
         }).then (({data}) => {
             this.props.history.push("/list")
             message.success("Upload successful~");
-            console.log(data);
+            console.log("data", data);
         }).catch (error => {
             message.error(error.message);
         }).finally(() => {
@@ -158,15 +164,16 @@ class upload extends React.Component {
             name: 'file',
             multiple: true,
             accept: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel,",   // 上傳文件類型限於 excel
-            // headers: {
-            //     'Access-Control-Allow-Origin': '*',
-            //     'Access-Control-Allow-Methods': 'POST'
-            // },
-            // action:'http://localhost:8080/file',
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'POST'
+            },
+            action:'http://localhost:8080/file',
             onChange(info) {
                 // this.setState({fileList: info.target.fileList[0]})
                const { status } = info.file;
-               console.log(info);
+               console.log("ok~");
+            //    console.log(info);
                if (status !== 'uploading') {
                     console.log(info.file, info.fileList);
                }
@@ -288,13 +295,13 @@ class upload extends React.Component {
                             <Col span={24}>
                                     <Form.Item 
                                         name="file" 
-                                        // initialValue={this.props.data && this.props.data.filename ? this.props.data.filename : []}
+                                        initialValue={this.props.data && this.props.data.filename ? this.props.data.filename : []}
                                         valuePropName= 'fileList'
                                         getValueFromEvent= {normFile}
                                         // className="form-group files" 
                                         wrapperCol={{ span: 24 }}
                                     >
-                                        <Dragger name='fileList' fileList={this.state.fileList} {...props} customRequest={this.dummyRequest} beforeUpload={(f, fList) => false} onChange={this.HandlefileChange}>
+                                        <Dragger fileList={this.state.fileList} customRequest={this.dummyRequest} {...props} beforeUpload={(f, fList) => false} onChange={this.HandlefileChange}>
                                             <p className="ant-upload-drag-icon">
                                                 <InboxOutlined />
                                             </p>

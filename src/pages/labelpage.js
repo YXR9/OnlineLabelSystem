@@ -7,10 +7,8 @@ import { getAuthToken, getFileId, getEncodeTaskId } from "../utils";
 export default function Labelpage() {
     
     // get data from API
-    const [ datas, setDatas ] = useState('');
+    const [ datas, setDatas ] = useState([]);
     const [ adjustData, setAdjustData ] = useState('');
-
-    const url = 'http://localhost:8080/';
 
     useEffect(() => {
         getAllDatas();
@@ -36,7 +34,8 @@ export default function Labelpage() {
           axios(config)
           .then(function (response) {
                 setDatas(response.data)
-                console.log(JSON.stringify(response.data));
+                console.log(getFileId(),getAuthToken(),getEncodeTaskId())
+                console.log(response.data);
           })
           .catch(function (error) {
             console.log(error);
