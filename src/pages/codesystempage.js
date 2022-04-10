@@ -281,10 +281,10 @@ export default function Codesystempage() {
                 style={{
                     height: 580,
                     overflow: 'auto',
-                    display: 'flex',
-                    flexDirection: 'column-reverse',
+                    // display: 'flex',
+                    // flexDirection: 'column-reverse',
                     // padding: '0 16px',
-                    justifyItems: 'center'
+                    // justifyItems: 'center'
                 }}
             >
             <Row>
@@ -342,7 +342,7 @@ export default function Codesystempage() {
                         </Form>
                     </Modal>
                     <Row>
-                        <Col>
+                        <Col span={12}>
                         <InfiniteScroll
                             dataLength={datas.length}
                             next={getAllDatas}
@@ -353,13 +353,19 @@ export default function Codesystempage() {
                             style={{ margin: '0px auto'}}
                         >
                             <List
-                                // grid={{ colum: 4  }}
+                                // grid={{ colum: 2  }}
+                                // grid={{
+                                //   sm:2
+                                // }}
+                                // width={'100%'}
                                 dataSource={datas}
+                                // split={true}
+                                
                                 // scroll={{ y: 240 }}
                                 renderItem={(data, index) => (
                                     <List.Item key={index}>
                                         <Card
-                                            style={{ margin: "10px", width: "100%", fontSize: "18px", borderRadius: "15px", color: "#002339", background: "#fff", boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px" }} 
+                                            style={{ margin: "10px", height: "245px", width: "396px", fontSize: "18px", borderRadius: "15px", color: "#002339", background: "#fff", boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px" }} 
                                             actions={[ 
                                                 // <Tooltip title="收藏">
                                                 //     <HeartOutlined />
@@ -377,24 +383,24 @@ export default function Codesystempage() {
                                             <Meta title={data.codeName} description={data.purpose} style={{ fontSize: "18px" }}/>
                                         </Card>
                                         <Modal 
-                                            title={datas[0].codeName}
+                                            title={datas[index].codeName}
                                             visible={deteil}
                                             onCancel={handleCancel}
                                             footer={null}
                                         >
                                             <Row>
                                                 <Col>
-                                                    <div>目的： {datas[0].purpose}</div>
+                                                    <div>目的： {datas[index].purpose}</div>
                                                 </Col>
                                             </Row>
                                             <Row>
                                                 <Col>
-                                                    <Table dataSource={datas[0].code} columns={column} components={components} rowClassName={() => 'editable-row'} pagination={{ pageSize: 50 }} scroll={{ y: 240 }} />
+                                                    <Table dataSource={datas[index].code} columns={column} components={components} rowClassName={() => 'editable-row'} pagination={{ pageSize: 50 }} scroll={{ y: 240 }} />
                                                 </Col>
                                             </Row>
                                             <Row>
                                                 <Col>
-                                                    <div>建立人： {datas[0].source}</div>
+                                                    <div>建立人： {datas[index].source}</div>
                                                 </Col>
                                             </Row>
                                         </Modal>

@@ -47,7 +47,7 @@ export default function Filelistpage() {
     return (
         <div className='App'>
             <Navbar/>
-        <div style={{ width: "60%", margin: "0px auto", padding: "60px 0px"}}>
+        <div style={{ width: "60%", height: "200px", margin: "0px auto", padding: "60px 0px"}}>
                     <Row>
                         <Col span={3}>
                             <h2>資料總管</h2>
@@ -58,8 +58,8 @@ export default function Filelistpage() {
                     </Row>
                     <Divider/>
             {/* <header className='App-header'> */}
-                {/* <div style={{ width: "100%" }}> */}
-                    <Table className='table' columns={columns} dataSource={datas}/>
+                {/* <div style={{ height: "300px" }}> */}
+                    <Table className='table' columns={columns} dataSource={datas} pagination={false} scroll={{ y: 500 }}/>
                 {/* </div> */}
             {/* </header> */}
         </div>
