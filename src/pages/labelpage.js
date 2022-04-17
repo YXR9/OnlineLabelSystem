@@ -16,22 +16,25 @@ export default function Labelpage() {
     }, []);
 
     const getAllDatas = () => {
-        var data = JSON.stringify({
-            "fileId": getFileId(),
-            "userId": getAuthToken(),
-            "encodeTaskId": getEncodeTaskId()
+        var data = ({
+          "userId": getAuthToken(),
+          "fileId": getFileId(),
+          "encodeTaskId": getEncodeTaskId()
           });
           var config = {
-            method: 'get',
-            url: 'http://localhost:8080/data/userData',
-            headers: { 
-              'Content-Type': 'application/json', 
+            // method: 'get',
+            // url: 'http://localhost:8080/data/userData',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json', 
             //   'Cookie': 'connect.sid=s%3A5Go4tS-x350sMnz7U3Osp2U8gHF9QDe1.0xdgbe54QYQKgNHr5MQFHCJOv%2BakBkZFd5H1wVpKJXU'
             },
-            data : data
+            data : {},
+            params: data
           };
+          console.log(config);
           
-          axios(config)
+          axios.get('http://localhost:8080/data/userData', config)
           .then(function (response) {
                 setDatas(response.data)
                 console.log(getFileId(),getAuthToken(),getEncodeTaskId())

@@ -261,7 +261,7 @@ export default function Codesystempage() {
   return (
     <div className='App'>
         <Navbar/>
-        <div style={{ width: "60%", margin: "0px auto", padding: "60px 0px"}}>
+        <div style={{ margin: "0px auto", padding: "60px 300px"}}>
             <Row>
                 <Col span={3}>
                     <h2>編碼架構</h2>
@@ -342,7 +342,7 @@ export default function Codesystempage() {
                         </Form>
                     </Modal>
                     <Row>
-                        <Col span={12}>
+                        <Col span={24}>
                         <InfiniteScroll
                             dataLength={datas.length}
                             next={getAllDatas}
@@ -354,9 +354,9 @@ export default function Codesystempage() {
                         >
                             <List
                                 // grid={{ colum: 2  }}
-                                // grid={{
-                                //   sm:2
-                                // }}
+                                grid={{
+                                  column: 1
+                                }}
                                 // width={'100%'}
                                 dataSource={datas}
                                 // split={true}
@@ -365,7 +365,7 @@ export default function Codesystempage() {
                                 renderItem={(data, index) => (
                                     <List.Item key={index}>
                                         <Card
-                                            style={{ margin: "10px", height: "245px", width: "396px", fontSize: "18px", borderRadius: "15px", color: "#002339", background: "#fff", boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px" }} 
+                                            style={{ margin: "10px", fontSize: "18px", borderRadius: "15px", color: "#002339", background: "#fff", boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px" }} 
                                             actions={[ 
                                                 // <Tooltip title="收藏">
                                                 //     <HeartOutlined />

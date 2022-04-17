@@ -8,7 +8,8 @@ const { Footer } = Layout;
 
 export default function DataTimeline(props) {
     const history = useHistory();
-    const [ current, setCurrent ] = useState(0)
+    const [ current, setCurrent ] = useState(0);    // 記錄目前在哪個階段
+
     
     const displayDatas = (props) => {
         
@@ -78,12 +79,12 @@ export default function DataTimeline(props) {
                             <Table columns={coCodeColumns} dataSource={adjustData} pagination={{ pageSize: 50 }} scroll={{ y: 240 }} />
                         </div>
             },
-            {
-                title: '完成編碼校正',
-                content: <div style={{ display: "inline-block", padding: "160px" }}>
-                            <Button className="btn">下載 excel 檔</Button>
-                        </div>
-            }
+            // {
+            //     title: '完成編碼校正',
+            //     content: <div style={{ display: "inline-block", padding: "160px" }}>
+            //                 <Button className="btn">下載 excel 檔</Button>
+            //             </div>
+            // }
         ]
         const next = () => {
             setCurrent(current + 1);
@@ -97,7 +98,7 @@ export default function DataTimeline(props) {
                 <div className="App">
                     <Navbar/>
                     <div className="App-header" >
-                        <div style={{ width: '100%', height: '100%', paddingTop: '100px'}}>
+                        <div style={{ width: '100%', height: '100%', paddingTop: '100px' }}>
                             <Steps current={current} style={{ maxWidth: '100%', padding: '0px 150px'}}>
                                 {
                                     steps.map(item => (
