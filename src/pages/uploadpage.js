@@ -16,7 +16,6 @@ class upload extends React.Component {
             fileName: '',
             collector: '',
             sourceTarget: '',
-            age: '',
             headCounts: '',
             collectDate: [],
             collectMethod: '',
@@ -27,7 +26,6 @@ class upload extends React.Component {
         this.inputFilename = this.inputFilename.bind(this);
         this.inputCollector = this.inputCollector.bind(this);
         this.getSourceTarget = this.getSourceTarget.bind(this);
-        this.getAge = this.getAge.bind(this);
         this.getHeadCounts = this.getHeadCounts.bind(this);
         this.getCollectDate = this.getCollectDate.bind(this);
         this.getCollectMethod = this.getCollectMethod.bind(this);
@@ -60,11 +58,6 @@ class upload extends React.Component {
 
     }
 
-    getAge = (e) => {
-      console.log('age ', e);
-      this.setState({ age: e });
-    };
-
     getHeadCounts = (e) => {
         console.log('head counts ', e);
         this.setState({ headCounts: e });
@@ -76,8 +69,8 @@ class upload extends React.Component {
     }
 
     getCollectMethod = (e) => {
-        console.log('collect method ', e.target.value);
-        this.setState({ collectMethod: e.target.value });
+        console.log('collect method ', e);
+        this.setState({ collectMethod: e });
     }
 
     getContext = (e) => {
@@ -115,7 +108,6 @@ class upload extends React.Component {
         data.append('fileName', fileName);
         data.append('collector', collector);
         data.append('sourceTarget', sourceTarget);
-        data.append('age', age);
         data.append('headCounts', headCounts);
         data.append('collectDate', collectDate);
         data.append('collectMethod', collectMethod);
@@ -193,9 +185,14 @@ class upload extends React.Component {
             <div className='App'>
                 <Navbar/>
             <div style={{ width: "90%", margin: "0px auto", padding: "20px"}}>
-                <PageHeader title="上傳檔案"/>
                 <header className='App-header'>
                     <Form name="file-upload-form" onFinish={this.handleSubmit}>
+                        <Row>
+                            <Col span={24}>
+                                <h2>檔案上傳</h2>
+                                <br/>
+                            </Col>
+                        </Row>
                         <Row>
                             <Col span={11}>
                                 <Form.Item 
@@ -219,7 +216,7 @@ class upload extends React.Component {
                             </Col>
                         </Row>
                         <Row>
-                            <Col span={8}>
+                            <Col span={11}>
                                 <Form.Item
                                     name="sourceTarget"
                                     label="來源對象"
@@ -230,25 +227,18 @@ class upload extends React.Component {
                                         <Select.Option value="elementarySchool">國小</Select.Option>
                                         <Select.Option value="secondary">國中</Select.Option>
                                         <Select.Option value="highSchool">高中</Select.Option>
+                                        <Select.Option value="university">大學</Select.Option>
+                                        <Select.Option value="graduateSchool">研究所</Select.Option>
                                     </Select>
                                 </Form.Item>
                             </Col>
-                            <Col span={8} push={1}>
-                                <Form.Item
-                                    name="age"
-                                    label="年紀"
-                                    rules={[{ required: true, message: '請填寫資料蒐集對象年紀！' }]}
-                                >
-                                    <InputNumber min={6} max={25} onChange={this.getAge} value={this.state.age}/>
-                                </Form.Item>
-                            </Col>
-                            <Col span={8} push={1}>
+                            <Col span={12} push={1}>
                                  <Form.Item
                                     name="headCounts"
                                     label="人數"
                                     rules={[{ required: true, message: '請填寫人數！' }]}
                                 >
-                                    <InputNumber min={1} max={1000} onChange={this.getHeadCounts} value={this.state.headCounts}/>
+                                    <InputNumber min={1} max={1000} onChange={this.getHeadCounts} value={this.state.headCounts} style={{ width: "100%" }}/>
                                 </Form.Item>
                             </Col>
                         </Row>
@@ -271,7 +261,13 @@ class upload extends React.Component {
                                     rules={[{ required: true, message: '請填寫收集方式！' }]}
                                     // style={{ display: 'inline-block', width: 'calc(50% - 8px)', margin: '0 8px' }}
                                 >
-                                    <Input name='collectMethod'  value={this.state.collectMethod} onChange={this.getCollectMethod}/>
+                                    <Select name='collectMethod' onChange={this.getCollectMethod} value={this.state.collectMethod}>
+                                        <Select.Option value="elementarySchool">錄音/錄影</Select.Option>
+                                        <Select.Option value="secondary">線上即時討論</Select.Option>
+                                        <Select.Option value="highSchool">線上論壇</Select.Option>
+                                        <Select.Option value="university">紙本資料</Select.Option>
+                                        <Select.Option value="other">其他</Select.Option>
+                                    </Select>
                                 </Form.Item>
                             </Col>
                         </Row>
@@ -287,7 +283,9 @@ class upload extends React.Component {
                                     },
                                   ]}
                                 >
-                                  <Input.TextArea showCount maxLength={100} value={this.state.context} onChange={this.getContext}/>
+                                  <Input.TextArea showCount maxLength={100} value={this.state.context} onChange={this.getContext} />
+                                  <br/>
+                                  <h6 style={{ textAlign: "left", color: "gray" }}>學習情境（任務）撰寫例子：老師請學生線上討論，或者讓學生參與課堂活動並寫學習單。</h6>
                                 </Form.Item>
                             </Col>
                         </Row>

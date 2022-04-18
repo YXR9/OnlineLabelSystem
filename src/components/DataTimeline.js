@@ -17,8 +17,8 @@ export default function DataTimeline(props) {
         const columns = [
             {
                 title: '資料',
-                dataIndex: 'dataName',
-                key: 'dataName',
+                dataIndex: 'content',
+                key: 'content',
                 render: text => <a href="/codingpage">{text}</a>
             }
         ]

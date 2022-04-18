@@ -53,7 +53,7 @@ export default function Filelistpage() {
                             <h2>資料總管</h2>
                         </Col>
                         <Col span={8} offset={13}>
-                            <Button className='add' onClick={()=>{ history.push('/uploadpage')}}  style={{ fontFamily: "Comic Sans MS", fontSize: "30px", margin: "0px 0px 0px 0px", textAlign: "center", padding: "0px 0px 7px 0px", float: "right", borderRadius: "50%", width: "50px", height: "50px", boxShadow: "rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px", lineHeight: "0px", border: "0px", background: "#00bdff", color: "#f8f7f5"}} >+</Button>
+                            <Button className='add' onClick={()=>{ history.push('/uploadpage')}} style={{ fontFamily: "Comic Sans MS", fontSize: "16px", margin: "0px 0px 0px 0px", textAlign: "center", padding: "0px 0px 7px 0px", float: "right", borderRadius: "5px", width: "150px", height: "50px", boxShadow: "rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px", lineHeight: "50px", border: "0px", background: "#00bdff", color: "#f8f7f5" }}>上傳檔案</Button>
                         </Col>
                     </Row>
                     <Divider/>
