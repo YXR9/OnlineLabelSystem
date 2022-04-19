@@ -261,7 +261,7 @@ export default function Codesystempage() {
   return (
     <div className='App'>
         <Navbar/>
-        <div style={{ margin: "0px auto", padding: "60px 300px"}}>
+        <div style={{ margin: "0px auto", padding: "60px 380px"}}>
             <Row>
                 <Col span={3}>
                     <h2>編碼架構</h2>

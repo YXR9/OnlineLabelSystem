@@ -1,5 +1,14 @@
 import React from 'react';
-import { Form, Input , message, Upload, Select, Button, InputNumber, DatePicker, Row, Col, Layout, PageHeader } from 'antd';
+import { Form, Input , message, Upload, Select, Button, InputNumber, DatePicker, Row, Col } from 'antd';
+// import { ProFormInstance } from '@ant-design/pro-form';
+// import ProForm, {
+//     StepsForm,
+//     ProFormText,
+//     ProFormDatePicker,
+//     ProFormSelect,
+//     ProFormTextArea
+// } from '@ant-design/pro-form';
+// import ProCard from '@ant-design/pro-card';
 import { InboxOutlined } from '@ant-design/icons';
 import '../App.css';
 import axios from 'axios';
@@ -185,7 +194,7 @@ class upload extends React.Component {
             <div className='App'>
                 <Navbar/>
             <div style={{ width: "90%", margin: "0px auto", padding: "20px"}}>
-                <header className='App-header'>
+                <header className='App-header' style={{ margin: "100px 0px"}}>
                     <Form name="file-upload-form" onFinish={this.handleSubmit}>
                         <Row>
                             <Col span={24}>
@@ -311,14 +320,14 @@ class upload extends React.Component {
                         <Row justify='center'>
                             <Col>
                                 <Form.Item>
-                                    <Button block className="btn1" onClick={() => { this.props.history.push("/list") }}>
+                                    <Button block  style={{ fontFamily: "Comic Sans MS", fontSize: "16px", margin: "0px 0px 0px 0px", textAlign: "center", padding: "0px 0px 7px 0px", float: "right", borderRadius: "5px", width: "150px", height: "50px", boxShadow: "rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px", lineHeight: "50px", border: "0px", background: "#f8f7f5", color: "#00bdff" }} onClick={() => { this.props.history.push("/list") }}>
                                         Cancel
                                     </Button>
                                 </Form.Item>
                             </Col>
                             <Col push={1}>
                                 <Form.Item>
-                                    <Button block type='primary' htmlType='submit' className="btn">
+                                    <Button block type='primary' htmlType='submit'  style={{ fontFamily: "Comic Sans MS", fontSize: "16px", margin: "0px 0px 0px 0px", textAlign: "center", padding: "0px 0px 7px 0px", float: "right", borderRadius: "5px", width: "150px", height: "50px", boxShadow: "rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px", lineHeight: "50px", border: "0px", background: "#00bdff", color: "#f8f7f5" }}>
                                         Upload
                                     </Button>
                                 </Form.Item>
