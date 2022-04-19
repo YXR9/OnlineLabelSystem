@@ -11,7 +11,8 @@ body {
 }
 
 h2 {
-  font-size: 1.8rem;
+  /* font-size: 1.8rem; */
+  font-weight: bold;
   font-family: "Montserrat","Noto Sans TC";
 }
 
@@ -381,6 +382,7 @@ nav {
   border-width: 10px;
 }
 
-::-webkit-scrollbar {
-  display : none; /* Chrome Safari */ 
-}
+/* ::-webkit-scrollbar { */
+  /* display : none;  */
+  /* Chrome Safari */ 
+/* } */

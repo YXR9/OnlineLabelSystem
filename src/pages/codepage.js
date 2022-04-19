@@ -6,6 +6,7 @@ import { CodeOutlined, EditOutlined, DeleteOutlined, DownloadOutlined } from '@a
 import Navbar from '../components/Navbar';
 import { setFile, setFileIndex, getAuthToken, setEncodeTaskId } from '../utils';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { Collapse } from 'antd';
 
 const { Footer } = Layout;
 
@@ -77,11 +78,11 @@ export default function Codepage() {
   return (
     <div className='App'>
         <Navbar/>
-        <div style={{ margin: "0px auto", padding: "50px 380px", height: "850px" }}>
+        <div style={{ margin: "0px auto", padding: "60px 380px", height: "850px" }}>
         
             <Row>
                 <Col span={5}>
-                    <h2>建立的編碼任務</h2>
+                    <h2> 進行中的編碼任務</h2>
                 </Col>
                 <Col span={5} offset={10}>
                 {/* <Popover placement='top' content={content}> */}
@@ -201,7 +202,7 @@ export default function Codepage() {
         </div>
         <Row>
                 <Col span={5}>
-                    <h2>結束的編碼任務</h2>
+                    <h2>已結束的編碼任務</h2>
                 </Col>
             </Row>
             <Divider/>
