@@ -181,22 +181,21 @@ nav {
   display: flex;
   align-items: center;
   justify-content: center;
-  /* background-color:#f2f0ec; */
   height: 650px;
   margin-left: 60px;
   margin-right: 60px;
-  /* border-color: #887451; */
-  /* border-style: dashed; */
-  /* border-width: 2px; */
-  /* border-radius: 50px; */
   font-family: Comic Sans MS;
   color: #af7c20;
 }
 
 .steps-content {
-  height: 500px;
+  height: 600px;
   text-align: center;
-  background-color: #000;
+  background-color:rgb(255, 255, 255);
+  border-radius: 15px;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  padding: 50px;
+  margin: 10px 0px;
 }
 
 .steps-action {
@@ -273,36 +272,6 @@ nav {
   border-bottom: 0.5mm solid rgba(110, 110, 110, 0.6);
   background-color: white;
   cursor: pointer;
-}
-
-.modal {
-  position:fixed; /* Stay in place */
-  z-index: 10000; /* Sit on top */
-  padding-top: 1px; /* Location of the box */
-  left: 1;
-  top: 0;
-  width: auto; /* Full width */
-  height: 30%; /* Full height */
-  padding: 20px;
-  vertical-align: middle;
-  /* text-align:justify; */
-  background-color: blueviolet;
-  /* text-align:end;
-  padding: 0!important; */
-}
-
-.modal::before {
-  content: '';
-  display: inline-block;
-  height: 100%;
-  vertical-align: middle;
-  margin-right: -4px;
-}
-
-.modal-dialog {
-  display: inline-block;
-  text-align: left;
-  vertical-align: middle;
 }
 
 .uploadInput {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Steps, Form, Input , message, Upload, Select, Button, InputNumber, DatePicker, Row, Col } from 'antd';
+import { Steps, Form, Input , message, Upload, Select, Button, InputNumber, DatePicker, Row, Col, Card } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
 import '../App.css';
 import FileDetails from '../components/FileDetails';
@@ -366,7 +366,7 @@ class upload extends React.Component {
             <div className='App'>
                 <Navbar/>
             <div style={{ width: "90%", margin: "0px auto", padding: "20px"}}>
-                <header className='App-header' style={{ margin: "100px 0px"}}>
+                <header className='App-header' style={{ margin: "80px 0px"}}>
                 <div>
                     <Steps current={current} style={{ width: '800px' }}>
                         {steps.map(item => (
@@ -374,9 +374,9 @@ class upload extends React.Component {
                         ))}
                     </Steps>
                     <br/>
-                    <Form className="steps-content">
+                    <Card className="steps-content">
                         {steps[current].content}
-                    </Form>
+                    </Card>
                     {/* <Form name="file-upload-form" onFinish={this.handleSubmit}>
                         <Row>
                             <Steps current={current}>
