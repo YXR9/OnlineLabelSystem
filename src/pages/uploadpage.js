@@ -1,22 +1,16 @@
 import React from 'react';
-import { Form, Input , message, Upload, Select, Button, InputNumber, DatePicker, Row, Col } from 'antd';
-// import { ProFormInstance } from '@ant-design/pro-form';
-// import ProForm, {
-//     StepsForm,
-//     ProFormText,
-//     ProFormDatePicker,
-//     ProFormSelect,
-//     ProFormTextArea
-// } from '@ant-design/pro-form';
-// import ProCard from '@ant-design/pro-card';
+import { Steps, Form, Input , message, Upload, Select, Button, InputNumber, DatePicker, Row, Col } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
 import '../App.css';
+import FileDetails from '../components/FileDetails';
+import Details from '../components/Details';
+import FileUpload from '../components/FileUpload';
 import axios from 'axios';
 import Navbar from '../components/Navbar';
 import { getAuthToken } from '../utils';
-// import { History } from 'history';
 
 const { Dragger } = Upload;
+const { Step } = Steps;
 
 class upload extends React.Component {
     constructor(props) {
@@ -30,7 +24,8 @@ class upload extends React.Component {
             collectMethod: '',
             context: '',
             fileList: [],    // fileList
-            UPLoading: false
+            UPLoading: false,
+            current: 0
         };
         this.inputFilename = this.inputFilename.bind(this);
         this.inputCollector = this.inputCollector.bind(this);
@@ -100,6 +95,20 @@ class upload extends React.Component {
             'fileList': fileList.length? [fileList[fileList.length - 1]] : []
         });
     }
+
+    prevStep = () => {
+        const { current } = this.state;
+        this.setState({ current: current - 1 });
+    }
+    
+    nextStep = () => {
+        const { current } = this.state;
+        this.setState({ current: current + 1 });
+    }
+
+    handleChange = input => e => {
+        this.setState({ [input]: e.target.value });
+    }
         
     handleSubmit = fields => {
         if(!this.state.fileList.length) {
@@ -147,8 +156,38 @@ class upload extends React.Component {
     }
 
     render() {
-        const { fileList } = this.state;
-        const { value } = this.state;
+        const { current } = this.state;
+        const { fileName, collector, sourceTarget, headCounts, collectDate, collectMethod, context, fileList } = this.state;
+        const values = { fileName, collector, sourceTarget, headCounts, collectDate, collectMethod, context, fileList };
+
+        // switch(current) {
+        //     case 1:
+        //         return (
+        //             <FileDetails
+        //                 nextStep={ this.nextStep }
+        //                 handleChange={ this.handleChange }
+        //                 values={ values }
+        //             />
+        //         )
+        //     case 2:
+        //         return (
+        //             <Details
+        //                 prevStep={ this.prevStep }
+        //                 nextStep={ this.nextStep }
+        //                 handleChange={ this.handleChange }
+        //                 values={ values }
+        //             />
+        //         )
+        //     case 3:
+        //         return (
+        //             <FileUpload
+        //                 prevStep={ this.prevStep }
+        //                 nextStep={ this.nextStep }
+        //                 handleChange={ this.handleChange }
+        //                 values={ values }
+        //             />
+        //         )
+        // }
         const normFile = (e) => {
             console.log('Upload event:', e);    
           
@@ -188,6 +227,139 @@ class upload extends React.Component {
               console.log('Dropped files');
             }
         };
+        const Prev = e => {
+            e.preventDefault();
+            this.prevStep();
+        }
+
+        const Next = e => {
+            e.preventDefault();
+            this.nextStep();
+        }
+
+        const steps = [
+            {
+                title: '創建資料',
+                content: 
+                // <div>
+                    <Form name="file-upload-form">
+                        <Form.Item 
+                            name='fileName'
+                            label="資料名稱"  
+                            hasFeedback 
+                            rules={[{ require: true, message: "Please enter filename" },]}
+                        >
+                            <Input name='fileName' value={this.state.fileName} onChange={this.inputFilename}/>
+                        </Form.Item>
+                        <Form.Item>
+                            <Button onClick={ Next }>下一步</Button>
+                        </Form.Item>
+                    </Form>
+                // </div>
+                    
+                
+            },
+            {
+                title: '填寫相關內容',
+                content: 
+                    <Form>
+                        <Form.Item 
+                            name="collector" 
+                            label="蒐集者姓名" 
+                            hasFeedback
+                            rules={[{ require: true, message: "Please enter collector" },]}
+                        >
+                            <Input name='collector' value={this.state.collector} onChange={this.inputCollector}/>
+                        </Form.Item>
+                        <Form.Item
+                            name="sourceTarget"
+                            label="來源對象"
+                            hasFeedback
+                            rules={[{ required: true, message: '請填寫來源對象！' }]}
+                        >
+                            <Select onChange={this.getSourceTarget} value={this.state.sourceTarget}>
+                                <Select.Option value="elementarySchool">國小</Select.Option>
+                                <Select.Option value="secondary">國中</Select.Option>
+                                <Select.Option value="highSchool">高中</Select.Option>
+                                <Select.Option value="university">大學</Select.Option>
+                                <Select.Option value="graduateSchool">研究所</Select.Option>
+                            </Select>
+                        </Form.Item>
+                         <Form.Item
+                            name="headCounts"
+                            label="人數"
+                            rules={[{ required: true, message: '請填寫人數！' }]}
+                        >
+                            <InputNumber min={1} max={1000} onChange={this.getHeadCounts} value={this.state.headCounts} style={{ width: "100%" }}/>
+                        </Form.Item>
+                        <Form.Item
+                            name="collectDate"
+                            label="蒐集日期"
+                            validateStatus="success"
+                            rules={[{ required: true, message: '請選擇資料蒐集日期！' }]}
+                        >
+                          <DatePicker style={{ width: '100%' }} onChange={this.getCollectDate} />
+                        </Form.Item>
+                        <Form.Item 
+                            name="collectMethod" 
+                            label="蒐集方式" 
+                            hasFeedback
+                            rules={[{ required: true, message: '請填寫收集方式！' }]}
+                            // style={{ display: 'inline-block', width: 'calc(50% - 8px)', margin: '0 8px' }}
+                        >
+                            <Select name='collectMethod' onChange={this.getCollectMethod} value={this.state.collectMethod}>
+                                <Select.Option value="elementarySchool">錄音/錄影</Select.Option>
+                                <Select.Option value="secondary">線上即時討論</Select.Option>
+                                <Select.Option value="highSchool">線上論壇</Select.Option>
+                                <Select.Option value="university">紙本資料</Select.Option>
+                                <Select.Option value="other">其他</Select.Option>
+                            </Select>
+                        </Form.Item>
+                        <Form.Item
+                          name="context"
+                          label="學習情境（任務）"
+                          rules={[
+                            {
+                              required: true,
+                              message: 'Please input Intro',
+                            },
+                          ]}
+                        >
+                          <Input.TextArea showCount maxLength={100} value={this.state.context} onChange={this.getContext} />
+                          <br/>
+                          <h6 style={{ textAlign: "left", color: "gray" }}>學習情境（任務）撰寫例子：老師請學生線上討論，或者讓學生參與課堂活動並寫學習單。</h6>
+                        </Form.Item>
+                        <Form.Item>
+                            <Button onClick={ Prev }>上一步</Button>
+                            <Button onClick={ Next }>下一步</Button>
+                        </Form.Item>
+                    </Form>
+                
+            },
+            {
+                title: '檔案上傳',
+                content: 
+                    <Form.Item 
+                        name="file" 
+                        initialValue={this.props.data && this.props.data.filename ? this.props.data.filename : []}
+                        valuePropName= 'fileList'
+                        getValueFromEvent= {normFile}
+                        // className="form-group files" 
+                        wrapperCol={{ span: 24 }}
+                    >
+                        <Dragger fileList={this.state.fileList} customRequest={this.dummyRequest} {...props} beforeUpload={(f, fList) => false} onChange={this.HandlefileChange}>
+                            <p className="ant-upload-drag-icon">
+                                <InboxOutlined />
+                            </p>
+                            <p className="ant-upload-text">點擊或拖曳檔案至此</p>
+                        </Dragger>
+                        <Form.Item>
+                            <Button onClick={ Prev }>上一步</Button>
+                            <Button onClick={ Next }>下一步</Button>
+                        </Form.Item>
+                    </Form.Item>
+            }
+        ]
         
 
         return (
@@ -195,12 +367,23 @@ class upload extends React.Component {
                 <Navbar/>
             <div style={{ width: "90%", margin: "0px auto", padding: "20px"}}>
                 <header className='App-header' style={{ margin: "100px 0px"}}>
-                    <Form name="file-upload-form" onFinish={this.handleSubmit}>
+                <div>
+                    <Steps current={current} style={{ width: '800px' }}>
+                        {steps.map(item => (
+                            <Step key={item.title} title={item.title}/>
+                        ))}
+                    </Steps>
+                    <br/>
+                    <Form className="steps-content">
+                        {steps[current].content}
+                    </Form>
+                    {/* <Form name="file-upload-form" onFinish={this.handleSubmit}>
                         <Row>
-                            <Col span={24}>
-                                <h2>檔案上傳</h2>
-                                <br/>
-                            </Col>
+                            <Steps current={current}>
+                                {steps.map(item => (
+                                    <Step key={item.title} title={item.title}/>
+                                ))}
+                            </Steps>
                         </Row>
                         <Row>
                             <Col span={11}>
@@ -317,7 +500,7 @@ class upload extends React.Component {
                                     </Form.Item>
                             </Col>
                         </Row>
-                        <Row justify='center'>
+                        <Row justify='center' style={{margin: '20px 0px'}}>
                             <Col>
                                 <Form.Item>
                                     <Button block  style={{ fontFamily: "Comic Sans MS", fontSize: "16px", margin: "0px 0px 0px 0px", textAlign: "center", padding: "0px 0px 7px 0px", float: "right", borderRadius: "5px", width: "150px", height: "50px", boxShadow: "rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px", lineHeight: "50px", border: "0px", background: "#f8f7f5", color: "#00bdff" }} onClick={() => { this.props.history.push("/list") }}>
@@ -333,7 +516,8 @@ class upload extends React.Component {
                                 </Form.Item>
                             </Col>
                         </Row>
-                    </Form>
+                    </Form> */}
+                    </div>
                 </header>
                 </div>
             </div>

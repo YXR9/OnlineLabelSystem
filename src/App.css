@@ -194,8 +194,9 @@ nav {
 }
 
 .steps-content {
-  height: 350px;
+  height: 500px;
   text-align: center;
+  background-color: #000;
 }
 
 .steps-action {
