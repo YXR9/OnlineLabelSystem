@@ -22,7 +22,8 @@ function info() {
         okText: "開始上傳檔案",
         onOk() { setTimeout(function () {
             window.location.href = 'http://localhost:3000/uploadpage';
-        }, 100); } 
+        }, 100); },
+        maskClosable: true
     })
 }
 
