@@ -251,9 +251,6 @@ class upload extends React.Component {
                         >
                             <Input name='fileName' value={this.state.fileName} onChange={this.inputFilename}/>
                         </Form.Item>
-                        <Form.Item>
-                            <Button onClick={ Next }>下一步</Button>
-                        </Form.Item>
                     </Form>
                 // </div>
                     
@@ -329,10 +326,6 @@ class upload extends React.Component {
                           <br/>
                           <h6 style={{ textAlign: "left", color: "gray" }}>學習情境（任務）撰寫例子：老師請學生線上討論，或者讓學生參與課堂活動並寫學習單。</h6>
                         </Form.Item>
-                        <Form.Item>
-                            <Button onClick={ Prev }>上一步</Button>
-                            <Button onClick={ Next }>下一步</Button>
-                        </Form.Item>
                     </Form>
                 
             },
@@ -346,6 +339,7 @@ class upload extends React.Component {
                         getValueFromEvent= {normFile}
                         // className="form-group files" 
                         wrapperCol={{ span: 24 }}
+                        style={{height: "1000px"}}
                     >
                         <Dragger fileList={this.state.fileList} customRequest={this.dummyRequest} {...props} beforeUpload={(f, fList) => false} onChange={this.HandlefileChange}>
                             <p className="ant-upload-drag-icon">
@@ -353,10 +347,6 @@ class upload extends React.Component {
                             </p>
                             <p className="ant-upload-text">點擊或拖曳檔案至此</p>
                         </Dragger>
-                        <Form.Item>
-                            <Button onClick={ Prev }>上一步</Button>
-                            <Button onClick={ Next }>下一步</Button>
-                        </Form.Item>
                     </Form.Item>
             }
         ]
@@ -368,7 +358,7 @@ class upload extends React.Component {
             <div style={{ width: "90%", margin: "0px auto", padding: "20px"}}>
                 <header className='App-header' style={{ margin: "80px 0px"}}>
                 <div>
-                    <Steps current={current} style={{ width: '800px' }}>
+                    <Steps current={current} style={{ width: '70rem', margin: "10px" }}>
                         {steps.map(item => (
                             <Step key={item.title} title={item.title}/>
                         ))}
@@ -377,6 +367,28 @@ class upload extends React.Component {
                     <Card className="steps-content">
                         {steps[current].content}
                     </Card>
+                    <div className="steps-action">
+                        {current < steps.length - 1 && (
+                          <Button style={{ margin: '0 8px' }}>
+                            暫停並返回編碼任務列表
+                          </Button>
+                        )}
+                        {current > 0 && (
+                          <Button style={{ margin: '0 8px' }} onClick={Prev}>
+                            返回
+                          </Button>
+                        )}
+                        {current < steps.length - 1 && (
+                          <Button type="primary" onClick={Next}>
+                            下一步
+                          </Button>
+                        )}
+                        {current === steps.length - 1 && (
+                          <Button type="primary" onClick={() => { message.success('Processing complete!');}}>
+                            完成並返回編碼任務列表
+                          </Button>
+                        )}
+                    </div>
                     {/* <Form name="file-upload-form" onFinish={this.handleSubmit}>
                         <Row>
                             <Steps current={current}>
