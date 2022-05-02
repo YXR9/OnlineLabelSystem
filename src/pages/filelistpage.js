@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link, Route, useHistory } from 'react-router-dom';
 import axios from "axios";
-import { Table, Button, Layout, Row, Col, Divider, Modal } from 'antd';
+import { Table, Button, Layout, Row, Col, Divider, Modal, Space, Popconfirm } from 'antd';
 import Navbar from '../components/Navbar';
 import { getAuthToken } from '../utils';
-import { DownloadOutlined } from '@ant-design/icons';
+import { DeleteOutlined, DownloadOutlined } from '@ant-design/icons';
 const { Footer } = Layout;
 
 function info() {
@@ -44,6 +44,16 @@ export default function Filelistpage() {
         {
             title: '檔案說明',
             dataIndex: 'context'
+        },
+        {
+            title: '',
+            key: 'action',
+            render: (_, record) => datas.length >= 1 ? (
+                <Popconfirm title="確定要刪除嗎？" onConfirm={() => handleDelete(record._id)}>
+                    <DeleteOutlined style={{color: "#BBB"}}/>
+                </Popconfirm>
+            ) : null,
+            width: 50
         }
     ]
 
@@ -63,6 +73,11 @@ export default function Filelistpage() {
             setDatas(res.data);
         })
         .catch(error => console.error(`Error: ${error}`));
+    }
+
+    const handleDelete = (_id) => {
+        const dataSource = [...datas];
+        setDatas(dataSource.filter((item) => item._id !== _id),);
     }
 
     return (
