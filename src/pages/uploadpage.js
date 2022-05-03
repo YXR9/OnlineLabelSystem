@@ -44,14 +44,14 @@ class upload extends React.Component {
 
     inputFilename = e => {
         if (e.target instanceof HTMLInputElement) {
-            // console.log('file name ', e.target.value);
+            console.log('file name ', e.target.value);
             this.setState({ fileName: e.target.value });
         }
     }
 
     inputCollector = e => {
         if (e.target instanceof HTMLInputElement) {
-            // console.log('collector ', e);
+            console.log('collector ', e.target.value);
             this.setState({ collector: e.target.value });
         }
     }
@@ -241,97 +241,89 @@ class upload extends React.Component {
             {
                 title: '創建資料',
                 content: 
-                // <div>
-                    <Form name="file-upload-form">
-                        <Form.Item 
-                            name='fileName'
-                            label="資料名稱"  
-                            hasFeedback 
-                            rules={[{ require: true, message: "Please enter filename" },]}
-                        >
-                            <Input name='fileName' value={this.state.fileName} onChange={this.inputFilename}/>
-                        </Form.Item>
-                    </Form>
-                // </div>
-                    
-                
+                <>
+                    <Form.Item name='fileName' label="資料名稱">
+                        <Input name='fileName' value={fileName} onChange={this.inputFilename}/>
+                    </Form.Item>
+                </>
             },
             {
                 title: '填寫相關內容',
                 content: 
-                    <Form>
-                        <Form.Item 
-                            name="collector" 
-                            label="蒐集者姓名" 
-                            hasFeedback
-                            rules={[{ require: true, message: "Please enter collector" },]}
-                        >
-                            <Input name='collector' value={this.state.collector} onChange={this.inputCollector}/>
-                        </Form.Item>
-                        <Form.Item
-                            name="sourceTarget"
-                            label="來源對象"
-                            hasFeedback
-                            rules={[{ required: true, message: '請填寫來源對象！' }]}
-                        >
-                            <Select onChange={this.getSourceTarget} value={this.state.sourceTarget}>
-                                <Select.Option value="elementarySchool">國小</Select.Option>
-                                <Select.Option value="secondary">國中</Select.Option>
-                                <Select.Option value="highSchool">高中</Select.Option>
-                                <Select.Option value="university">大學</Select.Option>
-                                <Select.Option value="graduateSchool">研究所</Select.Option>
-                            </Select>
-                        </Form.Item>
-                         <Form.Item
-                            name="headCounts"
-                            label="人數"
-                            rules={[{ required: true, message: '請填寫人數！' }]}
-                        >
-                            <InputNumber min={1} max={1000} onChange={this.getHeadCounts} value={this.state.headCounts} style={{ width: "100%" }}/>
-                        </Form.Item>
-                        <Form.Item
-                            name="collectDate"
-                            label="蒐集日期"
-                            validateStatus="success"
-                            rules={[{ required: true, message: '請選擇資料蒐集日期！' }]}
-                        >
-                          <DatePicker style={{ width: '100%' }} onChange={this.getCollectDate} />
-                        </Form.Item>
-                        <Form.Item 
-                            name="collectMethod" 
-                            label="蒐集方式" 
-                            hasFeedback
-                            rules={[{ required: true, message: '請填寫收集方式！' }]}
-                            // style={{ display: 'inline-block', width: 'calc(50% - 8px)', margin: '0 8px' }}
-                        >
-                            <Select name='collectMethod' onChange={this.getCollectMethod} value={this.state.collectMethod}>
-                                <Select.Option value="elementarySchool">錄音/錄影</Select.Option>
-                                <Select.Option value="secondary">線上即時討論</Select.Option>
-                                <Select.Option value="highSchool">線上論壇</Select.Option>
-                                <Select.Option value="university">紙本資料</Select.Option>
-                                <Select.Option value="other">其他</Select.Option>
-                            </Select>
-                        </Form.Item>
-                        <Form.Item
-                          name="context"
-                          label="學習情境（任務）"
-                          rules={[
-                            {
-                              required: true,
-                              message: 'Please input Intro',
-                            },
-                          ]}
-                        >
-                          <Input.TextArea showCount maxLength={100} value={this.state.context} onChange={this.getContext} />
-                          <br/>
-                          <h6 style={{ textAlign: "left", color: "gray" }}>學習情境（任務）撰寫例子：老師請學生線上討論，或者讓學生參與課堂活動並寫學習單。</h6>
-                        </Form.Item>
-                    </Form>
+                <>
+                    <Form.Item
+                        label="蒐集者姓名"  name="collector"
+                        // hasFeedback
+                        // rules={[{ require: true, message: "Please enter collector" },]}
+                    >
+                        <Form.Item><Input name='collector' value={this.state.collector} onChange={this.inputCollector}/></Form.Item>
+                    </Form.Item>
+                    <Form.Item
+                        
+                        label="來源對象" name="sourceTarget"
+                        // hasFeedback
+                        // rules={[{ required: true, message: '請填寫來源對象！' }]}
+                    >
+                        <Form.Item><Select onChange={this.getSourceTarget} value={this.state.sourceTarget}>
+                            <Select.Option value="elementarySchool">國小</Select.Option>
+                            <Select.Option value="secondary">國中</Select.Option>
+                            <Select.Option value="highSchool">高中</Select.Option>
+                            <Select.Option value="university">大學</Select.Option>
+                            <Select.Option value="graduateSchool">研究所</Select.Option>
+                        </Select></Form.Item>
+                        
+                    </Form.Item>
+                     <Form.Item
+                         name="headCounts"
+                        label="人數"
+                        // rules={[{ required: true, message: '請填寫人數！' }]}
+                    >
+                        <Form.Item><InputNumber min={1} max={1000} onChange={this.getHeadCounts} value={this.state.headCounts} style={{ width: "100%" }}/></Form.Item>
+                    </Form.Item>
+                    <Form.Item
+                         name="collectDate"
+                        label="蒐集日期"
+                        // validateStatus="success"
+                        // rules={[{ required: true, message: '請選擇資料蒐集日期！' }]}
+                    >
+                      <Form.Item><DatePicker style={{ width: '100%' }} onChange={this.getCollectDate} /></Form.Item>
+                    </Form.Item>
+                    <Form.Item 
+                        
+                        label="蒐集方式" 
+                        // hasFeedback
+                        // rules={[{ required: true, message: '請填寫收集方式！' }]}
+                        // style={{ display: 'inline-block', width: 'calc(50% - 8px)', margin: '0 8px' }}
+                    >
+                        <Form.Item name="collectMethod" ><Select name='collectMethod' onChange={this.getCollectMethod} value={this.state.collectMethod}>
+                            <Select.Option value="elementarySchool">錄音/錄影</Select.Option>
+                            <Select.Option value="secondary">線上即時討論</Select.Option>
+                            <Select.Option value="highSchool">線上論壇</Select.Option>
+                            <Select.Option value="university">紙本資料</Select.Option>
+                            <Select.Option value="other">其他</Select.Option>
+                        </Select></Form.Item>
+                    </Form.Item>
+                    <Form.Item
+                      
+                      label="學習情境（任務）"
+                    //   rules={[
+                    //     {
+                    //       required: true,
+                    //       message: 'Please input Intro',
+                    //     },
+                    //   ]}
+                    >
+                      <Form.Item name="context"><Input.TextArea showCount maxLength={100} value={this.state.context} onChange={this.getContext} /></Form.Item>
+                      <br/>
+                      <h6 style={{ textAlign: "left", color: "gray" }}>學習情境（任務）撰寫例子：老師請學生線上討論，或者讓學生參與課堂活動並寫學習單。</h6>
+                    </Form.Item>
+                </>
                 
             },
             {
                 title: '檔案上傳',
                 content: 
+                <>
                     <Form.Item 
                         name="file" 
                         initialValue={this.props.data && this.props.data.filename ? this.props.data.filename : []}
@@ -348,16 +340,16 @@ class upload extends React.Component {
                             <p className="ant-upload-text">點擊或拖曳檔案至此</p>
                         </Dragger>
                     </Form.Item>
+                </>
             }
         ]
-        
 
         return (
             <div className='App'>
                 <Navbar/>
             <div style={{ width: "90%", margin: "0px auto", padding: "20px"}}>
                 <header className='App-header' style={{ margin: "80px 0px"}}>
-                <div>
+                <Form name="file-upload-form" onFinish={this.handleSubmit}>
                     <Steps current={current} style={{ width: '70rem', margin: "10px" }}>
                         {steps.map(item => (
                             <Step key={item.title} title={item.title}/>
@@ -365,7 +357,10 @@ class upload extends React.Component {
                     </Steps>
                     <br/>
                     <Card className="steps-content">
-                        {steps[current].content}
+                        {/* <Form  name="file-upload-form" onFinish={this.handleSubmit}> */}
+                            {steps[current].content}
+                        {/* </Form> */}
+                        
                     </Card>
                     <div className="steps-action">
                         {current < steps.length - 1 && (
@@ -384,7 +379,7 @@ class upload extends React.Component {
                           </Button>
                         )}
                         {current === steps.length - 1 && (
-                          <Button type="primary" onClick={() => { message.success('Processing complete!');}}>
+                          <Button type="primary" htmlType='submit' onClick={() => { message.success('Processing complete!');}} >
                             完成並返回編碼任務列表
                           </Button>
                         )}
@@ -529,7 +524,7 @@ class upload extends React.Component {
                             </Col>
                         </Row>
                     </Form> */}
-                    </div>
+                </Form>
                 </header>
                 </div>
             </div>
