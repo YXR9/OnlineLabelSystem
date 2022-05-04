@@ -16,6 +16,7 @@ export default function Codesystempage() {
   const [ isModalVisible, setIsModalVisible ] = useState(false);
   const [ deteil, setDeteil ] = useState(false);
   const [ codeSystemDeteil, setCodeSystemDeteil ] = useState([]);
+  const [ filterList, setFilterList ] = useState(null);
 
   const url = 'http://localhost:8080/';
 
@@ -27,12 +28,6 @@ export default function Codesystempage() {
   const showJoinTask = () => {
       setIsModalVisible(true);
   }
-
-  // const showDeteil = () => {
-  //   setDeteil(true);
-  //   setAuthToken()
-  //   // console.log(index)
-  // }
 
   const handleAddCodeSystem = (fields) => {
       const userId = getAuthToken();
@@ -69,23 +64,6 @@ export default function Codesystempage() {
       .catch(function (error) {
         console.log(error);
       });
-      // const data = new FormData();
-      // data.append('userId', userId);
-      // data.append('codeName', codeName);
-      // data.append('purpose', purpose);
-      // data.append('code.option', option);
-      // data.append('code.description', description);
-      // data.append('source', source);
-      // // console.log(userId, coCode);
-
-      // axios.post(`${url}code/codeSystem`, data)
-      // .then((res) => {
-      //     message.success("成功建立編碼架構🎉");
-      //     setIsModalVisible(false);
-      //     console.log(res);
-      // }).catch (error => {
-      //     message.error(error.message);
-      // })
   }
 
   const handleCancel = () => {
@@ -97,18 +75,19 @@ export default function Codesystempage() {
       const userId = getAuthToken()
       axios.get(`${url}code/codeSystem/${userId}`)
       .then((res) => {
-          // const allDatas = res.data.datas.allDatas;
-          // add data to state
           setDatas(res.data);
       })
       .catch(error => console.error(`Error: ${error}`));
   }
 
   const onSearch = value => {
+    const filterData = datas.filter((o) => Object.keys(o).some((k) => String(o[k])
+      .toLowerCase()
+      .includes(value.toLowerCase())));
+    setFilterList(filterData);
     console.log(value);
   }
 
-  // const childData = datas.code;
   const columns = [
     {
         title: '選項',
@@ -129,17 +108,11 @@ export default function Codesystempage() {
         title: "選項",
         dataIndex: "option",
         key: "option",
-        // render: <Form.Item name="option">
-        //   <Input/>
-        // </Form.Item>
     },
     {
         title: "說明",
         dataIndex: "description",
         key: "description",
-        // render: <Form.Item name="description">
-        //   <Input/>
-        // </Form.Item>
     }
   ]
 
@@ -255,7 +228,6 @@ export default function Codesystempage() {
     setCodeSystemDeteil((pre) => {
       return [...pre, newOption];
     });
-    // console.log("okk")
   }
 
   return (
@@ -275,16 +247,11 @@ export default function Codesystempage() {
                 </Col>
             </Row>
             <Divider/>
-        {/* <div className='App-header'> */}
             <div 
                 id="scrollableDiv"
                 style={{
                     height: 580,
                     overflow: 'auto',
-                    // display: 'flex',
-                    // flexDirection: 'column-reverse',
-                    // padding: '0 16px',
-                    // justifyItems: 'center'
                 }}
             >
             <Row>
@@ -353,15 +320,10 @@ export default function Codesystempage() {
                             style={{ margin: '0px auto'}}
                         >
                             <List
-                                // grid={{ colum: 2  }}
                                 grid={{
                                   column: 1
                                 }}
-                                // width={'100%'}
-                                dataSource={datas}
-                                // split={true}
-                                
-                                // scroll={{ y: 240 }}
+                                dataSource={filterList == null ? datas : filterList}
                                 renderItem={(data, index) => (
                                     <List.Item key={index}>
                                         <Card
@@ -413,8 +375,6 @@ export default function Codesystempage() {
                 </Col>
             </Row>
             </div>
-        {/* </div>/ */}
-        
         </div>
         <Footer style={{ background: "#000406", color: "#5f8497", textAlign: 'center', position: "absolute", boxSizing: "border-box", bottom: "0", width: "100%", fontFamily: 'Comic Sans MS, Comic Sans, cursive' }}>Ant Design ©2018 Created by Ant UED</Footer>
     </div>
