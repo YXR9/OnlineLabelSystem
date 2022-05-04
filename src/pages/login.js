@@ -6,8 +6,6 @@ import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import { setAuthToken } from "../utils";
 
-
-
 export default function Login() {
 const history = useHistory();
     const [ account, setAccount ] = useState();
