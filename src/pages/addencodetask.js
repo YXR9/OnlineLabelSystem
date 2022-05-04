@@ -88,7 +88,14 @@ export default function Addencodetask() {
                 >
                     <Select
                         name="fileId"
+                        filterOption={(inputValue, file) =>
+                            file.props.children
+                                .toString()
+                                .toLowerCase()
+                                .includes(inputValue.toLowerCase())
+                        }
                         showSearch
+                        allowClear
                         placeholder="選擇編碼檔案"
                         bordered={false}
                     >
@@ -114,6 +121,14 @@ export default function Addencodetask() {
                         name="codeSysId" 
                         bordered={false}
                         placeholder="選擇編碼架構"
+                        filterOption={(inputValue, codeSystem) =>
+                            codeSystem.props.children
+                                .toString()
+                                .toLowerCase()
+                                .includes(inputValue.toLowerCase())
+                        }
+                        showSearch
+                        allowClear
                     >
                         {codeSystem.map((item, index) => (
                             <Select.Option key={JSON.stringify(index)} value={item._id}>{item.codeName}</Select.Option>
