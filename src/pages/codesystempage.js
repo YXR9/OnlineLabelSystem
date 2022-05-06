@@ -359,26 +359,26 @@ export default function Codesystempage() {
                                             <Meta title={data.codeName} description={data.purpose} style={{ fontSize: "18px" }}/>
                                         </Card>
                                         <Modal 
-                                            title={datas[index].codeName}
+                                            title={datas[getFileIndex()].codeName}
                                             visible={deteil}
                                             onCancel={handleCancel}
                                             footer={null}
                                         >
                                             <Row>
                                                 <Col>
-                                                    <div>目的： {datas[index].purpose}</div>
+                                                    <div>目的： {datas[getFileIndex()].purpose}</div>
                                                 </Col>
                                             </Row>
                                             <Row>
                                                 <Col>
                                                 <Form form={form} component={false}>
-                                                    <Table dataSource={datas[index].code} columns={margedColumns} components={components} rowClassName='editable-row' pagination={{ onChange: cancel }} scroll={{ y: 240 }} />
+                                                    <Table dataSource={datas[getFileIndex()].code} columns={margedColumns} components={components} rowClassName='editable-row' pagination={{ onChange: cancel }} scroll={{ y: 240 }} />
                                                 </Form>
                                                 </Col>
                                             </Row>
                                             <Row>
                                                 <Col>
-                                                    <div>建立人： {datas[index].source}</div>
+                                                    <div>建立人： {datas[getFileIndex()].source}</div>
                                                 </Col>
                                             </Row>
                                         </Modal>
