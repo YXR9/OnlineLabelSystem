@@ -1,24 +1,60 @@
 import { PlusOutlined, ContainerOutlined, DeleteOutlined } from '@ant-design/icons';
-import { Layout, Input, Row, Col, Button, Modal, Form, Divider, List, Card, Tooltip, Popconfirm, message, Table, PageHeader, Skeleton } from 'antd';
+import { Layout, Input, Row, Col, Button, Modal, Form, Divider, List, Card, Tooltip, Popconfirm, message, Table, PageHeader, Skeleton, Typography } from 'antd';
 import axios from 'axios';
 import React, { useEffect, useState, useContext, useRef } from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Navbar from '../components/Navbar';
 import { getAuthToken, getUsername, getFileIndex, setFile, setFileIndex } from '../utils';
 
-const EditableContext = React.createContext(null);
 const { Footer } = Layout;
 const { Search } = Input;
 const { Meta } = Card;
 
 export default function Codesystempage() {
+  const [ form ] = Form.useForm();
   const [ datas, setDatas ] = useState('');
+  const [ editingKey, setEditingKey] = useState('');
   const [ isModalVisible, setIsModalVisible ] = useState(false);
   const [ deteil, setDeteil ] = useState(false);
   const [ codeSystemDeteil, setCodeSystemDeteil ] = useState([]);
   const [ filterList, setFilterList ] = useState(null);
-
   const url = 'http://localhost:8080/';
+
+  const isEditing = (record) => record.key === editingKey;
+
+  const edit = (record) => {
+    form.setFieldsValue({
+      option: '',
+      description: '',
+      ...record,
+    });
+    setEditingKey(record.key);
+  };
+
+  const cancel = () => {
+    setEditingKey('');
+  };
+
+  const save = async (key) => {
+    try {
+      const row = await form.validateFields();
+      const newData = [...datas];
+      const index = newData.findIndex((item) => key === item.key);
+
+      if (index > -1) {
+        const item = newData[index];
+        newData.splice(index, 1, { ...item, ...row });
+        setDatas(newData);
+        setEditingKey('');
+      } else {
+        newData.push(row);
+        setDatas(newData);
+        setEditingKey('');
+      }
+    } catch (errInfo) {
+      console.log('Validate Failed:', errInfo);
+    }
+  };
 
   useEffect(() => {
       getAllDatas();
@@ -100,8 +136,49 @@ export default function Codesystempage() {
         dataIndex: 'description',
         key: 'description',
         editable: true
+    },
+    {
+      title: '編輯',
+      key: 'operation',
+      render: (_, record) => {
+        const editable = isEditing(record);
+        return editable ? (
+          <span>
+            <Typography.Link
+              onClick={() => save(record.key)}
+              style={{
+                marginRight: 8,
+              }}
+            >
+              儲存
+            </Typography.Link>
+            <Popconfirm title="確定要取消嗎？🤔" onConfirm={cancel}>
+              <a>取消</a>
+            </Popconfirm>
+          </span>
+        ) : (
+          <Typography.Link disabled={editingKey !== ''} onClick={() => edit(record)}>
+            編輯
+          </Typography.Link>
+        );
+      },
+    },
+  ];
+
+  const margedColumns = columns.map((col) => {
+    if (!col.editable) {
+      return col;
     }
-  ]
+    return {
+      ...col,
+      onCell: (record) => ({
+        record,
+        dataIndex: col.dataIndex,
+        title: col.title,
+        editing: isEditing(record),
+      }),
+    };
+  });
 
   const codeSystemOption = [
     {
@@ -116,108 +193,45 @@ export default function Codesystempage() {
     }
   ]
 
-  const EditableRow = ({...data}) => {
-    const [ form ] = Form.useForm();
-    return (
-      <Form form={form} component={false}>
-        <EditableContext.Provider value={form}>
-          <tr {...data}/>
-        </EditableContext.Provider>
-      </Form>
-    )
-  }
-
   const EditableCell = ({
     title,
-    editable,
+    editing,
     children,
     dataIndex,
     record,
-    handleSave,
     ...restProps
   }) => {
-    const [editing, setEditing] = useState(false);
-    const inputRef = useRef(null);
-    const form = useContext(EditableContext);
-    useEffect(() => {
-      if (editing) {
-        inputRef.current.focus();
-      }
-    }, [editing]);
-  
-    const toggleEdit = () => {
-      setEditing(!editing);
-      form.setFieldsValue({
-        [dataIndex]: record[dataIndex],
-      });
-    };
-    const save = async () => {
-      try {
-        const values = await form.validateFields();
-        toggleEdit();
-        handleSave({ ...record, ...values });
-      } catch (errInfo) {
-        console.log('Save failed:', errInfo);
-      }
-    };
-  
-    let childNode = children;
-  
-    if (editable) {
-      childNode = editing ? (
-        <Form.Item
-          style={{
-            margin: 0,
-          }}
-          name={dataIndex}
-          rules={[
-            {
-              required: true,
-              message: `${title} is required.`,
-            },
-          ]}
-        >
-          <Input ref={inputRef} onPressEnter={save} onBlur={save} />
-        </Form.Item>
-      ) : (
-        <div
-          className="editable-cell-value-wrap"
-          style={{
-            paddingRight: 24,
-          }}
-          onClick={toggleEdit}
-        >
-          {children}
-        </div>
-      );
-    }
-  
-    return <td {...restProps}>{childNode}</td>;
+    const inputNode = <Input/>
+    return (
+      <td {...restProps}>
+        {editing ? (
+          <Form.Item
+              name={dataIndex}
+              style={{
+                margin: 0,
+              }}
+              rules={[
+                {
+                  required: true,
+                  message: `Please Input ${title}!`,
+                },
+              ]}
+          >
+            {inputNode}
+          </Form.Item>
+        ) : (
+          children
+        )}
+      </td>
+    );
   };
+
 
   const components = {
     body: {
-      row: EditableRow,
-      cell: EditableCell
+      cell: EditableCell,
     }
   }
-  
-  const column = columns.map((col) => {
-    if (!col.editable) {
-      return col;
-    }
-
-    return {
-      ...col,
-      onCell: (record) => ({
-        record,
-        editable: col.editable,
-        dataIndex: col.dataIndex,
-        title: col.title,
-        // handleSave: handleSave,
-      }),
-    };
-  });
 
   const handleAdd = () => {
     const newOption = {
@@ -357,7 +371,9 @@ export default function Codesystempage() {
                                             </Row>
                                             <Row>
                                                 <Col>
-                                                    <Table dataSource={datas[index].code} columns={column} components={components} rowClassName={() => 'editable-row'} pagination={{ pageSize: 50 }} scroll={{ y: 240 }} />
+                                                <Form form={form} component={false}>
+                                                    <Table dataSource={datas[index].code} columns={margedColumns} components={components} rowClassName='editable-row' pagination={{ onChange: cancel }} scroll={{ y: 240 }} />
+                                                </Form>
                                                 </Col>
                                             </Row>
                                             <Row>
