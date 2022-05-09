@@ -1,7 +1,7 @@
-import { PlusOutlined, ContainerOutlined, DeleteOutlined } from '@ant-design/icons';
+import { ContainerOutlined, DeleteOutlined } from '@ant-design/icons';
 import { Layout, Input, Row, Col, Button, Modal, Form, Divider, List, Card, Tooltip, Popconfirm, message, Table, PageHeader, Skeleton, Typography } from 'antd';
 import axios from 'axios';
-import React, { useEffect, useState, useContext, useRef } from 'react'
+import React, { useEffect, useState } from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Navbar from '../components/Navbar';
 import { getAuthToken, getUsername, getFileIndex, setFile, setFileIndex } from '../utils';
@@ -20,26 +20,27 @@ export default function Codesystempage() {
   const [ filterList, setFilterList ] = useState(null);
   const url = 'http://localhost:8080/';
 
-  const isEditing = (record) => record.key === editingKey;
+  const isEditing = (record) => record.option === editingKey;
 
   const edit = (record) => {
+    console.log( "record: ", record )
     form.setFieldsValue({
       option: '',
       description: '',
       ...record,
     });
-    setEditingKey(record.key);
+    setEditingKey(record.option);
   };
 
   const cancel = () => {
     setEditingKey('');
   };
 
-  const save = async (key) => {
+  const save = async (option) => {
     try {
       const row = await form.validateFields();
       const newData = [...datas];
-      const index = newData.findIndex((item) => key === item.key);
+      const index = newData.findIndex((item) => option === item.option);
 
       if (index > -1) {
         const item = newData[index];
@@ -112,6 +113,7 @@ export default function Codesystempage() {
       axios.get(`${url}code/codeSystem/${userId}`)
       .then((res) => {
           setDatas(res.data);
+          console.log(res.data[1].code[1])
       })
       .catch(error => console.error(`Error: ${error}`));
   }
@@ -139,13 +141,13 @@ export default function Codesystempage() {
     },
     {
       title: '編輯',
-      key: 'operation',
+      dataIndex: 'operation',
       render: (_, record) => {
         const editable = isEditing(record);
         return editable ? (
           <span>
             <Typography.Link
-              onClick={() => save(record.key)}
+              onClick={() => save(record.index)}
               style={{
                 marginRight: 8,
               }}
@@ -213,7 +215,7 @@ export default function Codesystempage() {
               rules={[
                 {
                   required: true,
-                  message: `Please Input ${title}!`,
+                  message: `請輸入${title}!`,
                 },
               ]}
           >
@@ -347,7 +349,7 @@ export default function Codesystempage() {
                                                 //     <HeartOutlined />
                                                 // </Tooltip>, 
                                                 <Tooltip title="詳細內容"  style={{ borderColor: "#af7c20"}}>
-                                                    <ContainerOutlined style={{color: "#006288"}} onClick={()=>{setFileIndex(index); setFile(data._id); setDeteil(true);}} />
+                                                    <ContainerOutlined style={{color: "#006288"}} onClick={()=>{setFileIndex(index); setFile(data.index); setDeteil(true);}} />
                                                 </Tooltip>, 
                                                 <Tooltip title="刪除">
                                                     <Popconfirm title="確定要刪除此編碼架構嗎？">
