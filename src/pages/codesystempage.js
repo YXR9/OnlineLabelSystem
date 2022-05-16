@@ -5,19 +5,23 @@ import React, { useEffect, useState } from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Navbar from '../components/Navbar';
 import { getAuthToken, getUsername, getFileIndex, setFile, setFileIndex } from '../utils';
+import { useHistory } from "react-router-dom"
 
 const { Footer } = Layout;
 const { Search } = Input;
 const { Meta } = Card;
 
 export default function Codesystempage() {
+  const history = useHistory();
   const [ form ] = Form.useForm();
   const [ datas, setDatas ] = useState('');
   const [ editingKey, setEditingKey] = useState('');
   const [ isModalVisible, setIsModalVisible ] = useState(false);
   const [ deteil, setDeteil ] = useState(false);
-  const [ codeSystemDeteil, setCodeSystemDeteil ] = useState([]);
+  const [ code, setCode ] = useState([]);
   const [ filterList, setFilterList ] = useState(null);
+  const [ option, setOption ] = useState('');
+  const [ description, setDescription ] = useState('');
   const url = 'http://localhost:8080/';
 
   const isEditing = (record) => record.option === editingKey;
@@ -59,7 +63,7 @@ export default function Codesystempage() {
 
   useEffect(() => {
       getAllDatas();
-      handleAdd();
+      // handleAdd();
   }, []);
 
   const showJoinTask = () => {
@@ -69,17 +73,13 @@ export default function Codesystempage() {
   const handleAddCodeSystem = (fields) => {
       const userId = getAuthToken();
       const source = getUsername()
-      const { codeName, purpose, option, description } = fields;
+      const { codeName, purpose } = fields;
+      console.log(codeName, purpose, code);
       var data = JSON.stringify({
         "userId": userId,
         "codeName": codeName,
         "purpose": purpose,
-        "code": [
-          {
-            "option": option,
-            "description": description
-          }
-        ],
+        "code": code,
         "source": source
       });
 
@@ -236,14 +236,28 @@ export default function Codesystempage() {
   }
 
   const handleAdd = () => {
-    const newOption = {
-        option: <Form.Item name="option"><Input name='option' placeholder='Please enter option'/></Form.Item>,
-        description: <Form.Item name="description"><Input name='description' placeholder='Please enter description.'/></Form.Item>
-    }
+    setCode([
+      {
+        option: option,
+        description: description
+      }, ...code
+    ])
+    setOption('');
+    setDescription('');
+    // const newOption = {
+    //     option: <Form.Item name="option"><Input name='option' placeholder='Please enter option'/></Form.Item>,
+    //     description: <Form.Item name="description"><Input name='description' placeholder='Please enter description.'/></Form.Item>
+    // }
     // console.log("ok")
-    setCodeSystemDeteil((pre) => {
-      return [...pre, newOption];
-    });
+    // setCodeSystemDeteil.push(newOption);
+  }
+
+  const hadleInputOption = (e) => {
+    setOption(e.target.value);
+  }
+
+  const handleInputDescription = (e) => {
+    setDescription(e.target.value);
   }
 
   return (
@@ -282,45 +296,34 @@ export default function Codesystempage() {
                             <Form.Item name="codeName">
                                 <Input
                                     name='codeName'
-                                    placeholder="請輸入編碼架構名稱" 
-                                    style={{
-                                        height: "75px",
-                                        width: "300px",
-                                        borderRadius: "10px",
-                                        borderStyle: "dashed",
-                                        position: "abslute",
-                                        top: "50%",
-                                        left: "50%",
-                                        margin: "20px 0 0 -150px"
-                                    }}
-                                    size="large"
+                                    placeholder="請輸入編碼架構名稱"
                                 />
                             </Form.Item>
                             <Form.Item name="purpose">
                                 <Input
                                     name='purpose'
-                                    placeholder="請輸入編碼架構的編碼面向" 
-                                    style={{
-                                        height: "75px",
-                                        width: "300px",
-                                        borderRadius: "10px",
-                                        borderStyle: "dashed",
-                                        position: "abslute",
-                                        top: "50%",
-                                        left: "50%",
-                                        margin: "20px 0 0 -150px"
-                                    }}
-                                    size="large"
+                                    placeholder="請輸入編碼架構的編碼面向"
                                 />
                             </Form.Item>
                             <Form.Item>
-                                <Button className='btn1' onClick={handleAdd} type="primary" style={{ width: "100px", margin: "10px 180px 10px 10px", float: "right"}}>新增選項</Button>
+                                <Row>
+                                  <Col span={8}>
+                                      <Input placeholder='請輸入編碼選項' value={option} onChange={hadleInputOption}/>
+                                  </Col>
+                                  <Col push={1} span={8}>
+                                      <Input placeholder='請說明選項的意涵' value={description} onChange={handleInputDescription}/>
+                                  </Col>
+                                  <Col push={2} span={8}>
+                                      <Button onClick={handleAdd} type="primary" style={{width: "118px"}}>新增</Button>
+                                  </Col>
+                                </Row>
+                                
                             </Form.Item>
                             <Form.Item name="code">
-                                <Table name="code" dataSource={codeSystemDeteil} columns={codeSystemOption}/>
+                                <Table name="code" dataSource={code} columns={codeSystemOption}/>
                             </Form.Item>
                             <Form.Item>
-                                <Button block className="btn" htmlType="submit" type='primary' style={{ width: "150px", margin: "10px 150px 10px 10px", float: "right"}}>建立</Button>
+                                <Button block htmlType="submit" type='primary' style={{ width: "150px", margin: "10px 150px 10px 10px", float: "right"}} onClick={handleCancel}>建立編碼架構</Button>
                             </Form.Item>
                         </Form>
                     </Modal>
