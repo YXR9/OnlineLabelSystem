@@ -52,7 +52,7 @@ const history = useHistory();
                     onFinish={()=> onFinish()}
                 >
                     <Form.Item>
-                        <h3  style={{ color: '#4b4741', fontFamily: 'Comic Sans MS', fontSize: "30px"}}>OnlineLabelSystem</h3>
+                        <h3  style={{ color: '#f0f5f8', fontFamily: 'Comic Sans MS', fontSize: "30px"}}>OnlineLabelSystem</h3>
                     </Form.Item>
                     <Form.Item
                         name="account"
@@ -69,9 +69,9 @@ const history = useHistory();
                             placeholder="Username" 
                             onChange={e => setAccount(e.target.value)}
                             style={{
-                                backgroundColor: "#887451",
+                                backgroundColor: "#f0f5f8",
                                 height: "75px",
-                                color: "#EEE",
+                                color: "#002339",
                                 borderRadius: "10px"
                             }}
                             size="large"
@@ -93,9 +93,9 @@ const history = useHistory();
                             placeholder="Password"
                             onChange={e => setPassword(e.target.value)}
                             style={{
-                                backgroundColor: "#887451",
+                                backgroundColor: "#f0f5f8",
                                 height: "75px",
-                                color: "#EEE",
+                                color: "#002339",
                                 borderRadius: "10px"
                             }}
                             size="large"
@@ -104,10 +104,10 @@ const history = useHistory();
                     </Form.Item>
                     <Form.Item>
                         <Button type="primary" htmlType="submit" className="login-form-button">
-                            Log in
+                            登入
                         </Button>
-                        <Divider orientation='botton'>Or</Divider>
-                        <a href="/register">register now!</a>
+                        <Divider orientation='botton' style={{ color: '#f0f5f8'}}>或</Divider>
+                        <a href="/register">註冊一個帳號</a>
                     </Form.Item>
                 </Form>
             </header>

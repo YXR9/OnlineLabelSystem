@@ -69,7 +69,7 @@ export default function Register() {
                 scrollToFirstError
             >
                 <Form.Item>
-                    <h3  style={{ color: '#4b4741', fontFamily: 'Comic Sans MS', fontSize: "30px"}}>OnlineLabelSystem</h3>
+                    <h3  style={{ color: '#f0f5f8', fontFamily: 'Comic Sans MS', fontSize: "30px"}}>OnlineLabelSystem</h3>
                 </Form.Item>
                 {/* <Form.Item
                   name="name"
@@ -98,10 +98,10 @@ export default function Register() {
                       prefix={<MailOutlined className="site-form-item-icon" />}
                       placeholder='e-mail'
                       style={{
-                        backgroundColor: "#887451",
+                        backgroundColor: "#f0f5f8",
                         height: "70px",
                         width: "300px",
-                        color: "#EEE",
+                        color: "#002339",
                         borderRadius: "10px"
                     }}
                     size="large"
@@ -123,10 +123,10 @@ export default function Register() {
                       prefix={<UserOutlined className="site-form-item-icon" />}
                       placeholder='Username'
                       style={{
-                        backgroundColor: "#887451",
+                        backgroundColor: "#f0f5f8",
                         height: "70px",
                         width: "300px",
-                        color: "#EEE",
+                        color: "#002339",
                         borderRadius: "10px"
                   }}
                   size="large"
@@ -148,10 +148,10 @@ export default function Register() {
                       prefix={<LockOutlined className="site-form-item-icon" />}
                       placeholder='Password'
                       style={{
-                        backgroundColor: "#887451",
+                        backgroundColor: "#f0f5f8",
                         height: "70px",
                         width: "300px",
-                        color: "#EEE",
+                        color: "#002339",
                         borderRadius: "10px"
                       }}
                       size="large"
@@ -183,10 +183,10 @@ export default function Register() {
                       prefix={<LockOutlined className="site-form-item-icon" />}
                       placeholder='Confirm Password'
                       style={{
-                        backgroundColor: "#887451",
+                        backgroundColor: "#f0f5f8",
                         height: "70px",
                         width: "300px",
-                        color: "#EEE",
+                        color: "#002339",
                         borderRadius: "10px"
                     }}
                     size="large"
@@ -195,10 +195,10 @@ export default function Register() {
                 </Form.Item>
                 <Form.Item {...tailFormItemLayout}>
                     <Button type="primary" htmlType="submit" className="login-form-button">
-                      Register
+                      註冊
                     </Button>
-                    <Divider orientation='botton'>Or</Divider>
-                    <a href="/">login now!</a>
+                    <Divider orientation='botton' style={{ color: '#f0f5f8'}}>或</Divider>
+                    <a href="/">已經有帳戶了，登入</a>
                 </Form.Item>
             </Form>
         </header>
