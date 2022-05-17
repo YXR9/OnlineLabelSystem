@@ -90,7 +90,7 @@ export default function DataPick(props) {
                                             style={{
                                                 margin: '50px',
                                                 fontSize: "25px",
-                                                backgroundColor: "#f2f0ec"
+                                                backgroundColor: "#f0f5f8"
                                             }}
                                         >
                                             {datas[page].dataName}
