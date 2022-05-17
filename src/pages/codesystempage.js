@@ -1,5 +1,5 @@
 import { ContainerOutlined, DeleteOutlined } from '@ant-design/icons';
-import { Layout, Input, Row, Col, Button, Modal, Form, Divider, List, Card, Tooltip, Popconfirm, message, Table, PageHeader, Skeleton, Typography } from 'antd';
+import { Layout, Input, Row, Col, Button, Modal, Form, Divider, List, Card, Tooltip, Popconfirm, message, Table, Skeleton, Typography, Rate } from 'antd';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component';
@@ -10,6 +10,7 @@ import { useHistory } from "react-router-dom"
 const { Footer } = Layout;
 const { Search } = Input;
 const { Meta } = Card;
+const desc = ['收藏'];
 
 export default function Codesystempage() {
   const history = useHistory();
@@ -348,9 +349,9 @@ export default function Codesystempage() {
                                         <Card
                                             style={{ margin: "10px", fontSize: "18px", borderRadius: "15px", color: "#002339", background: "#fff", boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px" }} 
                                             actions={[ 
-                                                // <Tooltip title="收藏">
-                                                //     <HeartOutlined />
-                                                // </Tooltip>, 
+                                                <Tooltip title="收藏">
+                                                    <Rate tooltips={desc} count={1}/>
+                                                </Tooltip>, 
                                                 <Tooltip title="詳細內容"  style={{ borderColor: "#af7c20"}}>
                                                     <ContainerOutlined style={{color: "#006288"}} onClick={()=>{setFileIndex(index); setFile(data.index); setDeteil(true);}} />
                                                 </Tooltip>, 
@@ -364,26 +365,26 @@ export default function Codesystempage() {
                                             <Meta title={data.codeName} description={data.purpose} style={{ fontSize: "18px" }}/>
                                         </Card>
                                         <Modal 
-                                            title={datas[getFileIndex()].codeName}
+                                            title={datas[0].codeName}
                                             visible={deteil}
                                             onCancel={handleCancel}
                                             footer={null}
                                         >
                                             <Row>
                                                 <Col>
-                                                    <div>目的： {datas[getFileIndex()].purpose}</div>
+                                                    <div>目的： {datas[0].purpose}</div>
                                                 </Col>
                                             </Row>
                                             <Row>
                                                 <Col>
                                                 <Form form={form} component={false}>
-                                                    <Table dataSource={datas[getFileIndex()].code} columns={margedColumns} components={components} rowClassName='editable-row' pagination={{ onChange: cancel }} scroll={{ y: 240 }} />
+                                                    <Table dataSource={datas[0].code} columns={margedColumns} components={components} rowClassName='editable-row' pagination={{ onChange: cancel }} scroll={{ y: 240 }} />
                                                 </Form>
                                                 </Col>
                                             </Row>
                                             <Row>
                                                 <Col>
-                                                    <div>建立人： {datas[getFileIndex()].source}</div>
+                                                    <div>建立人： {datas[0].source}</div>
                                                 </Col>
                                             </Row>
                                         </Modal>
