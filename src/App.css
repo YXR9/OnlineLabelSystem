@@ -59,9 +59,9 @@ nav {
 .login-form-button {
   width: 100%;
   height: 45px;
-  background-color: #474b41;
-  border-color: #f2f0ec;
-  color: #f2f0ec;
+  background-color: #00bdff;
+  border-color: #f0f5f8;
+  color: #f0f5f8;
   border-radius: 20px;
   margin-bottom: 15px;
   font-family: 'Comic Sans MS'
@@ -81,45 +81,45 @@ nav {
 }
 
 .btn {
-  background-color: #936510;
-  border-color: #f2f0ec;
-  color: #f3f2ee;
+  background-color: #00bdff;
+  border-color: #f0f5f8;
+  color: #f0f5f8;
   border-radius: 20px;
   margin-bottom: 15px;
 }
 
 .btn:hover {
-  background-color: #ae7b20;
-  border-color: #f2f0ec;
-  color: #f3f2ee;
+  background-color: #29c6ff;
+  border-color: #f0f5f8;
+  color: #f0f5f8;
 }
 
 .btn:active {
-  background-color: #f3f2ee;
-  border-color: #f2f0ec;
-  color: #ae7b20;
+  background-color: #f0f5f8;
+  border-color: #f0f5f8;
+  color: #059ed6;
   transform: translateY(5px);
 }
 
 .btn1 {
-  background-color: #e8e7e3;
-  border-color: #f2f0ec;
-  color: #a5a29b;
+  background-color: #f0f5f8;
+  border-color: #00bdff;
+  color: #00bdff;
   border-radius: 20px;
   margin-bottom: 15px;
   font-family: 'Comic Sans MS'
 }
 
 .btn1:hover {
-  background-color: #e0dfdb;
-  color: #565047;
-  border-color: #f2f0ec;
+  background-color: #d4efff;
+  color: #00bdff;
+  border-color: #00bdff;
 }
 
 .btn1:active {
-  background-color: #e0dfdb;
-  color: #565047;
-  border-color: #f2f0ec;
+  background-color: #bcd8e8;
+  color: #00bdff;
+  border-color: #00bdff;
   transform: translateY(5px);
 }
 
@@ -164,17 +164,17 @@ nav {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color:#f2f0ec;
+  background-color:#002339;
   height: 800px;
   margin-top: 80px;
   margin-left: 60px;
   margin-right: 60px;
-  border-color: #887451;
+  border-color: #000406;
   border-style: dashed;
   border-width: 2px;
   border-radius: 50px;
   font-family: Comic Sans MS;
-  color: #af7c20;
+  color: #f0f5f8;
 }
 
 .App-header {
