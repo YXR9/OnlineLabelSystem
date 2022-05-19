@@ -24,7 +24,7 @@ export default function DataTimeline(props) {
         ]
         const coCodeColumns = [
             {
-                title: 'data',
+                title: '資料',
                 dataIndex: 'dataName',
                 width: 700,
                 key: 'dataName',
@@ -98,7 +98,7 @@ export default function DataTimeline(props) {
                 <div className="App">
                     <Navbar/>
                     <div className="App-header" >
-                        <div style={{ width: '100%', height: '100%', paddingTop: '100px' }}>
+                        <div  className="steps-content">
                             <Steps current={current} style={{ maxWidth: '100%', padding: '0px 150px'}}>
                                 {
                                     steps.map(item => (
@@ -106,9 +106,10 @@ export default function DataTimeline(props) {
                                     ))
                                 }
                             </Steps>
-                            <div className="steps-content">
+                            <div>
                                 {steps[current].content}
                             </div>
+                        </div>
                             <div className="steps-action">
                                 {current < steps.length - 1 && (
                                   <Button className="btn1" type="primary" style={{ margin: '0 8px' }} onClick={() => history.push("/codepage")}>
@@ -131,7 +132,6 @@ export default function DataTimeline(props) {
                                   </Button>
                                 )}
                             </div>
-                        </div>
                     </div>
                     <Footer style={{ background: "#000406", color: "#5f8497", textAlign: 'center', position: "absolute", boxSizing: "border-box", bottom: "0", width: "100%", fontFamily: 'Comic Sans MS, Comic Sans, cursive' }}>Ant Design ©2018 Created by Ant UED</Footer>
                 </div>

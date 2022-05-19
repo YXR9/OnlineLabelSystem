@@ -121,7 +121,7 @@ export default function Codepage() {
                         grid={{ 
                             // gutter: ,
                             // sm: 2, 
-                            column: 1
+                            column: 2
                         }}
                         dataSource={datas}
                         renderItem={(data, index) => (

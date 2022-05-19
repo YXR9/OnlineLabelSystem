@@ -1,4 +1,4 @@
-import { ContainerOutlined, DeleteOutlined } from '@ant-design/icons';
+import { ContainerOutlined, DeleteOutlined, StarFilled } from '@ant-design/icons';
 import { Layout, Input, Row, Col, Button, Modal, Form, Divider, List, Card, Tooltip, Popconfirm, message, Table, Skeleton, Typography, Rate } from 'antd';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
@@ -266,14 +266,16 @@ export default function Codesystempage() {
         <Navbar/>
         <div style={{ margin: "0px auto", padding: "60px 380px"}}>
             <Row>
-                <Col span={3}>
+                <Col span={6}>
                     <h2>編碼架構</h2>
                 </Col>
-                <Col span={3} offset={5}>
+                <Col span={10}>
                     <Search size='large' placeholder='搜尋編碼架構' allowClear onSearch={onSearch} style={{ width: "500px", lineHeight: "100px" ,background: "#fbfaf7" }} bordered={false} enterButton={false}/>
-                    {/* <HeartOutlined /> */}
                 </Col>
-                <Col span={8} offset={5}>
+                <Col span={2}>
+                    <Button icon={<StarFilled style={{ color:"gainsboro", fontSize: '25px', margin: '8px'}}/>} style={{ borderColor: '#f0f5f8', background: "#f0f5f8", fontSize: '25px', height: '40px', width: '40px', padding: '0px'}}></Button>
+                </Col>
+                <Col span={6}>
                     <Button style={{ fontFamily: "Comic Sans MS", fontSize: "16px", margin: "0px 0px 0px 0px", textAlign: "center", padding: "0px 0px 7px 0px", float: "right", borderRadius: "5px", width: "150px", height: "50px", boxShadow: "rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px", lineHeight: "50px", border: "0px", background: "#00bdff", color: "#f8f7f5" }} onClick={showJoinTask}>建立編碼架構</Button>
                 </Col>
             </Row>
