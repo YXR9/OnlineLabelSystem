@@ -3,6 +3,7 @@ import { Card, Empty, Form, Checkbox, Button, message, Row, Col } from "antd";
 import axios from "axios";
 import { useHistory } from "react-router-dom"
 import Navbar from '../components/Navbar';
+import { getAuthToken, getEncodeTaskId } from "../utils";
 
 const perspective = ['安全面', '科學與技術面', '環保面', '社會面', '經濟面'];
 const purpose = ['提出論點或主張(CA1)', '提出疑問(CA2)', '提出挑戰(CA3)', '進行推論(CA4)', '表達支持(CA5)', '其他(CA6)'];
@@ -10,21 +11,36 @@ const purpose = ['提出論點或主張(CA1)', '提出疑問(CA2)', '提出挑�
 export default function DataPick(props) {
     const history = useHistory();
     const [page, setPage] = useState(0);
-    const [perspectiveValue, setPerspectiveValue] = useState([]);
-    const [purposeValue, setPurposeValue] = useState([]);
+    const [code, setCode] = useState([]);
+    const [perspectiveValue, setPerspectiveValue] = useState('');
+    const [purposeValue, setPurposeValue] = useState('');
 
     const onChangePerspective = e => {
         console.log('perspective: ', e);
         setPerspectiveValue(e);
+        // setCode({
+        //     perspective: perspectiveValue,
+        // })
+        // console.log('code: ', setCode())
     }
 
     const onChangePurpose = e => {
         console.log('purpose: ', e);
         setPurposeValue(e);
+        // setCode({
+        //     purpose: purposeValue,
+        // }])
     }
 
     const next = () => {
         setPage(page + 1);
+        setCode([{
+            perspective: perspectiveValue,
+        },{
+            purpose: purposeValue,
+        }])
+        setPerspectiveValue('');
+        setPurposeValue('');
     };
 
     const prev = () => {
@@ -32,27 +48,23 @@ export default function DataPick(props) {
     }
 
     const displayDatas = (props) => {
-        
         const {datas} = props;
         if(datas.length > 0) {
-            console.log(datas[page]._id);
+            console.log("_id: ", datas[page]._id);
             
         const handleSave = fields => {
-            const userId = "61cd8404c5f3234a331e3ac4";
+            const userId = getAuthToken();
             const _id = datas[page]._id;
-            const version = ["1"];
+            // const version = ["1"];
             var data = JSON.stringify({
-                "_id": _id,
-                "history": {
-                    "userId": userId,
-                    "perspective":perspectiveValue,
-                    "purpose": purposeValue,
-                    "version": version
-                }
+                "dataId": _id,
+                "userId": userId,
+                "encodeTaskId": getEncodeTaskId(),
+                "code": code
                 });
             var config = {
                 method: 'post',
-                url: 'http://localhost:8080/data/tagData',
+                url: 'http://localhost:8080/code/tag',
                 headers: { 
                   'Content-Type': 'application/json'
                 },
@@ -72,7 +84,7 @@ export default function DataPick(props) {
             <div className="App">
                 <Navbar/>
                 <div className="App-header">
-                    <div style={{margin: "200px",marginTop: "150px"}}>
+                    <div  className="steps-content">
                         <Form name="file-upload-form" onFinish={handleSave}>
                             {/* <Form.Item
                                 style={{
@@ -127,13 +139,13 @@ export default function DataPick(props) {
                                     <Form.Item>
                                         <Row>
                                             <Col>
-                                                <Button type="primary" htmlType="submit" className="btn1" onClick={() => { history.push("/labelpage")}}>
+                                                <Button type="primary" className="btn1" onClick={() => { history.push("/labelpage")}}>
                                                     離開編碼任務
                                                 </Button>
                                             </Col>
                                             <Col>
                                                 {page > 0 && (
-                                                    <Button type="primary" htmlType="submit" className="btn" style={{ margin: '0 8px' }} onClick={() => prev()}>
+                                                    <Button type="primary" className="btn" style={{ margin: '0 8px' }} onClick={() => prev()}>
                                                         上一筆
                                                     </Button>
                                                 )}
@@ -145,12 +157,17 @@ export default function DataPick(props) {
                                                     </Button>
                                                 )}    
                                             </Col>
+                                            <Col>
+                                                {page === datas.length - 1 && (
+                                                    <Button type="primary" className="btn" style={{ margin: '0 8px' }} onClick={ () => { message.success('任務已完成~🎉'); history.push("/labelpage")}}>
+                                                        任務送出
+                                                    </Button>
+                                                )}
+                                            </Col>
                                         </Row>
-                                        
                                     </Form.Item>
                                 </Col>
                             </Row>
-                            
                         </Form>
                     </div>
                     

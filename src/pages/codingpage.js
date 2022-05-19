@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../components/modal.css";
 import DataPick from "../components/DataPick";
 import axios from "axios";
-import { getAuthToken } from "../utils";
+import { getFileId, getAuthToken, getEncodeTaskId } from "../utils";
 
 export default function Codingpage(props) {
      // get data from API
@@ -16,15 +16,16 @@ export default function Codingpage(props) {
  
      const getAllDatas = () => {
         var data = JSON.stringify({
-            "fileId": "622471df1730db0496083cd3",
+            "fileId": getFileId(),
             "userId": getAuthToken(),
-            "encodeTaskId": "622c4626f4db8a2efc9d4cc4"
+            "encodeTaskId": getEncodeTaskId()
           });
         axios.get(`${url}data/userData`)
          .then((res) => {
              // const allDatas = res.data.datas.allDatas;
              // add data to state
              setDatas(res.data);
+             console.log("fileId: ", getFileId())
          })
          .catch(error => console.error(`Error: ${error}`));
      }

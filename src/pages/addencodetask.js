@@ -78,7 +78,7 @@ export default function Addencodetask() {
                     // label='選擇編碼檔案'
                     style={{
                         borderBottomStyle: "solid",
-                        borderColor: "#af7c20",
+                        borderColor: "#39d8eb",
                         height: "75px",
                         color: "#EEE",
                         lineHeight: "75px",
@@ -109,7 +109,7 @@ export default function Addencodetask() {
                     // label='選擇編碼架構'
                     style={{
                         borderBottomStyle: "solid",
-                        borderColor: "#af7c20",
+                        borderColor: "#39d8eb",
                         height: "75px",
                         color: "#EEE",
                         lineHeight: "75px",
@@ -140,7 +140,7 @@ export default function Addencodetask() {
                     label='開始時間'
                     style={{
                         borderBottomStyle: "solid",
-                        borderColor: "#af7c20",
+                        borderColor: "#39d8eb",
                         height: "75px",
                         color: "#EEE",
                         lineHeight: "75px",
@@ -159,7 +159,7 @@ export default function Addencodetask() {
                     label='結束時間'
                     style={{
                         borderBottomStyle: "solid",
-                        borderColor: "#af7c20",
+                        borderColor: "#39d8eb",
                         height: "75px",
                         color: "#EEE",
                         lineHeight: "75px",

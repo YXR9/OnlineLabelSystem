@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory, Link } from 'react-router-dom';
-import { Layout, Drawer, Menu, Button, Row, Col, Avatar, Popover } from 'antd'
-import { CodeOutlined, UserOutlined, LogoutOutlined } from '@ant-design/icons'
+import { Layout, Drawer, Menu, Button, Row, Col, Avatar, Popover, Divider } from 'antd'
+import { CodeOutlined, UserOutlined, LogoutOutlined, StarFilled } from '@ant-design/icons'
 import { getUsername, setAuthToken } from '../utils';
 
 
@@ -35,13 +35,14 @@ export default function Navbar() {
   const content = (
     <div>
       <Row>
-        <Col style={{ margin: "0px auto"}}>
+        <Col style={{ margin: '0px auto' }}>
           {username}
         </Col>
       </Row>
+      <Divider style={{ margin: '10px auto'}}/>
       <Row>
-        <Col>
-          <Button icon={<LogoutOutlined title='LogOut'/>} style={{borderColor: '#FFF', fontFamily: 'Comic Sans MS'}}  onClick={logOut}>LogOut</Button>
+        <Col >
+          <Button icon={<LogoutOutlined/>} style={{borderColor: '#FFF', fontFamily: 'Comic Sans MS'}}  onClick={logOut}>登出</Button>
         </Col>
       </Row>
     </div>
