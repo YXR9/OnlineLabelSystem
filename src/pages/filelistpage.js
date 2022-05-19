@@ -1,11 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { Link, Route, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import axios from "axios";
-import { Table, Button, Layout, Row, Col, Divider, Modal, Space, Popconfirm } from 'antd';
+import { Table, Button, Layout, Row, Col, Divider, Modal, Popconfirm, message } from 'antd';
 import Navbar from '../components/Navbar';
 import { getAuthToken } from '../utils';
 import { DeleteOutlined, DownloadOutlined } from '@ant-design/icons';
 const { Footer } = Layout;
+
+const handleDownload = () => {
+    axios.get(`http://localhost:8080/file/example`)
+    .then((res) => {
+        console.log(res);
+        message.success("已成功下載範例檔案！");
+    })
+    .catch((err) => {
+        console.log(err);
+        message.error("下載失敗 QQ");
+    })
+}
 
 function info() {
     Modal.info({
@@ -16,7 +28,7 @@ function info() {
                 <p>2. Excel 檔案中的資料欄位必須遵照以下規定：</p>
                 <p>2-1 'A1'必須填入'content'</p>
                 <p>2-2 其餘內容必須都放置於A欄中（例如：可以放在 A2、A3、A4、A5、...）</p>
-                <Button shape='round' icon={<DownloadOutlined/>}>下載範例檔案</Button>
+                <Button shape='round' icon={<DownloadOutlined/>} onClick={handleDownload}>下載範例檔案</Button>
             </div>
         ),
         okText: "開始上傳檔案",

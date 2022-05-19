@@ -61,7 +61,7 @@ export default function Register() {
     };
   return (
     <div className='App'>
-        <header className='App-login-header'>
+        <header className='App-register-header'>
             <Form
                 {...formItemLayout}
                 name="register"
@@ -69,7 +69,7 @@ export default function Register() {
                 scrollToFirstError
             >
                 <Form.Item>
-                    <h3  style={{ color: '#f0f5f8', fontFamily: 'Comic Sans MS', fontSize: "30px"}}>OnlineLabelSystem</h3>
+                    <h3  style={{ color: '#9DB7C7', fontFamily: 'Comic Sans MS', fontSize: "30px"}}>OnlineLabelSystem</h3>
                 </Form.Item>
                 {/* <Form.Item
                   name="name"
@@ -98,11 +98,13 @@ export default function Register() {
                       prefix={<MailOutlined className="site-form-item-icon" />}
                       placeholder='e-mail'
                       style={{
-                        backgroundColor: "#f0f5f8",
-                        height: "70px",
-                        width: "300px",
-                        color: "#002339",
-                        borderRadius: "10px"
+                          backgroundColor: "#f0f5f8",
+                          height: "75px",
+                          color: "#9DB7C7",
+                          borderRadius: "10px",
+                          borderStyle: "solid",
+                          borderWidth: "1px",
+                          borderColor: "#9DB7C7"
                     }}
                     size="large"
                     bordered={false}
@@ -124,10 +126,12 @@ export default function Register() {
                       placeholder='Username'
                       style={{
                         backgroundColor: "#f0f5f8",
-                        height: "70px",
-                        width: "300px",
-                        color: "#002339",
-                        borderRadius: "10px"
+                        height: "75px",
+                        color: "#9DB7C7",
+                        borderRadius: "10px",
+                        borderStyle: "solid",
+                        borderWidth: "1px",
+                        borderColor: "#9DB7C7"
                   }}
                   size="large"
                   bordered={false}
@@ -149,10 +153,12 @@ export default function Register() {
                       placeholder='Password'
                       style={{
                         backgroundColor: "#f0f5f8",
-                        height: "70px",
-                        width: "300px",
-                        color: "#002339",
-                        borderRadius: "10px"
+                        height: "75px",
+                        color: "#9DB7C7",
+                        borderRadius: "10px",
+                        borderStyle: "solid",
+                        borderWidth: "1px",
+                        borderColor: "#9DB7C7"
                       }}
                       size="large"
                       bordered={false}
@@ -184,10 +190,12 @@ export default function Register() {
                       placeholder='Confirm Password'
                       style={{
                         backgroundColor: "#f0f5f8",
-                        height: "70px",
-                        width: "300px",
-                        color: "#002339",
-                        borderRadius: "10px"
+                        height: "75px",
+                        color: "#9DB7C7",
+                        borderRadius: "10px",
+                        borderStyle: "solid",
+                        borderWidth: "1px",
+                        borderColor: "#9DB7C7"
                     }}
                     size="large"
                     bordered={false}
@@ -197,7 +205,7 @@ export default function Register() {
                     <Button type="primary" htmlType="submit" className="login-form-button">
                       註冊
                     </Button>
-                    <Divider orientation='botton' style={{ color: '#f0f5f8'}}>或</Divider>
+                    <Divider orientation='botton' style={{ color: '#9DB7C7'}}>或</Divider>
                     <a href="/">已經有帳戶了，登入</a>
                 </Form.Item>
             </Form>
