@@ -4,7 +4,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Navbar from '../components/Navbar';
-import { getAuthToken, getUsername, getFileIndex, setFile, setFileIndex } from '../utils';
+import { getAuthToken, getUsername, getFileIndex, getFileId, setFile, setFileIndex } from '../utils';
 import { useHistory } from "react-router-dom"
 
 const { Footer } = Layout;
@@ -125,6 +125,49 @@ export default function Codesystempage() {
       .includes(value.toLowerCase())));
     setFilterList(filterData);
     console.log(value);
+  }
+
+  const handleFavorite = () => {
+    const userId = getAuthToken();
+    const codeSysId = getFileId();
+
+    var data = ({
+        "userId": userId,
+        "codeSysId": codeSysId
+    });
+    console.log(data);
+    var config = {
+        method: 'post',
+        url: 'http://localhost:8080/code/favCodeSystem',
+        headers: { 
+          'Content-Type': 'application/json', 
+          'Cookie': 'connect.sid=s%3ARIsBSwLMlutQa9uiA83xflDlhwQNZBGD.a1tIJee87yhZE5DGt2FySQmBlfDONYjFolq4yqyp830'
+        },
+        data : data
+    };
+    
+    axios(config)
+    .then(function (response) {
+        message.success("收藏成功！😉");
+        console.log(JSON.stringify(response.data));
+    })
+    .catch(function (error) {
+        message.error(error,"😥");
+        console.log(error);
+    });
+
+    // const data = new FormData();
+    // data.append('userId', userId);
+    // data.append('codeSysId', codeSysId);
+    // console.log(userId, codeSysId)
+
+    // axios.post(`${url}code/favCodeSystem`, data)
+    // .then((res) => {
+    //   message.success("收藏成功！😉");
+    //   console.log(res);
+    // }).catch (error => {
+    //   message.error(error.message);
+    // })
   }
 
   const columns = [
@@ -352,10 +395,10 @@ export default function Codesystempage() {
                                             style={{ margin: "10px", fontSize: "18px", borderRadius: "15px", color: "#002339", background: "#fff", boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px" }} 
                                             actions={[ 
                                                 <Tooltip title="收藏">
-                                                    <Rate tooltips={desc} count={1}/>
+                                                    <Rate autoFocus tooltips={desc} count={1} onChange={handleFavorite} style={{ borderColor: "green"}}/>
                                                 </Tooltip>, 
                                                 <Tooltip title="詳細內容"  style={{ borderColor: "#af7c20"}}>
-                                                    <ContainerOutlined style={{color: "#006288"}} onClick={()=>{setFileIndex(index); setFile(data.index); setDeteil(true);}} />
+                                                    <ContainerOutlined style={{color: "#006288"}} onClick={()=>{setFileIndex(index); setFile(data._id); console.log("data.Index: ", data._id); setDeteil(true);}} />
                                                 </Tooltip>, 
                                                 <Tooltip title="刪除">
                                                     <Popconfirm title="確定要刪除此編碼架構嗎？">

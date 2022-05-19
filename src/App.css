@@ -59,9 +59,9 @@ nav {
 .login-form-button {
   width: 100%;
   height: 45px;
-  background-color: #00bdff;
-  border-color: #f0f5f8;
-  color: #f0f5f8;
+  background-color: #CFDDE6;
+  border-color: #9DB7C7;
+  color: #9DB7C7;
   border-radius: 20px;
   margin-bottom: 15px;
   font-family: 'Comic Sans MS'
@@ -164,17 +164,31 @@ nav {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color:#002339;
+  /* background-color:#9DB7C7; */
   height: 800px;
   margin-top: 80px;
-  margin-left: 60px;
-  margin-right: 60px;
-  border-color: #000406;
-  border-style: dashed;
-  border-width: 2px;
+  margin-left: -30px;
+  margin-right: 400px;
+  border-color: #9DB7C7;
+  border-style: solid;
+  border-width: 1px;
   border-radius: 50px;
   font-family: Comic Sans MS;
-  color: #f0f5f8;
+}
+
+.App-register-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 800px;
+  margin-top: 80px;
+  margin-left: 600px;
+  margin-right: 600px;
+  border-color: #9DB7C7;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 50px;
+  font-family: Comic Sans MS;
 }
 
 .App-header {
