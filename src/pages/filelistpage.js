@@ -28,7 +28,7 @@ function info() {
                 <p>2. Excel 檔案中的資料欄位必須遵照以下規定：</p>
                 <p>2-1 'A1'必須填入'content'</p>
                 <p>2-2 其餘內容必須都放置於A欄中（例如：可以放在 A2、A3、A4、A5、...）</p>
-                <Button shape='round' icon={<DownloadOutlined/>} onClick={handleDownload}>下載範例檔案</Button>
+                <Button shape='round' icon={<DownloadOutlined style={{ color: "#00bdff"}}/>}><a href='http://localhost:8080/file/example'> 下載範例檔案 </a></Button>
             </div>
         ),
         okText: "開始上傳檔案",
