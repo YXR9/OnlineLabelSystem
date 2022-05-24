@@ -78,7 +78,7 @@ export default function Filelistpage() {
     const getAllDatas = () => {
         const userId = getAuthToken();
         // console.log(userId)
-        axios.get(`${url}file/allFile/${userId}`)
+        axios.get(`${url}file/allFileInfo/${userId}`)
         .then((res) => {
             // const allDatas = res.data.datas.allDatas;
             // add data to state

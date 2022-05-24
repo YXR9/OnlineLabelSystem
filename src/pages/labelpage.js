@@ -35,7 +35,7 @@ export default function Labelpage() {
               'Content-Type': 'application/json',
             //   'Cookie': 'connect.sid=s%3A5Go4tS-x350sMnz7U3Osp2U8gHF9QDe1.0xdgbe54QYQKgNHr5MQFHCJOv%2BakBkZFd5H1wVpKJXU'
             },
-            data : {},
+            data : data,
             // params: data
           };
           console.log(config);
