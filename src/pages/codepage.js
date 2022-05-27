@@ -77,7 +77,7 @@ export default function Codepage() {
   return (
     <div className='App'>
         <Navbar/>
-        <div style={{ margin: "0px auto", padding: "60px 380px", height: "850px" }}>
+        <div style={{ width: "60%", height: "200px", margin: "0px auto", padding: "60px 0px" }}>
         
             <Row>
                 <Col span={5}>

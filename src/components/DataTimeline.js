@@ -14,6 +14,7 @@ export default function DataTimeline(props) {
     const displayDatas = (props) => {
         
         const { datas, adjustData } = props;
+
         const columns = [
             {
                 title: '資料',
@@ -22,6 +23,7 @@ export default function DataTimeline(props) {
                 render: text => <a href="/codingpage">{text}</a>
             }
         ]
+
         const coCodeColumns = [
             {
                 title: '資料',
@@ -54,6 +56,7 @@ export default function DataTimeline(props) {
                 render: () => <a>edit</a>
             },
         ]
+
         const steps = [
             {
                 title: '獨立編碼',
@@ -67,7 +70,6 @@ export default function DataTimeline(props) {
                             <Form.Item 
                                 label="排定校正日期"
                                 size="large"
-                                // bordered={false}
                             >
                                 <DatePicker showToday size="large"/>
                             </Form.Item>
@@ -79,20 +81,16 @@ export default function DataTimeline(props) {
                             <Table columns={coCodeColumns} dataSource={adjustData} pagination={{ pageSize: 50 }} scroll={{ y: 240 }} />
                         </div>
             },
-            // {
-            //     title: '完成編碼校正',
-            //     content: <div style={{ display: "inline-block", padding: "160px" }}>
-            //                 <Button className="btn">下載 excel 檔</Button>
-            //             </div>
-            // }
         ]
+
         const next = () => {
             setCurrent(current + 1);
-          };
+        };
         
-          const prev = () => {
+        const prev = () => {
             setCurrent(current - 1);
-          };
+        };
+
         if(datas.length > 0) {
             return(
                 <div className="App">
@@ -135,7 +133,6 @@ export default function DataTimeline(props) {
                     </div>
                     <Footer style={{ background: "#000406", color: "#5f8497", textAlign: 'center', position: "absolute", boxSizing: "border-box", bottom: "0", width: "100%", fontFamily: 'Comic Sans MS, Comic Sans, cursive' }}>Ant Design ©2018 Created by Ant UED</Footer>
                 </div>
-                
             )
         } else {
             return (
