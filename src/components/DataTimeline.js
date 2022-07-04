@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { Table, Steps, Empty, Button, message, DatePicker, Form, Layout } from "antd";
+import { Table, Steps, Empty, Button, message, DatePicker, Form, Layout, Popconfirm, Tag } from "antd";
 import { useHistory } from "react-router-dom";
 import Navbar from '../components/Navbar';
+import { EditOutlined } from "@ant-design/icons";
 
 const { Step } = Steps;
 const { Footer } = Layout;
@@ -27,41 +28,46 @@ export default function DataTimeline(props) {
         const coCodeColumns = [
             {
                 title: '資料',
-                dataIndex: 'dataName',
-                width: 700,
-                key: 'dataName',
-                render: text => <h3>{text}</h3>
+                dataIndex: 'content',
+                width: 300,
+                key: 'constent',
+                render: text => <p>{text}</p>
             },
             {
-                title: 'A 編碼者',
-                dataIndex: 'userId',
-                key: 'userId',
-                render: text => <a>{text}</a>
-            },
-            {
-                title: 'B 編碼者',
-                dataIndex: '',
-                key: '',
-                // render: text => <a>{text}</a>
+                title: '編碼者',
+                dataIndex: 'userDetails',
+                key: 'userDetails',
+                width: 70,
+                render: (userDetails) => userDetails.map(userDetail => userDetail.account).join()
             },
             {
                 title: '編碼結果',
-                dataIndex: 'history.code',
-                key: 'history.code',
-                // render: text => <a>{text}</a>
+                dataIndex: 'result',
+                key: 'result',
+                width: 100,
+                render: (result) => (<Tag color='blue' key={result}>{result.map(result => result.code).join()}</Tag>)
             },
             {
                 title: '修改',
-                width: 100,
-                render: () => <a>edit</a>
-            },
+                width: 40,
+                key: 'edit',
+                render: (record) => {
+                    return (
+                            <EditOutlined
+                                onClick={() => {
+                                    onEditData(record)
+                                }}
+                            />
+                    );
+                }
+            }
         ]
 
         const steps = [
             {
                 title: '獨立編碼',
-                content: <div style={{ padding: '30px 100px'}}>
-                            <Table columns={columns} dataSource={datas} pagination={false} scroll={{ y: 500 }} />
+                content: <div style={{ padding: '20px 100px', margin: '0px auto', width: '100%' }}>
+                            <Table className='table' rowKey="_id" columns={columns} dataSource={datas} pagination={false} scroll={{ y: 430 }} />
                         </div>
             },
             {
@@ -77,8 +83,8 @@ export default function DataTimeline(props) {
             },
             {
                 title: '進行編碼校正',
-                content: <div style={{ padding: '30px 100px'}}>
-                            <Table columns={coCodeColumns} dataSource={adjustData} pagination={{ pageSize: 50 }} scroll={{ y: 240 }} />
+                content: <div style={{ padding: '20px 100px', margin: '0px auto', width: '100%'}}>
+                            <Table className='table' rowKey="_id" columns={coCodeColumns} dataSource={adjustData} pagination={false} scroll={{ y: 430 }} />
                         </div>
             },
         ]
@@ -91,13 +97,17 @@ export default function DataTimeline(props) {
             setCurrent(current - 1);
         };
 
+        const onEditData = (record) => {
+
+        }
+
         if(datas.length > 0) {
             return(
                 <div className="App">
                     <Navbar/>
-                    <div className="App-header" >
+                    <div style={{ width: "75%", height: "0px", margin: "0px auto", padding: "80px 0px"}}>
                         <div  className="steps-content">
-                            <Steps current={current} style={{ maxWidth: '100%', padding: '0px 150px'}}>
+                            <Steps current={current} style={{  width: "80%", margin: "0px auto", padding: "10px 0px" }}>
                                 {
                                     steps.map(item => (
                                         <Step key={item.title} title={item.title} />

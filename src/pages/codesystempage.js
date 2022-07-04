@@ -206,7 +206,7 @@ export default function Codesystempage() {
           </span>
         ) : (
           <Typography.Link disabled={editingKey !== ''} onClick={() => edit(record)}>
-            編輯
+              編輯
           </Typography.Link>
         );
       },

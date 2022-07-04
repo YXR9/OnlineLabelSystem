@@ -4,13 +4,15 @@ import axios from "axios";
 import { getAuthToken, getFileId, getEncodeTaskId } from "../utils";
 import { useParams } from "react-router-dom";
 
+var url = 'http://localhost:8080/';
+
 export default function Labelpage() {
     // const [ user, setUser ] = useState(null);
     // const [ file, setFile ] = useState(null);
     // const [ encodeTask, setEncodeTask ] = useState(null);
     // get data from API
     const [ datas, setDatas ] = useState([]);
-    const [ adjustData, setAdjustData ] = useState('');
+    const [ adjustData, setAdjustData ] = useState([]);
 
     const { handle } = useParams();
 
@@ -27,66 +29,57 @@ export default function Labelpage() {
           "userId": getAuthToken(),
           "fileId": getFileId(),
           "encodeTaskId": getEncodeTaskId()
-          });
-          var config = {
+        });
+        var config = {
             method: 'get',
-            url: `http://localhost:8080/data/userData?userId=${getAuthToken()}&fileId=${getFileId()}&encodeTaskId=${getEncodeTaskId()}`,
+            url: `${url}data/userData?userId=${getAuthToken()}&fileId=${getFileId()}&encodeTaskId=${getEncodeTaskId()}`,
             headers: {
               'Content-Type': 'application/json',
             //   'Cookie': 'connect.sid=s%3A5Go4tS-x350sMnz7U3Osp2U8gHF9QDe1.0xdgbe54QYQKgNHr5MQFHCJOv%2BakBkZFd5H1wVpKJXU'
             },
             data : data,
             // params: data
-          };
-          console.log(config);
+        };
+        console.log(config);
           
           axios(config)
           .then(function (response) {
-                setDatas(response.data)
-                console.log(getFileId(),getAuthToken(),getEncodeTaskId())
-                console.log(response.data);
+              setDatas(response.data)
+              console.log("data: ", getFileId(), getAuthToken(), getEncodeTaskId())
+              console.log("content: ", response.data);
           })
           .catch(function (error) {
             console.log(error);
           });
-          
-        // axios.get(`${url}data/userData`, data)
-        // .then((res) => {
-        //     setDatas(res.data);
-        // })
-        // .catch(error => console.error(`Error: ${error}`));
     }
-
+    
     const getAdjustData = () => {
-        var dt = JSON.stringify({
-            "encodeTaskId": getEncodeTaskId(),
-            "fileId": getFileId()
-        });
-        var cfg = {
-            method: 'get',
-            url: 'http://localhost:8080/data/adjustData',
-            headers: { 
-              'Content-Type': 'application/json', 
-            //   'Cookie': 'connect.sid=s%3A5Go4tS-x350sMnz7U3Osp2U8gHF9QDe1.0xdgbe54QYQKgNHr5MQFHCJOv%2BakBkZFd5H1wVpKJXU'
-            },
-            data : dt
-          };
-          
-          axios(cfg)
-          .then(function (res) {
-                setAdjustData(res.data);
-                console.log("adjust", JSON.stringify(res.data));
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-          
-        // axios.get(`${url}data/adjustData`, data)
-        // .then((data) => {
-        //     console.log("AdjustData", data.data)
-        //     setAdjustData(data.data);
-        // })
-        // .catch(error => console.error(`Error: ${error}`));
+      var adjustData = {
+          // "encodeTaskId": getEncodeTaskId(),
+          // "fileId": getFileId()
+          "encodeTaskId": "622c4626f4db8a2efc9d4cc4",
+          "fileId": "622471df1730db0496083cd3"
+      };
+      var adjustConfig = {
+          method: 'get',
+          url: `${url}data/adjustData/${getEncodeTaskId()}/${getFileId()}`,
+          headers: { 
+            'Content-Type': 'application/json', 
+            // 'Cookie': 'connect.sid=s%3A5Go4tS-x350sMnz7U3Osp2U8gHF9QDe1.0xdgbe54QYQKgNHr5MQFHCJOv%2BakBkZFd5H1wVpKJXU'
+          },
+          data : adjustData,
+      };
+      console.log(adjustConfig)
+        
+      axios(adjustConfig)
+      .then(function (response) {
+          setAdjustData(response.data);
+          console.log("encodeTaskId: ",getEncodeTaskId(), "fileId: ", getFileId())
+          console.log("adjust: ", response.data);
+      })
+      .catch(function (error) {
+          console.log(error);
+      });
     }
 
     return (
